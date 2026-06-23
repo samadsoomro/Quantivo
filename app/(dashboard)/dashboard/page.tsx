@@ -61,7 +61,7 @@ export default async function DashboardPage() {
 
   const catMap: Record<string, { name: string; amount: number; color: string }> = {}
   txThisMonth?.filter(t => t.type === 'expense').forEach(t => {
-    const cat = t.categories as { name: string; color: string } | null
+    const cat = (Array.isArray(t.categories) ? t.categories[0] : t.categories) as { name: string; color: string } | null
     const key = cat?.name ?? 'Other'
     if (!catMap[key]) catMap[key] = { name: key, amount: 0, color: cat?.color ?? '#6b7280' }
     catMap[key].amount += Number(t.amount)
