@@ -294,6 +294,10 @@ export default function SettingsPage() {
                       <option value="usd">USD ($) - US Dollar</option>
                       <option value="eur">EUR (€) - Euro</option>
                       <option value="gbp">GBP (£) - British Pound</option>
+                      <option value="cad">CAD ($) - Canadian Dollar</option>
+                      <option value="aud">AUD ($) - Australian Dollar</option>
+                      <option value="jpy">JPY (¥) - Japanese Yen</option>
+                      <option value="chf">CHF (Fr) - Swiss Franc</option>
                     </select>
                     <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#c7c5d0]">expand_more</span>
                   </div>

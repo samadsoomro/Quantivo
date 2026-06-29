@@ -1,0 +1,187 @@
+
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-white/10 transition-all duration-300 ease-out">
+<div class="flex justify-between items-center px-margin-desktop py-4 max-w-7xl mx-auto">
+<div class="font-display-lg text-display-lg text-primary tracking-tighter">
+                Quantivo
+            </div>
+<div class="hidden md:flex space-x-gutter">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:-translate-y-[3px] duration-300 ease-out" href="#features">Features</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:-translate-y-[3px] duration-300 ease-out" href="#tools">Tools</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:-translate-y-[3px] duration-300 ease-out" href="#pricing">Pricing</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md hover:-translate-y-[3px] duration-300 ease-out" href="#faq">FAQ</a>
+</div>
+<div class="flex items-center space-x-md">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Log In</a>
+<a class="bg-primary text-on-primary px-6 py-2 rounded-full font-body-md text-body-md hover-lift transition-transform duration-300 ease-out" href="#">Get Started</a>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-20">
+<!-- Hero Section -->
+<section class="relative px-margin-desktop max-w-7xl mx-auto text-center mb-xl">
+<!-- Decorative Tags -->
+<div class="absolute inset-0 pointer-events-none hidden md:block overflow-hidden">
+<div class="floating-tag absolute top-10 left-[10%] px-4 py-1 rounded-full font-data-label text-data-label" style="background-color: rgba(255,68,51,0.15); color: #ff4433; border: 1px solid #ff4433; --rotation: -8deg; animation-delay: 0s;">Groceries</div>
+<div class="floating-tag absolute top-20 right-[15%] px-4 py-1 rounded-full font-data-label text-data-label" style="background-color: rgba(255,204,2,0.15); color: #ffcc02; border: 1px solid #ffcc02; --rotation: 12deg; animation-delay: 1s;">Savings</div>
+<div class="floating-tag absolute bottom-10 left-[20%] px-4 py-1 rounded-full font-data-label text-data-label" style="background-color: rgba(0,172,254,0.15); color: #00acfe; border: 1px solid #00acfe; --rotation: 5deg; animation-delay: 2s;">Travel</div>
+<div class="floating-tag absolute bottom-20 right-[10%] px-4 py-1 rounded-full font-data-label text-data-label" style="background-color: rgba(0,204,75,0.15); color: #00cc4b; border: 1px solid #00cc4b; --rotation: -12deg; animation-delay: 0.5s;">Income</div>
+</div>
+<div class="relative z-10 max-w-4xl mx-auto">
+<h1 class="font-display-lg text-display-lg md:text-[64px] leading-tight tracking-tighter mb-md">
+<span class="animated-gradient-text">Your Money. Your Goals. One Command Center.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg max-w-2xl mx-auto">
+                    Engineered for precision. High-performance financial tracking blending technical clarity with automated insights.
+                </p>
+<div class="flex justify-center space-x-md mb-xl">
+<a class="bg-primary text-on-primary px-8 py-3 rounded-full font-body-lg text-body-lg hover-lift" href="#">Get Started Free</a>
+<a class="bg-transparent border border-primary text-primary px-8 py-3 rounded-full font-body-lg text-body-lg hover-lift" href="#">View Demo</a>
+</div>
+</div>
+<!-- Hero Preview Dashboard -->
+<div class="glass-card w-full max-w-5xl mx-auto h-[500px] relative overflow-hidden mt-xl fade-up">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+<!-- Mock Dashboard UI -->
+<div class="p-lg h-full flex flex-col">
+<div class="flex justify-between items-center mb-md border-b border-white/5 pb-sm">
+<div class="font-headline-md text-headline-md">Overview</div>
+<div class="font-data-value text-data-value text-primary-fixed">Q3 2024</div>
+</div>
+<div class="grid grid-cols-3 gap-gutter flex-1">
+<div class="border border-white/5 rounded-lg p-md flex flex-col justify-center">
+<span class="font-data-label text-data-label text-on-surface-variant">Total Balance</span>
+<span class="font-data-value text-data-value text-[32px] mt-xs">$124,500.00</span>
+</div>
+<div class="col-span-2 border border-white/5 rounded-lg p-md relative overflow-hidden">
+<!-- Placeholder for chart -->
+<div class="bg-cover bg-center w-full h-full opacity-50 mix-blend-screen" data-alt="A sleek, high-tech line chart visualization interface showing financial growth over time. The chart uses glowing violet and amber lines against a deep space navy background, with sharp, minimalist axes and data points. The aesthetic is modern, glassmorphic, and highly precise, fitting a professional analytics dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSDwwdOXzVHLDNR49EwAkg91cWzVC-Re3Qpcsh4UjcZeGBQ1hzJg5gyeBzcyua5V2BnE3fRETVmjZx14jxNiM5jn1xlpVt2E6ROWeCTMhkWSQeBFjVeNYkfkMd4Vm0v4V1wrWIEfvMAB7KD9rt6WUrmtPzZC_qsmQoHhzVQMEDcW_jvHwiyfzCJ3ugqQEGXVQX37lxslOz8f4pFi1re93Jo6JaGY_O1lQKfeN-ucpFyYeox1ECp1_sEzJv1ynaUcS3R7GrqBG1E0M')"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats Bar -->
+<div class="mt-xl grid grid-cols-2 md:grid-cols-4 gap-gutter border-t border-white/5 pt-lg fade-up stagger-1">
+<div>
+<div class="font-data-value text-data-value text-primary text-[24px]">120k</div>
+<div class="font-data-label text-data-label text-on-surface-variant mt-xs">Active Users</div>
+</div>
+<div>
+<div class="font-data-value text-data-value text-primary text-[24px]">$48M</div>
+<div class="font-data-label text-data-label text-on-surface-variant mt-xs">Tracked Monthly</div>
+</div>
+<div>
+<div class="font-data-value text-data-value text-primary text-[24px]">4.9</div>
+<div class="font-data-label text-data-label text-on-surface-variant mt-xs">Star Rating</div>
+</div>
+<div>
+<div class="font-data-value text-data-value text-primary text-[24px]">99.9%</div>
+<div class="font-data-label text-data-label text-on-surface-variant mt-xs">Uptime SLA</div>
+</div>
+</div>
+</section>
+<!-- Tools Section -->
+<section class="px-margin-desktop max-w-7xl mx-auto mb-xl pt-xl" id="tools">
+<div class="text-center mb-lg fade-up">
+<h2 class="font-headline-md text-headline-md text-secondary-container mb-sm">Professional Tools</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Accelerate your workflow with precision utilities.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Tool Card 1 -->
+<div class="glass-card p-lg border-secondary/30 hover:border-secondary/60 transition-colors fade-up hover-lift">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-[32px] text-secondary" style="font-variation-settings: 'FILL' 0;">receipt_long</span>
+<span class="bg-secondary/15 text-secondary border border-secondary px-3 py-1 rounded-full font-data-label text-[12px]">2/3 free uses</span>
+</div>
+<h3 class="font-headline-md text-[20px] mb-xs text-on-surface">Invoice Generator</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Create professional, compliant invoices in seconds. Export directly to PDF.</p>
+<div class="flex space-x-sm">
+<a class="bg-secondary text-on-secondary px-4 py-2 rounded-full font-body-sm text-body-sm flex-1 text-center" href="#">Try Free</a>
+</div>
+</div>
+<!-- Tool Card 2 -->
+<div class="glass-card p-lg border-secondary/30 hover:border-secondary/60 transition-colors fade-up stagger-1 hover-lift">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-[32px] text-secondary" style="font-variation-settings: 'FILL' 0;">account_balance</span>
+<span class="bg-secondary/15 text-secondary border border-secondary px-3 py-1 rounded-full font-data-label text-[12px]">2/3 free uses</span>
+</div>
+<h3 class="font-headline-md text-[20px] mb-xs text-on-surface">Statement Generator</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Generate mock or normalized bank statements for testing and reconciliation.</p>
+<div class="flex space-x-sm">
+<a class="bg-secondary text-on-secondary px-4 py-2 rounded-full font-body-sm text-body-sm flex-1 text-center" href="#">Try Free</a>
+</div>
+</div>
+<!-- Tool Card 3 -->
+<div class="glass-card p-lg border-secondary/30 hover:border-secondary/60 transition-colors fade-up stagger-2 hover-lift">
+<div class="flex justify-between items-start mb-md">
+<span class="material-symbols-outlined text-[32px] text-secondary" style="font-variation-settings: 'FILL' 0;">picture_as_pdf</span>
+<span class="bg-secondary/15 text-secondary border border-secondary px-3 py-1 rounded-full font-data-label text-[12px]">2/3 free uses</span>
+</div>
+<h3 class="font-headline-md text-[20px] mb-xs text-on-surface">PDF Converter</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">Convert financial CSVs and raw data directly into formatted, presentation-ready PDFs.</p>
+<div class="flex space-x-sm">
+<a class="bg-secondary text-on-secondary px-4 py-2 rounded-full font-body-sm text-body-sm flex-1 text-center" href="#">Try Free</a>
+</div>
+</div>
+</div>
+<div class="mt-md flex justify-center fade-up stagger-3">
+<a class="bg-primary text-on-primary px-8 py-3 rounded-full font-body-lg text-body-lg hover-lift inline-flex items-center" href="#">
+<span class="material-symbols-outlined mr-sm" style="font-variation-settings: 'FILL' 1;">lock_open</span>
+                    Unlock All Tools
+                </a>
+</div>
+<!-- AdSense Placeholder -->
+<div class="mt-xl flex flex-col items-center justify-center opacity-50 fade-up">
+<span class="font-data-label text-[10px] text-on-surface-variant mb-xs">Advertisement</span>
+<div class="w-[728px] h-[90px] bg-surface-container-high border border-white/5 flex items-center justify-center">
+<span class="font-data-value text-on-surface-variant">728x90 Ad Unit</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full pt-20 pb-10 bg-surface-container-lowest border-t border-white/5">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop max-w-7xl mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-display-lg text-display-lg text-primary mb-md">Quantivo</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-md">© 2024 Quantivo Analytics. Engineered for precision.</p>
+</div>
+<div class="flex flex-col space-y-sm">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">Features</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">Tools</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">Pricing</a>
+</div>
+<div class="flex flex-col space-y-sm">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">FAQ</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col space-y-sm">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">Security</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-secondary transition-colors transition-opacity duration-200" href="#">Status</a>
+</div>
+</div>
+</footer>
+<script>
+        // Intersection Observer for Fade-Up animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-up').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>

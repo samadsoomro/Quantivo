@@ -36,6 +36,12 @@ body {
 ::-webkit-scrollbar-thumb { background: #464554; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #908fa0; }
 
+/* Accessibility Focus States */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 
         @keyframes subtle-float {
             0%, 100% { transform: translateY(0); }

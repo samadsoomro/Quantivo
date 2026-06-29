@@ -1,0 +1,237 @@
+
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-0 h-screen w-[240px] bg-surface-container/60 backdrop-blur-xl border-r border-white/5 shadow-2xl flex flex-col py-8 px-6 z-50">
+<div class="flex items-center gap-3 mb-10">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container" data-weight="fill">account_balance_wallet</span>
+</div>
+<div>
+<h1 class="font-display-lg text-headline-md text-primary tracking-tight">Quantivo</h1>
+<p class="font-data-mono text-label-caps text-on-surface-variant uppercase tracking-wider">Executive Suite</p>
+</div>
+</div>
+<ul class="flex-1 space-y-2">
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-white/5 transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-primary font-bold border-r-2 border-primary bg-white/5 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-weight="fill">payments</span>
+                    Finances
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-white/5 transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">ads_click</span>
+                    Goals
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-white/5 transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">cached</span>
+                    Habits
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-white/5 transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+                    Invoices
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-white/5 transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">subscriptions</span>
+                    Subscriptions
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-white/5 transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                    Reports
+                </a>
+</li>
+</ul>
+<div class="mt-auto pt-6 border-t border-white/5">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant font-medium hover:bg-white/5 transition-colors active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+<button class="w-full mt-4 bg-primary-container text-on-primary-container font-medium py-3 px-4 rounded-full hover:brightness-110 transition-all shadow-[0_0_15px_rgba(192,193,255,0.2)]">
+                Add Transaction
+            </button>
+</div>
+</nav>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-240px)] z-40 bg-background/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-margin-desktop h-20">
+<div class="flex-1 max-w-xl">
+<div class="relative flex items-center focus-within:ring-1 focus-within:ring-primary rounded-lg overflow-hidden glass-input">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant">search</span>
+<input class="w-full bg-transparent border-none py-2.5 pl-10 pr-4 text-on-surface placeholder:text-on-surface-variant font-data-mono text-data-mono focus:ring-0" placeholder="Search finances..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6 ml-8">
+<button class="text-on-surface-variant hover:text-primary transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary-container rounded-full border border-background"></span>
+</button>
+<div class="h-8 w-px bg-white/10"></div>
+<button class="bg-surface-variant text-on-surface px-4 py-2 rounded-full font-medium hover:bg-surface-bright transition-colors text-sm">
+                Upgrade
+            </button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate executive in a modern office, softly lit with subtle cool tones and a blurred background, high quality, realistic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzwAN4tcxuoHuBoV071ua6jnxmRGxVbPIaRTsIz_oiaHOjf7lgaH96hS4uAXISaVM2jPIXLSr_1KxoLajw_lR-NfPvwXB5mbpD5m20tLkFVKGeN56fNeBswg-xfRnQNAfFIvLbu7K71ZQ1mt5kT2Tq2YZl0Ncw3wYSbALvGLZuDUr3uQZI3QpTPYnz6gUeTh8bvNE4e6IwMt8cDbM5_96wurBwxX-yiBQENXjz0ceAEskwXbq_QBaaJUveDmKsE2AHEeJ9MXqmJ-E"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[240px] mt-20 p-margin-desktop min-h-[calc(100vh-80px)]">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<h2 class="font-display-lg text-[40px] leading-tight text-white mb-2 tracking-tight">Finances</h2>
+<p class="text-on-surface-variant">Manage and track your operational cash flow.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-[#c0c1ff] text-[#051424] px-6 py-2.5 rounded-full font-medium flex items-center gap-2 hover:brightness-110 hover:shadow-[0_0_20px_rgba(192,193,255,0.3)] transition-all">
+<span class="material-symbols-outlined text-sm">add</span>
+                    Add Income
+                </button>
+<button class="bg-[#fa8c00] text-[#051424] px-6 py-2.5 rounded-full font-medium flex items-center gap-2 hover:brightness-110 hover:shadow-[0_0_20px_rgba(250,140,0,0.3)] transition-all">
+<span class="material-symbols-outlined text-sm">remove</span>
+                    Add Expense
+                </button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="glass-card p-4 mb-8 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center bg-surface-container-lowest rounded-lg p-1 border border-white/5">
+<button class="px-4 py-1.5 rounded-md bg-surface-variant text-on-surface font-medium text-sm transition-colors">All</button>
+<button class="px-4 py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-medium text-sm transition-colors">Income</button>
+<button class="px-4 py-1.5 rounded-md text-on-surface-variant hover:text-on-surface font-medium text-sm transition-colors">Expense</button>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<button class="glass-input flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm">calendar_today</span>
+<span class="font-data-mono text-data-mono">Last 30 Days</span>
+<span class="material-symbols-outlined text-sm ml-1">expand_more</span>
+</button>
+</div>
+<div class="relative">
+<button class="glass-input flex items-center gap-2 px-4 py-2 rounded-lg text-sm text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+<span>Category</span>
+<span class="material-symbols-outlined text-sm ml-1">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Transactions Table -->
+<div class="glass-card overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-white/5 text-on-surface-variant font-data-mono text-label-caps uppercase tracking-wider">
+<th class="py-4 px-6 font-medium cursor-pointer hover:text-primary transition-colors group">
+<div class="flex items-center gap-2">
+                                    Date
+                                    <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_downward</span>
+</div>
+</th>
+<th class="py-4 px-6 font-medium">Description</th>
+<th class="py-4 px-6 font-medium">Category</th>
+<th class="py-4 px-6 font-medium text-right cursor-pointer hover:text-primary transition-colors group">
+<div class="flex items-center justify-end gap-2">
+                                    Amount
+                                    <span class="material-symbols-outlined text-[16px] opacity-0 group-hover:opacity-100 transition-opacity">arrow_downward</span>
+</div>
+</th>
+<th class="py-4 px-6 font-medium text-center">Type</th>
+<th class="py-4 px-6 font-medium text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/[0.04] transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono text-data-mono text-on-surface-variant">2023-10-24</td>
+<td class="py-4 px-6 font-body-md text-on-surface font-medium">Client Retainer - Acme Corp</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">Consulting</span>
+</td>
+<td class="py-4 px-6 font-data-mono text-data-mono text-right text-emerald-400">+$12,500.00</td>
+<td class="py-4 px-6 text-center">
+<span class="material-symbols-outlined text-emerald-400 text-[20px]">arrow_circle_up</span>
+</td>
+<td class="py-4 px-6 text-right text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="hover:text-error p-1 ml-1"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.04] transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono text-data-mono text-on-surface-variant">2023-10-22</td>
+<td class="py-4 px-6 font-body-md text-on-surface font-medium">AWS Cloud Hosting</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-tertiary/10 text-tertiary border border-tertiary/20">Infrastructure</span>
+</td>
+<td class="py-4 px-6 font-data-mono text-data-mono text-right text-error">-$1,240.50</td>
+<td class="py-4 px-6 text-center">
+<span class="material-symbols-outlined text-error text-[20px]">arrow_circle_down</span>
+</td>
+<td class="py-4 px-6 text-right text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="hover:text-error p-1 ml-1"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.04] transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono text-data-mono text-on-surface-variant">2023-10-21</td>
+<td class="py-4 px-6 font-body-md text-on-surface font-medium">Software Subscriptions (Adobe, Figma)</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">Tools</span>
+</td>
+<td class="py-4 px-6 font-data-mono text-data-mono text-right text-error">-$285.00</td>
+<td class="py-4 px-6 text-center">
+<span class="material-symbols-outlined text-error text-[20px]">arrow_circle_down</span>
+</td>
+<td class="py-4 px-6 text-right text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="hover:text-error p-1 ml-1"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+<tr class="hover:bg-white/[0.04] transition-colors cursor-pointer group">
+<td class="py-4 px-6 font-data-mono text-data-mono text-on-surface-variant">2023-10-18</td>
+<td class="py-4 px-6 font-body-md text-on-surface font-medium">Project Milestone Payment - Beta LLC</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">Consulting</span>
+</td>
+<td class="py-4 px-6 font-data-mono text-data-mono text-right text-emerald-400">+$5,000.00</td>
+<td class="py-4 px-6 text-center">
+<span class="material-symbols-outlined text-emerald-400 text-[20px]">arrow_circle_up</span>
+</td>
+<td class="py-4 px-6 text-right text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="hover:text-primary p-1"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="hover:text-error p-1 ml-1"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-white/5 flex items-center justify-between">
+<span class="font-data-mono text-data-mono text-on-surface-variant">Showing 1-4 of 124</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded border border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white/5 hover:text-white transition-colors disabled:opacity-50">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary/20 text-primary font-data-mono text-sm border border-primary/30 flex items-center justify-center">1</button>
+<button class="w-8 h-8 rounded border border-white/10 flex items-center justify-center font-data-mono text-sm text-on-surface-variant hover:bg-white/5 hover:text-white transition-colors">2</button>
+<button class="w-8 h-8 rounded border border-white/10 flex items-center justify-center font-data-mono text-sm text-on-surface-variant hover:bg-white/5 hover:text-white transition-colors">3</button>
+<span class="text-on-surface-variant px-1">...</span>
+<button class="w-8 h-8 rounded border border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white/5 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
