@@ -159,14 +159,14 @@ export default function SettingsPage() {
     <>
       <style>{`
         .glass-panel {
-          background-color: rgba(18, 33, 49, 0.6);
+          background-color: var(--bg-card);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
         }
         .ghost-input {
           background-color: rgba(1, 15, 31, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
           color: var(--text-primary);
           transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
         }

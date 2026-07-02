@@ -75,10 +75,10 @@ export default async function DashboardPage() {
     <>
       <style>{`
         .glass-panel {
-          background-color: rgba(18, 33, 49, 0.6);
+          background-color: var(--bg-card);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
         }
         .glass-panel-hover:hover {
           transform: translateY(-3px);
@@ -205,7 +205,7 @@ export default async function DashboardPage() {
                             <div className="text-xs mt-1">{format(new Date(tx.date), 'MMM dd, yyyy')}</div>
                           </td>
                           <td className="py-4 px-2">
-                            <span className="px-2 py-1 rounded-full font-label-caps text-[10px]" style={{ backgroundColor: `${category?.color || '#918f9a'}20`, color: category?.color || '#918f9a', border: `1px solid ${category?.color || '#918f9a'}30` }}>
+                            <span className="px-2 py-1 rounded-full font-label-caps text-[10px]" style={{ backgroundColor: `${category?.color || 'var(--text-muted)'}20`, color: category?.color || 'var(--text-muted)', border: `1px solid ${category?.color || 'var(--text-muted)'}30` }}>
                               {category?.name?.toUpperCase() || 'OTHER'}
                             </span>
                           </td>

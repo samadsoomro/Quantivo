@@ -24,9 +24,18 @@ export async function proxy(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   const { pathname } = request.nextUrl
 
-  const publicRoutes = ['/', '/login', '/signup', '/pricing', '/about', '/features', '/faq', '/tools', '/tools/invoice', '/tools/statement', '/tools/pdf']
+  const publicRoutes = [
+    '/', '/login', '/signup', '/pricing', '/about', '/features', '/faq',
+    '/tools',
+    '/tools/invoice', '/tools/pdf', '/tools/bank-statement', '/tools/qr-code',
+    '/tools/currency-converter', '/tools/loan-calculator', '/tools/expense-report',
+    '/tools/budget-planner', '/tools/csv-to-excel', '/tools/terms-generator',
+    '/tools/privacy-policy', '/tools/code-explainer', '/tools/product-description',
+    '/tools/barcode-generator', '/tools/password-generator',
+  ]
   const isPublicRoute = publicRoutes.some(r => pathname === r) || pathname.startsWith('/#')
   const isToolRoute = pathname.startsWith('/tools')
+
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/signup')
   const isApiRoute = pathname.startsWith('/api') || pathname.startsWith('/auth')
 

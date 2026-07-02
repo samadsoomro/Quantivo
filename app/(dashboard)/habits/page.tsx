@@ -177,7 +177,7 @@ export default function HabitsPage() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
         <div>
           <h1 style={{ fontSize: '28px', fontWeight: 700, color: '#e1dfff', margin: 0 }}>Habits</h1>
-          <p style={{ fontSize: '14px', color: '#918f9a', margin: '4px 0 0' }}>Build streaks. Stay consistent.</p>
+          <p style={{ fontSize: '14px', color: 'var(--text-muted)', margin: '4px 0 0' }}>Build streaks. Stay consistent.</p>
         </div>
         <button onClick={() => { setShowAdd(true); setForm({ title: '', icon: 'flame', color: '#c0c1ff', frequency: 'daily' }) }}
           style={{ background: '#c0c1ff', color: '#1000a9', border: 'none', borderRadius: '999px', padding: '10px 20px', fontWeight: 700, fontSize: '14px', cursor: 'pointer' }}>
@@ -187,13 +187,13 @@ export default function HabitsPage() {
 
       {loading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
-          {[1, 2, 3].map(i => <div key={i} style={{ height: '180px', background: 'rgba(18,33,49,0.6)', borderRadius: '16px', animation: 'pulse 2s infinite' }} />)}
+          {[1, 2, 3].map(i => <div key={i} style={{ height: '180px', background: 'var(--bg-card)', borderRadius: '16px', animation: 'pulse 2s infinite' }} />)}
         </div>
       ) : habits.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '80px 24px', background: 'rgba(18,33,49,0.4)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>🔥</div>
           <h3 style={{ color: '#e1dfff', fontSize: '20px', fontWeight: 600, marginBottom: '8px' }}>No habits yet</h3>
-          <p style={{ color: '#918f9a', fontSize: '14px', marginBottom: '24px' }}>Start building your first streak today</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '24px' }}>Start building your first streak today</p>
           <button onClick={() => setShowAdd(true)} style={{ background: '#c0c1ff', color: '#1000a9', border: 'none', borderRadius: '999px', padding: '10px 24px', fontWeight: 700, fontSize: '14px', cursor: 'pointer' }}>Add your first habit</button>
         </div>
       ) : (
@@ -209,8 +209,8 @@ export default function HabitsPage() {
                 <div key={habit.id}
                   onClick={() => setSelectedHabit(habit.id)}
                   style={{
-                    background: 'rgba(18,33,49,0.6)',
-                    border: `2px solid ${isSelected ? habit.color : done ? habit.color + '40' : 'rgba(255,255,255,0.08)'}`,
+                    background: 'var(--bg-card)',
+                    border: `2px solid ${isSelected ? habit.color : done ? habit.color + '40' : 'var(--border-color)'}`,
                     borderRadius: '16px', padding: '20px', transition: 'all 0.2s', cursor: 'pointer', position: 'relative'
                   }}>
                   <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
@@ -230,11 +230,11 @@ export default function HabitsPage() {
                     </div>
                     <div style={{ display: 'flex', gap: '4px' }}>
                       <button onClick={(e) => { e.stopPropagation(); setEditHabit(habit); setForm({ title: habit.title, icon: habit.icon, color: habit.color, frequency: habit.frequency }) }}
-                        style={{ background: 'none', border: 'none', color: '#918f9a', cursor: 'pointer', padding: '4px' }}>
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px' }}>
                         <Pencil size={14} />
                       </button>
                       <button onClick={(e) => { e.stopPropagation(); setDeleteConfirm(habit.id) }}
-                        style={{ background: 'none', border: 'none', color: '#918f9a', cursor: 'pointer', padding: '4px' }}>
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: '4px' }}>
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -244,7 +244,7 @@ export default function HabitsPage() {
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <Flame size={16} style={{ color: streak > 0 ? '#fa8c00' : '#464654' }} />
                         <span style={{ fontSize: '18px', fontWeight: 700, color: habit.color, fontFamily: 'JetBrains Mono, monospace', lineHeight: 1 }}>{streak}</span>
-                        <span style={{ fontSize: '11px', color: '#918f9a' }}>day streak</span>
+                        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>day streak</span>
                       </div>
                       <div style={{ fontSize: '11px', color: '#c7c4d7', marginTop: '2px' }}>
                         Progress: <span style={{ fontWeight: 'bold', color: done ? '#00cc4b' : '#e1dfff' }}>{done ? '1' : '0'}/1</span> {habit.frequency === 'daily' ? 'today' : 'this week'}
@@ -268,15 +268,15 @@ export default function HabitsPage() {
 
           {/* GitHub-style Contribution Grid */}
           {activeHabit && (
-            <div style={{ background: 'rgba(18,33,49,0.6)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px', padding: '24px' }}>
+            <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '16px', padding: '24px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: activeHabit.color }}></div>
                   <h3 style={{ fontSize: '16px', fontWeight: 600, color: '#e1dfff', margin: 0 }}>{activeHabit.title} — Activity</h3>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: '#918f9a' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11px', color: 'var(--text-muted)' }}>
                   <span>Less</span>
-                  <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: 'rgba(18,33,49,0.6)', border: '1px solid rgba(255,255,255,0.1)' }}></div>
+                  <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: 'var(--bg-card)', border: '1px solid var(--border-color)' }}></div>
                   <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: activeHabit.color, opacity: 0.4 }}></div>
                   <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: activeHabit.color }}></div>
                   <span>More</span>
@@ -287,7 +287,7 @@ export default function HabitsPage() {
                   {/* Day labels column */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', marginRight: '4px', paddingTop: '0px' }}>
                     {dayLabels.map((d, i) => (
-                      <div key={i} style={{ width: '12px', height: '12px', fontSize: '9px', color: '#918f9a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{i % 2 === 1 ? d : ''}</div>
+                      <div key={i} style={{ width: '12px', height: '12px', fontSize: '9px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{i % 2 === 1 ? d : ''}</div>
                     ))}
                   </div>
                   {/* Weeks columns */}
@@ -303,8 +303,8 @@ export default function HabitsPage() {
                             title={date}
                             style={{
                               width: '12px', height: '12px', borderRadius: '2px',
-                              background: isFuture ? 'transparent' : completed ? activeHabit.color : 'rgba(18,33,49,0.6)',
-                              border: isFuture ? '1px solid rgba(255,255,255,0.03)' : '1px solid rgba(255,255,255,0.1)',
+                              background: isFuture ? 'transparent' : completed ? activeHabit.color : 'var(--bg-card)',
+                              border: isFuture ? '1px solid rgba(255,255,255,0.03)' : '1px solid var(--border-color)',
                               cursor: isFuture ? 'default' : 'pointer',
                               transition: 'all 0.15s',
                               opacity: isFuture ? 0.3 : 1
@@ -325,36 +325,36 @@ export default function HabitsPage() {
       {(showAdd || editHabit) && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '16px' }}
           onClick={() => { setShowAdd(false); setEditHabit(null) }}>
-          <div style={{ background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '32px', width: '100%', maxWidth: '440px' }}
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '16px', padding: '32px', width: '100%', maxWidth: '440px' }}
             onClick={e => e.stopPropagation()}>
             <h2 style={{ color: '#e1dfff', fontSize: '20px', fontWeight: 700, marginBottom: '24px' }}>
               {editHabit ? 'Edit Habit' : 'New Habit'}
             </h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div>
-                <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Title</label>
-                <input style={{ width: '100%', background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '10px 12px', color: 'var(--text-primary)', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
+                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Title</label>
+                <input style={{ width: '100%', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '10px 12px', color: 'var(--text-primary)', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }}
                   value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="e.g. Morning workout" />
               </div>
               <div>
-                <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Frequency</label>
+                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Frequency</label>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   {(['daily', 'weekly'] as const).map(f => (
                     <button key={f} onClick={() => setForm(prev => ({ ...prev, frequency: f }))}
-                      style={{ flex: 1, padding: '8px', borderRadius: '8px', border: '1px solid', borderColor: form.frequency === f ? '#c0c1ff' : 'rgba(255,255,255,0.1)', background: form.frequency === f ? 'rgba(192,193,255,0.1)' : 'transparent', color: form.frequency === f ? '#c0c1ff' : '#918f9a', cursor: 'pointer', fontSize: '13px', fontWeight: 500, textTransform: 'capitalize' }}>
+                      style={{ flex: 1, padding: '8px', borderRadius: '8px', border: '1px solid', borderColor: form.frequency === f ? '#c0c1ff' : 'var(--border-color)', background: form.frequency === f ? 'rgba(192,193,255,0.1)' : 'transparent', color: form.frequency === f ? '#c0c1ff' : 'var(--text-muted)', cursor: 'pointer', fontSize: '13px', fontWeight: 500, textTransform: 'capitalize' }}>
                       {f}
                     </button>
                   ))}
                 </div>
               </div>
               <div>
-                <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Icon</label>
+                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Icon</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   {ICON_KEYS.map(key => {
                     const Icon = ICON_MAP[key]
                     return (
                       <button key={key} onClick={() => setForm(f => ({ ...f, icon: key }))}
-                        style={{ width: '40px', height: '40px', borderRadius: '8px', border: '1px solid', borderColor: form.icon === key ? '#c0c1ff' : 'rgba(255,255,255,0.1)', background: form.icon === key ? 'rgba(192,193,255,0.1)' : 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: form.icon === key ? '#c0c1ff' : '#918f9a' }}>
+                        style={{ width: '40px', height: '40px', borderRadius: '8px', border: '1px solid', borderColor: form.icon === key ? '#c0c1ff' : 'var(--border-color)', background: form.icon === key ? 'rgba(192,193,255,0.1)' : 'transparent', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: form.icon === key ? '#c0c1ff' : 'var(--text-muted)' }}>
                         <Icon size={18} />
                       </button>
                     )
@@ -362,7 +362,7 @@ export default function HabitsPage() {
                 </div>
               </div>
               <div>
-                <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Color</label>
+                <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Color</label>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   {COLORS.map(color => (
                     <button key={color} onClick={() => setForm(f => ({ ...f, color }))}
@@ -372,7 +372,7 @@ export default function HabitsPage() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
-              <button onClick={() => { setShowAdd(false); setEditHabit(null) }} style={{ flex: 1, padding: '11px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px' }}>Cancel</button>
+              <button onClick={() => { setShowAdd(false); setEditHabit(null) }} style={{ flex: 1, padding: '11px', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'transparent', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px' }}>Cancel</button>
               <button onClick={editHabit ? updateHabit : addHabit} disabled={!form.title || saving}
                 style={{ flex: 2, padding: '11px', borderRadius: '8px', background: '#c0c1ff', color: '#1000a9', border: 'none', fontWeight: 700, cursor: 'pointer', fontSize: '14px', opacity: !form.title ? 0.5 : 1 }}>
                 {saving ? 'Saving...' : editHabit ? 'Save Changes' : 'Create Habit'}
@@ -386,12 +386,12 @@ export default function HabitsPage() {
       {deleteConfirm && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '16px' }}
           onClick={() => setDeleteConfirm(null)}>
-          <div style={{ background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '24px', width: '100%', maxWidth: '360px' }}
+          <div style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '16px', padding: '24px', width: '100%', maxWidth: '360px' }}
             onClick={e => e.stopPropagation()}>
             <h3 style={{ color: '#e1dfff', fontSize: '18px', fontWeight: 700, marginBottom: '8px' }}>Delete Habit</h3>
-            <p style={{ color: '#918f9a', fontSize: '14px', marginBottom: '20px' }}>Are you sure? This will deactivate the habit.</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginBottom: '20px' }}>Are you sure? This will deactivate the habit.</p>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <button onClick={() => setDeleteConfirm(null)} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'transparent', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px' }}>Cancel</button>
+              <button onClick={() => setDeleteConfirm(null)} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'transparent', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px' }}>Cancel</button>
               <button onClick={() => deleteHabit(deleteConfirm)} style={{ flex: 1, padding: '10px', borderRadius: '8px', background: '#ff4433', color: 'white', border: 'none', fontWeight: 700, cursor: 'pointer', fontSize: '14px' }}>Delete</button>
             </div>
           </div>
@@ -400,7 +400,7 @@ export default function HabitsPage() {
 
       {/* Toast */}
       {toastMsg && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px' }}>
           {toastMsg}
         </div>
       )}

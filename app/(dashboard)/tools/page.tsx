@@ -188,16 +188,16 @@ export default function ToolsPage() {
   }
 
   const glassPanel = {
-    background: 'rgba(18,33,49,0.6)',
+    background: 'var(--bg-card)',
     backdropFilter: 'blur(16px)',
     WebkitBackdropFilter: 'blur(16px)',
-    border: '1px solid rgba(255,255,255,0.08)',
+    border: '1px solid var(--border-color)',
     borderRadius: '16px'
   } as const
 
   const inputStyle = {
     background: 'rgba(1,15,31,0.7)',
-    border: '1px solid rgba(255,255,255,0.1)',
+    border: '1px solid var(--border-color)',
     color: 'var(--text-primary)',
     borderRadius: '8px',
     padding: '8px 12px',
@@ -212,7 +212,7 @@ export default function ToolsPage() {
       {/* Header */}
       <div style={{ marginBottom: '32px' }}>
         <h1 style={{ fontSize: '32px', fontWeight: 700, color: '#e1dfff', margin: 0 }}>Tools</h1>
-        <p style={{ fontSize: '14px', color: '#918f9a', marginTop: '6px' }}>Productivity tools for financial documents.</p>
+        <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '6px' }}>Productivity tools for financial documents.</p>
       </div>
 
       {/* Tab Bar */}
@@ -229,7 +229,7 @@ export default function ToolsPage() {
               padding: '8px 20px', borderRadius: '8px', border: 'none', cursor: 'pointer',
               fontSize: '14px', fontWeight: 500, transition: 'all 0.2s',
               background: activeTab === tab.key ? 'rgba(192,193,255,0.15)' : 'transparent',
-              color: activeTab === tab.key ? '#c0c1ff' : '#918f9a'
+              color: activeTab === tab.key ? '#c0c1ff' : 'var(--text-muted)'
             }}>
             {tab.label}
           </button>
@@ -243,7 +243,7 @@ export default function ToolsPage() {
           <div style={{ ...glassPanel, padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#e1dfff', margin: 0 }}>HTML Editor</h2>
-              <span style={{ fontSize: '11px', color: '#918f9a', fontFamily: 'monospace' }}>paste any HTML</span>
+              <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'monospace' }}>paste any HTML</span>
             </div>
             <textarea
               value={htmlInput}
@@ -266,7 +266,7 @@ export default function ToolsPage() {
             <iframe
               ref={iframeRef}
               srcDoc={htmlInput}
-              style={{ flex: 1, minHeight: '420px', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', background: 'white' }}
+              style={{ flex: 1, minHeight: '420px', border: '1px solid var(--border-color)', borderRadius: '8px', background: 'white' }}
               sandbox="allow-same-origin"
               title="HTML Preview"
             />
@@ -288,11 +288,11 @@ export default function ToolsPage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
-                <label style={{ fontSize: '11px', color: '#918f9a', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Account Holder Name</label>
+                <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Account Holder Name</label>
                 <input style={inputStyle} placeholder="e.g. John Smith" value={stmtName} onChange={e => setStmtName(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontSize: '11px', color: '#918f9a', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Statement Period</label>
+                <label style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Statement Period</label>
                 <input style={inputStyle} placeholder="e.g. Jan 2024 – Jun 2024" value={stmtPeriod} onChange={e => setStmtPeriod(e.target.value)} />
               </div>
             </div>
@@ -306,7 +306,7 @@ export default function ToolsPage() {
               { label: 'Net Balance', value: fmt(netBalance), color: netBalance >= 0 ? '#4ade80' : '#f87171' }
             ].map(kpi => (
               <div key={kpi.label} style={{ ...glassPanel, padding: '20px' }}>
-                <p style={{ fontSize: '11px', color: '#918f9a', margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{kpi.label}</p>
+                <p style={{ fontSize: '11px', color: 'var(--text-muted)', margin: '0 0 8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{kpi.label}</p>
                 <p style={{ fontSize: '24px', fontWeight: 700, color: kpi.color, margin: 0, fontFamily: 'JetBrains Mono, monospace' }}>{kpi.value}</p>
               </div>
             ))}
@@ -323,7 +323,7 @@ export default function ToolsPage() {
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                     {['Date', 'Description', 'Credit ($)', 'Debit ($)', ''].map(h => (
-                      <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', color: '#918f9a', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
+                      <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -335,7 +335,7 @@ export default function ToolsPage() {
                       <td style={{ padding: '8px 16px' }}><input type="number" step="0.01" style={{ ...inputStyle, width: '120px', color: '#4ade80' }} placeholder="0.00" value={tx.credit || ''} onChange={e => updateStmtRow(i, 'credit', parseFloat(e.target.value) || 0)} /></td>
                       <td style={{ padding: '8px 16px' }}><input type="number" step="0.01" style={{ ...inputStyle, width: '120px', color: '#f87171' }} placeholder="0.00" value={tx.debit || ''} onChange={e => updateStmtRow(i, 'debit', parseFloat(e.target.value) || 0)} /></td>
                       <td style={{ padding: '8px 16px' }}>
-                        <button onClick={() => removeStmtRow(i)} disabled={stmtTxs.length === 1} style={{ background: 'none', border: 'none', color: '#918f9a', cursor: 'pointer', fontSize: '16px', padding: '4px' }}>×</button>
+                        <button onClick={() => removeStmtRow(i)} disabled={stmtTxs.length === 1} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '16px', padding: '4px' }}>×</button>
                       </td>
                     </tr>
                   ))}
@@ -359,13 +359,13 @@ export default function ToolsPage() {
         <div style={{ ...glassPanel, padding: '32px', maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#e1dfff', margin: 0 }}>QR Code Generator</h2>
           <div>
-            <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Target URL / Text</label>
+            <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Target URL / Text</label>
             <input style={inputStyle} value={qrUrl} onChange={e => setQrUrl(e.target.value)} placeholder="https://..." />
           </div>
           <button onClick={async () => {
             if (!qrUrl) return
             try {
-              const url = await QRCode.toDataURL(qrUrl, { width: 300, margin: 2, color: { dark: '#051424', light: '#ffffff' } })
+              const url = await QRCode.toDataURL(qrUrl, { width: 300, margin: 2, color: { dark: 'var(--bg-canvas)', light: '#ffffff' } })
               setQrDataUrl(url)
               showToast('QR Code Generated')
             } catch (err) {
@@ -387,7 +387,7 @@ export default function ToolsPage() {
         <div style={{ ...glassPanel, padding: '32px', maxWidth: '600px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#e1dfff', margin: 0 }}>Currency Converter (from USD)</h2>
           <div>
-            <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Amount in USD ($)</label>
+            <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Amount in USD ($)</label>
             <input type="number" style={{ ...inputStyle, fontSize: '24px', padding: '16px' }} value={currencyAmount} onChange={e => setCurrencyAmount(parseFloat(e.target.value) || 0)} />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
@@ -398,7 +398,7 @@ export default function ToolsPage() {
               { cur: 'AUD', rate: 1.52, sym: 'A$' }
             ].map(c => (
               <div key={c.cur} style={{ background: 'rgba(255,255,255,0.03)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ fontSize: '12px', color: '#918f9a', marginBottom: '4px' }}>{c.cur}</div>
+                <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '4px' }}>{c.cur}</div>
                 <div style={{ fontSize: '20px', fontWeight: 700, color: '#e1dfff' }}>{c.sym}{(currencyAmount * c.rate).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
               </div>
             ))}
@@ -412,15 +412,15 @@ export default function ToolsPage() {
           <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#e1dfff', margin: 0 }}>Loan Calculator</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
             <div style={{ gridColumn: '1 / -1' }}>
-              <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>Principal Amount ($)</label>
+              <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>Principal Amount ($)</label>
               <input type="number" style={inputStyle} value={loanPrincipal} onChange={e => setLoanPrincipal(parseFloat(e.target.value) || 0)} />
             </div>
             <div>
-              <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>Interest Rate (%)</label>
+              <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>Interest Rate (%)</label>
               <input type="number" step="0.1" style={inputStyle} value={loanRate} onChange={e => setLoanRate(parseFloat(e.target.value) || 0)} />
             </div>
             <div>
-              <label style={{ fontSize: '12px', color: '#918f9a', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>Loan Term (Years)</label>
+              <label style={{ fontSize: '12px', color: 'var(--text-muted)', display: 'block', marginBottom: '8px', textTransform: 'uppercase' }}>Loan Term (Years)</label>
               <input type="number" style={inputStyle} value={loanYears} onChange={e => setLoanYears(parseInt(e.target.value) || 0)} />
             </div>
           </div>
@@ -439,11 +439,11 @@ export default function ToolsPage() {
                 <div style={{ fontSize: '36px', fontWeight: 800, color: '#4ade80', marginBottom: '16px' }}>${monthlyPayment.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(74,222,128,0.2)', paddingTop: '16px' }}>
                   <div>
-                    <div style={{ fontSize: '11px', color: '#918f9a' }}>Total Principal</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Total Principal</div>
                     <div style={{ fontSize: '16px', fontWeight: 600, color: '#e1dfff' }}>${p.toLocaleString('en-US')}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '11px', color: '#918f9a' }}>Total Interest</div>
+                    <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Total Interest</div>
                     <div style={{ fontSize: '16px', fontWeight: 600, color: '#f87171' }}>${totalInterest.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                   </div>
                 </div>
@@ -455,7 +455,7 @@ export default function ToolsPage() {
 
       {/* Toast */}
       {toast && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toast}
         </div>
       )}

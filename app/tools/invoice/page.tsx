@@ -4,6 +4,8 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { checkToolUsage, recordToolUsage } from '@/lib/usage'
+import { ToolUsageBanner } from '@/components/ToolUsageBanner'
 
 export default function PublicInvoiceToolPage() {
   const [companyName, setCompanyName] = useState('')
@@ -13,10 +15,17 @@ export default function PublicInvoiceToolPage() {
   const [clientAddress, setClientAddress] = useState('')
   const [logoBase64, setLogoBase64] = useState<string | null>(null)
   const logoInputRef = useRef<HTMLInputElement>(null)
+  const [usageCount, setUsageCount] = useState(0)
+  const [canUse, setCanUse] = useState(true)
   
   useEffect(() => {
     const savedLogo = localStorage.getItem('invoice_logo')
     if (savedLogo) setLogoBase64(savedLogo)
+    
+    checkToolUsage('invoice').then(res => {
+      setUsageCount(res.count)
+      setCanUse(res.allowed)
+    })
   }, [])
   
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,9 +49,10 @@ export default function PublicInvoiceToolPage() {
   ])
   const [taxRate, setTaxRate] = useState(5)
   const [notes, setNotes] = useState('Thank you for your business.')
-  const [watermarkText, setWatermarkText] = useState('QUANTIVO FREE')
-  const [watermarkColor, setWatermarkColor] = useState('#ffffff')
-  const [watermarkOpacity, setWatermarkOpacity] = useState(0.02)
+  const [watermarkText, setWatermarkText] = useState('DRAFT')
+  const [watermarkColor, setWatermarkColor] = useState('#9ca3af')
+  const [watermarkOpacity, setWatermarkOpacity] = useState(0.15)
+  const [watermarkSize, setWatermarkSize] = useState(72)
   const [toastMsg, setToastMsg] = useState<string | null>(null)
   const showToast = (msg: string) => { setToastMsg(msg); setTimeout(() => setToastMsg(null), 3000) }
 
@@ -77,27 +87,140 @@ export default function PublicInvoiceToolPage() {
     setLineItems(lineItems.filter(item => item.id !== id))
   }
 
-  const handleDownloadPDF = () => {
-    showToast('Sign up to download PDF invoices — it\'s free!')
+  const presetColors = [
+    { label: 'DRAFT', color: '#9ca3af' },
+    { label: 'PAID', color: '#4ade80' },
+    { label: 'VOID', color: '#f87171' },
+    { label: 'COPY', color: '#60a5fa' }
+  ]
+
+  const handleDownloadPDF = async () => {
+    if (!canUse) {
+      showToast('Limit reached. Sign up to unlock.')
+      return
+    }
+    try {
+      const { jsPDF } = await import('jspdf')
+      const doc = new jsPDF()
+      
+      // Basic PDF Layout
+      if (logoBase64) {
+        try {
+          doc.addImage(logoBase64, 'JPEG', 20, 20, 40, 20)
+        } catch(e) {}
+      }
+      
+      doc.setFontSize(24)
+      doc.text("INVOICE", 150, 30)
+      doc.setFontSize(10)
+      doc.text("INV-001", 150, 38)
+      
+      doc.setFontSize(10)
+      doc.text("FROM:", 20, 60)
+      doc.setFontSize(12)
+      doc.text(companyName || 'Your Company', 20, 66)
+      doc.setFontSize(10)
+      doc.text((companyAddress || 'Your Address').split('\n'), 20, 72)
+      
+      doc.text("TO:", 120, 60)
+      doc.setFontSize(12)
+      doc.text(clientName || 'Client Name', 120, 66)
+      doc.setFontSize(10)
+      if (clientEmail) doc.text(clientEmail, 120, 72)
+      doc.text((clientAddress || 'Client Address').split('\n'), 120, clientEmail ? 78 : 72)
+
+      doc.text(`Issue Date: ${issueDate}`, 20, 100)
+      doc.text(`Due Date: ${dueDate}`, 80, 100)
+      doc.text(`Currency: ${currency}`, 140, 100)
+
+      let startY = 120
+      doc.setFontSize(10)
+      doc.text("Description", 20, startY)
+      doc.text("Qty", 120, startY)
+      doc.text("Rate", 140, startY)
+      doc.text("Amount", 170, startY)
+      
+      startY += 10
+      doc.line(20, startY-5, 190, startY-5)
+      
+      lineItems.forEach(item => {
+        doc.text(item.description, 20, startY)
+        doc.text(item.qty.toString(), 120, startY)
+        doc.text(`${symbol}${item.rate.toFixed(2)}`, 140, startY)
+        doc.text(`${symbol}${(item.qty * item.rate).toFixed(2)}`, 170, startY)
+        startY += 10
+      })
+      
+      doc.line(20, startY, 190, startY)
+      startY += 10
+      
+      doc.text(`Subtotal: ${symbol}${subtotal.toFixed(2)}`, 140, startY)
+      doc.text(`Tax (${taxRate}%): ${symbol}${taxAmount.toFixed(2)}`, 140, startY+10)
+      doc.setFontSize(12)
+      doc.text(`Total: ${symbol}${total.toFixed(2)}`, 140, startY+20)
+
+      doc.setFontSize(10)
+      doc.text("Notes:", 20, startY)
+      doc.text(notes.split('\n'), 20, startY+10)
+
+      // Watermark
+      if (watermarkText) {
+        doc.setFontSize(watermarkSize)
+        doc.setTextColor(watermarkColor)
+        const gstate = new (doc as any).GState({opacity: watermarkOpacity})
+        doc.setGState(gstate)
+        // Draw diagonal center
+        const pageWidth = doc.internal.pageSize.getWidth()
+        const pageHeight = doc.internal.pageSize.getHeight()
+        doc.text(watermarkText, pageWidth / 2, pageHeight / 2, { angle: 35, align: 'center' })
+      }
+
+      doc.save(`Invoice_${companyName || 'Draft'}.pdf`)
+      
+      await recordToolUsage('invoice')
+      setUsageCount(prev => prev + 1)
+      if (usageCount + 1 >= 3) setCanUse(false)
+    } catch(err) {
+      console.error(err)
+      showToast('Error generating PDF')
+    }
   }
 
-  const handleDownloadCSV = () => {
-    showToast('Sign up to export CSV invoice data — it\'s free!')
+  const handleDownloadCSV = async () => {
+    if (!canUse) {
+      showToast('Limit reached. Sign up to unlock.')
+      return
+    }
+    const headers = ['Description', 'Qty', 'Rate', 'Amount']
+    const rows = lineItems.map(item => [item.description, item.qty, item.rate, item.qty*item.rate])
+    const csvContent = [headers.join(','), ...rows.map(e => e.join(','))].join('\n')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement("a")
+    link.href = url
+    link.download = "invoice_data.csv"
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    
+    await recordToolUsage('invoice')
+    setUsageCount(prev => prev + 1)
+    if (usageCount + 1 >= 3) setCanUse(false)
   }
 
   return (
     <>
       <style>{`
         .glass-panel {
-          background: rgba(18, 33, 49, 0.6);
+          background: var(--bg-card);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
           border-radius: 16px;
         }
         .input-glass {
           background: rgba(1, 15, 31, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
           color: var(--text-primary);
           transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
         }
@@ -110,10 +233,7 @@ export default function PublicInvoiceToolPage() {
           position: absolute;
           top: 50%;
           left: 50%;
-          transform: translate(-50%, -50%) rotate(-30deg);
-          opacity: 0.02;
-          font-size: 6rem;
-          font-weight: 900;
+          transform: translate(-50%, -50%) rotate(-35deg);
           pointer-events: none;
           white-space: nowrap;
           z-index: 0;
@@ -121,45 +241,37 @@ export default function PublicInvoiceToolPage() {
       `}</style>
 
       {/* Top Navbar */}
-      <nav className="w-full sticky top-0 z-50 bg-[var(--bg-canvas)]/80 backdrop-blur-lg border-b border-white/10 flex justify-between items-center h-16 px-12">
-        <Link href="/" className="font-headline-lg text-xl font-bold text-white tracking-tight">
+      <nav className="w-full sticky top-0 z-50 bg-[var(--bg-canvas)]/80 backdrop-blur-lg border-b border-[var(--border-color)] flex justify-between items-center h-16 px-12">
+        <Link href="/" className="font-headline-lg text-xl font-bold text-[var(--text-primary)] tracking-tight">
           Quantivo
         </Link>
         <div className="flex items-center gap-6">
-          <Link href="/login" className="text-[var(--text-secondary)] hover:text-white font-body-sm text-sm transition-colors px-4 py-2 rounded-full">
+          <Link href="/login" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] font-body-sm text-sm transition-colors px-4 py-2 rounded-full">
             Log In
           </Link>
-          <Link href="/signup" className="bg-[#c0c1ff] text-[var(--bg-canvas)] font-body-sm text-sm font-bold px-6 py-2 rounded-full hover:brightness-110 transition-all">
+          <Link href="/signup" className="bg-[var(--color-primary)] text-[var(--bg-canvas)] font-body-sm text-sm font-bold px-6 py-2 rounded-full hover:brightness-110 transition-all">
             Sign Up
           </Link>
         </div>
       </nav>
 
-      {/* Amber Usage Notification Banner */}
-      <div className="w-full bg-[#fa8c00]/10 backdrop-blur-md border-b border-[#fa8c00]/25 flex justify-center items-center py-2 px-6 hover:bg-[#fa8c00]/15 transition-all group">
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-[#fa8c00] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>info</span>
-          <span className="font-mono text-xs text-[#fa8c00]">
-            Free tool — 2/3 uses remaining today · <Link href="/signup" className="underline font-bold text-white hover:text-[#c0c1ff]">Create free account to unlock unlimited uses</Link>
-          </span>
-        </div>
-      </div>
-
       <main className="flex-1 w-full max-w-[1440px] mx-auto px-6 py-8 flex flex-col gap-6">
+        <ToolUsageBanner toolName="Invoice Generator" usageCount={usageCount} />
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT PANEL: Editor */}
           <div className="glass-panel p-6 flex flex-col gap-6">
-            <div className="flex justify-between items-end border-b border-white/10 pb-4">
-              <h1 className="font-headline-lg text-2xl font-bold text-white">New Invoice</h1>
+            <div className="flex justify-between items-end border-b border-[var(--border-color)] pb-4">
+              <h1 className="font-headline-lg text-2xl font-bold text-[var(--text-primary)]">New Invoice</h1>
               <span className="font-mono text-xs text-[var(--text-secondary)]">INV-001</span>
             </div>
 
             {/* Company Info & Logo */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-white/10 pb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-b border-[var(--border-color)] pb-6">
               <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                   <label className="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-wider">From (Your Company)</label>
-                  <button onClick={() => logoInputRef.current?.click()} className="text-xs text-[#c0c1ff] hover:underline font-bold flex items-center gap-1">
+                  <button onClick={() => logoInputRef.current?.click()} className="text-xs text-[var(--color-primary)] hover:underline font-bold flex items-center gap-1">
                     <span className="material-symbols-outlined text-[14px]">upload</span> Upload Logo
                   </button>
                   <input type="file" accept="image/*" ref={logoInputRef} onChange={handleLogoUpload} className="hidden" />
@@ -216,7 +328,7 @@ export default function PublicInvoiceToolPage() {
             </div>
 
             {/* Dates & Currency */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-y border-white/10 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-y border-[var(--border-color)] py-6">
               <div className="flex flex-col gap-2">
                 <label className="font-mono text-xs text-[var(--text-secondary)]">Issue Date</label>
                 <input
@@ -255,7 +367,7 @@ export default function PublicInvoiceToolPage() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-white/10 font-mono text-xs text-[var(--text-secondary)]">
+                    <tr className="border-b border-[var(--border-color)] font-mono text-xs text-[var(--text-secondary)]">
                       <th className="pb-2 pl-2 w-1/2">Description</th>
                       <th className="pb-2 px-2 text-right w-1/6">Qty</th>
                       <th className="pb-2 px-2 text-right w-1/6">Rate</th>
@@ -265,7 +377,7 @@ export default function PublicInvoiceToolPage() {
                   </thead>
                   <tbody>
                     {lineItems.map((item) => (
-                      <tr key={item.id} className="border-b border-white/5">
+                      <tr key={item.id} className="border-b border-[var(--border-color)]/50">
                         <td className="py-2 pr-2">
                           <input
                             className="input-glass rounded-lg px-3 py-1 w-full text-xs"
@@ -312,7 +424,7 @@ export default function PublicInvoiceToolPage() {
               </div>
               <button
                 onClick={handleAddItem}
-                className="self-start flex items-center gap-2 text-[#fa8c00] hover:text-white transition-colors font-mono text-xs py-2"
+                className="self-start flex items-center gap-2 text-[#fa8c00] hover:text-[var(--text-primary)] transition-colors font-mono text-xs py-2"
               >
                 <span className="material-symbols-outlined text-sm">add</span> Add Row
               </button>
@@ -330,12 +442,12 @@ export default function PublicInvoiceToolPage() {
                   onChange={(e) => setNotes(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col gap-2 bg-black/20 rounded-lg p-4">
+              <div className="flex flex-col gap-2 bg-[var(--bg-elevated)]/50 rounded-lg p-4 border border-[var(--border-color)]">
                 <div className="flex justify-between items-center text-xs text-[var(--text-secondary)]">
                   <span>Subtotal</span>
                   <span className="font-mono">{symbol}{subtotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                 </div>
-                <div className="flex justify-between items-center text-xs text-[var(--text-secondary)] border-b border-white/10 pb-2">
+                <div className="flex justify-between items-center text-xs text-[var(--text-secondary)] border-b border-[var(--border-color)] pb-2">
                   <div className="flex items-center gap-2">
                     <span>Tax Rate</span>
                     <input
@@ -350,19 +462,33 @@ export default function PublicInvoiceToolPage() {
                   <span className="font-mono">{symbol}{taxAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                 </div>
                 <div className="flex justify-between items-center pt-2">
-                  <span className="font-bold text-white">Total</span>
+                  <span className="font-bold text-[var(--text-primary)]">Total</span>
                   <span className="font-mono font-bold text-[#fa8c00]">{symbol}{total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                 </div>
               </div>
             </div>
 
             {/* Advanced Watermark Options */}
-            <div className="flex flex-col gap-4 border-t border-white/10 pt-6 mt-2">
+            <div className="flex flex-col gap-4 border-t border-[var(--border-color)] pt-6 mt-2">
               <h3 className="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-wider flex items-center gap-2">
                 <span className="material-symbols-outlined text-[14px]">branding_watermark</span> 
                 Watermark Options
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              
+              <div className="flex gap-2">
+                {presetColors.map(preset => (
+                  <button 
+                    key={preset.label}
+                    onClick={() => { setWatermarkText(preset.label); setWatermarkColor(preset.color) }}
+                    className="px-3 py-1 text-[10px] font-bold rounded"
+                    style={{ background: preset.color + '22', color: preset.color, border: `1px solid ${preset.color}44` }}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
                   <label className="font-mono text-xs text-[var(--text-secondary)]">Watermark Text</label>
                   <input
@@ -379,17 +505,30 @@ export default function PublicInvoiceToolPage() {
                     type="color"
                     value={watermarkColor}
                     onChange={(e) => setWatermarkColor(e.target.value)}
-                    className="h-[34px] w-full bg-transparent border border-white/10 rounded cursor-pointer"
+                    className="h-[34px] w-full bg-transparent border border-[var(--border-color)] rounded cursor-pointer"
+                  />
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="font-mono text-xs text-[var(--text-secondary)]">Watermark Size: {watermarkSize}px</label>
+                  <input
+                    type="range"
+                    min="40" max="120" step="1"
+                    value={watermarkSize}
+                    onChange={(e) => setWatermarkSize(parseInt(e.target.value))}
+                    className="mt-2 w-full accent-[var(--color-primary)]"
                   />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className="font-mono text-xs text-[var(--text-secondary)]">Opacity: {Math.round(watermarkOpacity * 100)}%</label>
                   <input
                     type="range"
-                    min="0" max="1" step="0.01"
+                    min="0.05" max="0.30" step="0.01"
                     value={watermarkOpacity}
                     onChange={(e) => setWatermarkOpacity(parseFloat(e.target.value))}
-                    className="mt-2 w-full accent-[#c0c1ff]"
+                    className="mt-2 w-full accent-[var(--color-primary)]"
                   />
                 </div>
               </div>
@@ -398,10 +537,7 @@ export default function PublicInvoiceToolPage() {
 
           {/* RIGHT PANEL: Live Preview */}
           <div className="glass-panel p-6 flex flex-col relative overflow-hidden h-full min-h-[600px]">
-            <div className="watermark" style={{ color: watermarkColor, opacity: watermarkOpacity }}>
-              {watermarkText || 'QUANTIVO FREE'}
-            </div>
-            <div className="flex justify-between items-center mb-8 border-b border-white/10 pb-4 relative z-10">
+            <div className="flex justify-between items-center mb-8 border-b border-[var(--border-color)] pb-4 relative z-10">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[var(--text-secondary)] text-sm">visibility</span>
                 <h2 className="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-wider">Live Preview</h2>
@@ -410,43 +546,46 @@ export default function PublicInvoiceToolPage() {
             </div>
 
             {/* Invoice Preview Canvas */}
-            <div className="flex-1 bg-white/5 rounded-lg border border-white/10 p-6 flex flex-col gap-6 relative z-10 overflow-y-auto">
-              <div className="flex justify-between items-start">
+            <div className="flex-1 bg-[var(--bg-surface)] rounded-lg border border-[var(--border-color)] p-6 flex flex-col gap-6 relative z-10 overflow-hidden">
+              <div className="watermark font-bold tracking-widest text-center" style={{ color: watermarkColor, opacity: watermarkOpacity, fontSize: `${watermarkSize/1.5}px` }}>
+                {watermarkText}
+              </div>
+              <div className="flex justify-between items-start relative z-10">
                 {logoBase64 ? (
                   <img src={logoBase64} alt="Company Logo" className="h-12 object-contain" />
                 ) : (
-                  <div className="w-12 h-12 bg-white/5 rounded-lg border border-white/10 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-white/50 text-[20px]">image</span>
+                  <div className="w-12 h-12 bg-black/5 rounded-lg border border-[var(--border-color)] flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[var(--text-muted)] text-[20px]">image</span>
                   </div>
                 )}
                 <div className="text-right">
-                  <div className="font-headline text-lg font-bold text-white">INVOICE</div>
+                  <div className="font-headline text-lg font-bold text-[var(--text-primary)]">INVOICE</div>
                   <div className="font-mono text-xs text-[var(--text-secondary)]">INV-001</div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-6 text-xs">
+              <div className="grid grid-cols-2 gap-6 text-xs relative z-10">
                 <div>
                   <div className="font-mono text-[var(--text-secondary)] mb-2 uppercase tracking-wider">FROM</div>
-                  <div className="font-bold text-white mb-1">{companyName || '[Your Company]'}</div>
+                  <div className="font-bold text-[var(--text-primary)] mb-1">{companyName || '[Your Company]'}</div>
                   <div className="text-[var(--text-secondary)] whitespace-pre-wrap">{companyAddress || '[Your Details]'}</div>
                 </div>
                 <div>
                   <div className="font-mono text-[var(--text-secondary)] mb-2 uppercase tracking-wider">TO</div>
-                  <div className="font-bold text-white mb-1">{clientName || '[Client Name]'}</div>
+                  <div className="font-bold text-[var(--text-primary)] mb-1">{clientName || '[Client Name]'}</div>
                   {clientEmail && <div className="text-[var(--text-secondary)] mb-1">{clientEmail}</div>}
                   <div className="text-[var(--text-secondary)] whitespace-pre-wrap">{clientAddress || '[Client Details]'}</div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 text-xs border-y border-white/5 py-4">
+              <div className="grid grid-cols-3 gap-4 text-xs border-y border-[var(--border-color)] py-4 relative z-10">
                 <div>
                   <div className="text-[var(--text-secondary)] mb-1">Issue Date</div>
-                  <div className="font-mono text-white">{issueDate || '—'}</div>
+                  <div className="font-mono text-[var(--text-primary)]">{issueDate || '—'}</div>
                 </div>
                 <div>
                   <div className="text-[var(--text-secondary)] mb-1">Due Date</div>
-                  <div className="font-mono text-white">{dueDate || '—'}</div>
+                  <div className="font-mono text-[var(--text-primary)]">{dueDate || '—'}</div>
                 </div>
                 <div>
                   <div className="text-[var(--text-secondary)] mb-1">Currency</div>
@@ -454,15 +593,15 @@ export default function PublicInvoiceToolPage() {
                 </div>
               </div>
 
-              <div className="w-full text-xs">
-                <div className="grid grid-cols-12 gap-2 border-b border-white/10 pb-2 mb-2 font-mono text-[var(--text-secondary)] uppercase tracking-wider">
+              <div className="w-full text-xs relative z-10">
+                <div className="grid grid-cols-12 gap-2 border-b border-[var(--border-color)] pb-2 mb-2 font-mono text-[var(--text-secondary)] uppercase tracking-wider">
                   <div className="col-span-6">Description</div>
                   <div className="col-span-2 text-right">Qty</div>
                   <div className="col-span-2 text-right">Rate</div>
                   <div className="col-span-2 text-right">Amount</div>
                 </div>
                 {lineItems.map((item) => (
-                  <div key={item.id} className="grid grid-cols-12 gap-2 pb-2 border-b border-white/5 text-[var(--text-primary)]">
+                  <div key={item.id} className="grid grid-cols-12 gap-2 pb-2 border-b border-[var(--border-color)]/30 text-[var(--text-primary)]">
                     <div className="col-span-6 truncate">{item.description || '[Item Description]'}</div>
                     <div className="col-span-2 text-right font-mono">{item.qty}</div>
                     <div className="col-span-2 text-right font-mono">{symbol}{item.rate.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>
@@ -471,7 +610,7 @@ export default function PublicInvoiceToolPage() {
                 ))}
               </div>
 
-              <div className="mt-auto flex justify-between items-end pt-6 border-t border-white/10 text-xs">
+              <div className="mt-auto flex justify-between items-end pt-6 border-t border-[var(--border-color)] text-xs relative z-10">
                 <div className="w-1/2">
                   <div className="font-mono text-[var(--text-secondary)] mb-1 uppercase tracking-wider">NOTES</div>
                   <div className="text-[var(--text-secondary)] whitespace-pre-wrap">{notes || '—'}</div>
@@ -485,7 +624,7 @@ export default function PublicInvoiceToolPage() {
                     <span>Tax ({taxRate}%)</span>
                     <span className="font-mono">{symbol}{taxAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-sm text-white pt-2 border-t border-white/10">
+                  <div className="flex justify-between font-bold text-sm text-[var(--text-primary)] pt-2 border-t border-[var(--border-color)]">
                     <span>Total</span>
                     <span className="font-mono text-[#fa8c00]">{symbol}{total.toLocaleString('en-US', { minimumFractionDigits: 2 })}</span>
                   </div>
@@ -499,7 +638,7 @@ export default function PublicInvoiceToolPage() {
         <div className="flex flex-col sm:flex-row justify-end items-center gap-4 mt-2">
           <button
             onClick={handleDownloadCSV}
-            className="w-full sm:w-auto px-6 py-3 rounded-full border border-white/10 text-white font-body-md text-sm hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3 rounded-full border border-[var(--border-color)] text-[var(--text-primary)] font-body-md text-sm hover:bg-[var(--bg-elevated)] transition-colors flex items-center justify-center gap-2"
           >
             <span className="material-symbols-outlined text-sm">csv</span>
             Download CSV
@@ -512,40 +651,23 @@ export default function PublicInvoiceToolPage() {
             Download PDF
           </button>
         </div>
-
-        {/* Pro Banner */}
-        <div className="mt-8 glass-panel rounded-xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden group border-[#c0c1ff]/30 hover:border-[#c0c1ff]/60 transition-colors">
-          <div className="absolute inset-0 bg-[#c0c1ff]/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-          <div className="flex items-start sm:items-center gap-4 relative z-10">
-            <div className="w-12 h-12 rounded-full bg-[#c0c1ff]/20 flex items-center justify-center shrink-0">
-              <span className="material-symbols-outlined text-[#c0c1ff]">lock_open</span>
-            </div>
-            <div>
-              <h3 className="font-headline text-lg font-bold text-white mb-1">Unlock Unlimited Features</h3>
-              <p className="font-body-sm text-xs text-[var(--text-secondary)]">Custom Branding, Auto-reminders, Multi-currency, Client Portal.</p>
-            </div>
-          </div>
-          <Link href="/signup" className="w-full sm:w-auto shrink-0 px-6 py-3 rounded-full bg-[#c0c1ff] text-[var(--bg-canvas)] font-bold font-body-md text-sm hover:brightness-110 transition-all text-center relative z-10 block">
-            Unlock Pro
-          </Link>
-        </div>
       </main>
 
       {/* Footer */}
-      <footer className="w-full mt-auto border-t border-white/5 flex flex-col md:flex-row justify-between items-center py-6 px-12 bg-[var(--bg-canvas)]/60 backdrop-blur-md">
-        <div className="font-headline text-lg text-white mb-4 md:mb-0">
+      <footer className="w-full mt-auto border-t border-[var(--border-color)] flex flex-col md:flex-row justify-between items-center py-6 px-12 bg-[var(--footer-bg)]">
+        <div className="font-headline text-lg text-[var(--footer-text)] mb-4 md:mb-0">
           Quantivo
         </div>
-        <div className="text-[var(--text-secondary)] text-xs mb-4 md:mb-0">
-          © 2024 Quantivo Analytics. All rights reserved.
+        <div className="text-[var(--footer-text)]/70 text-xs mb-4 md:mb-0">
+          © {new Date().getFullYear()} Quantivo Analytics. All rights reserved.
         </div>
-        <div className="flex gap-6 text-xs text-[var(--text-secondary)]">
-          <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+        <div className="flex gap-6 text-xs text-[var(--footer-text)]/70">
+          <a href="#" className="hover:text-[var(--footer-text)] transition-colors">Privacy Policy</a>
+          <a href="#" className="hover:text-[var(--footer-text)] transition-colors">Terms of Service</a>
         </div>
       </footer>
       {toastMsg && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toastMsg}
         </div>
       )}

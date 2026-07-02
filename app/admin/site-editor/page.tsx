@@ -22,7 +22,7 @@ export default async function AdminSiteEditorPage() {
         </div>
       </div>
 
-      <div className="bg-[rgba(18,33,49,0.6)] backdrop-blur-md border border-white/10 rounded-2xl p-8 max-w-2xl">
+      <div className="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-2xl p-8 max-w-2xl">
         <h2 className="text-xl font-bold text-white mb-6">Hero Section</h2>
         <SiteEditorForm initialConfig={config} />
       </div>

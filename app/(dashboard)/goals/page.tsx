@@ -139,22 +139,22 @@ export default function GoalsPage() {
     <>
       <style>{`
         .glass-card {
-          background: rgba(18, 33, 49, 0.6);
+          background: var(--bg-card);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
           border-radius: 16px;
         }
         .glass-modal {
           background: rgba(13, 28, 45, 0.95);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid var(--border-color);
           border-radius: 16px;
         }
         .glass-input {
           background: rgba(10, 20, 30, 0.8);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid var(--border-color);
           color: var(--text-primary);
           border-radius: 8px;
           padding: 10px 14px;

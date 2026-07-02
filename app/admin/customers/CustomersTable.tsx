@@ -71,7 +71,7 @@ export function CustomersTable({ initialProfiles }: { initialProfiles: Profile[]
       </div>
 
       {/* Table */}
-      <div className="bg-[rgba(18,33,49,0.6)] backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-white/5 border-b border-white/10">
             <tr>

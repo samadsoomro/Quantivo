@@ -175,15 +175,15 @@ export default function InvoicesPage() {
     <>
       <style>{`
         .glass-panel {
-          background: rgba(18, 33, 49, 0.6);
+          background: var(--bg-card);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
           border-radius: 16px;
         }
         .input-glass {
           background: rgba(1, 15, 31, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
           color: var(--text-primary);
           transition: border-color 200ms ease-out, box-shadow 200ms ease-out;
         }
@@ -207,9 +207,9 @@ export default function InvoicesPage() {
       `}</style>
 
       <div className="max-w-[1440px] mx-auto pb-12 flex flex-col gap-6">
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '16px' }}>
-          <button onClick={() => setActiveTab('list')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'list' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'list' ? '#c0c1ff' : '#918f9a', border: 'none', cursor: 'pointer' }}>My Invoices</button>
-          <button onClick={() => setActiveTab('new')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'new' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'new' ? '#c0c1ff' : '#918f9a', border: 'none', cursor: 'pointer' }}>New Invoice</button>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px' }}>
+          <button onClick={() => setActiveTab('list')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'list' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'list' ? '#c0c1ff' : 'var(--text-muted)', border: 'none', cursor: 'pointer' }}>My Invoices</button>
+          <button onClick={() => setActiveTab('new')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'new' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'new' ? '#c0c1ff' : 'var(--text-muted)', border: 'none', cursor: 'pointer' }}>New Invoice</button>
         </div>
 
         {activeTab === 'list' && (
@@ -218,7 +218,7 @@ export default function InvoicesPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-[rgba(255,255,255,0.08)]">
+                  <tr className="border-b border-[var(--border-color)]">
                     <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Invoice</th>
                     <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Client</th>
                     <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Due</th>
@@ -247,7 +247,7 @@ export default function InvoicesPage() {
                         {inv.status !== 'Paid' && (
                           <button 
                             onClick={() => markPaid(inv.id)} 
-                            className="px-3 py-1.5 rounded-lg border border-[rgba(255,255,255,0.1)] text-xs font-medium text-[var(--text-secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.05)] transition-colors"
+                            className="px-3 py-1.5 rounded-lg border border-[var(--border-color)] text-xs font-medium text-[var(--text-secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.05)] transition-colors"
                           >
                             Mark paid
                           </button>
@@ -574,7 +574,7 @@ export default function InvoicesPage() {
       </div>
 
       {toastMsg && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toastMsg}
         </div>
       )}

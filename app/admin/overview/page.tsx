@@ -36,7 +36,7 @@ export default async function AdminOverviewPage() {
           { label: 'MRR', value: `$${mrr.toLocaleString()}` },
           { label: 'Free Users', value: freeUsers || 0 }
         ].map((kpi, i) => (
-          <div key={i} className="bg-[rgba(18,33,49,0.6)] backdrop-blur-md border border-white/10 rounded-2xl p-6">
+          <div key={i} className="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-2xl p-6">
             <h3 className="text-xs text-[var(--text-secondary)] font-mono uppercase tracking-wider mb-2">{kpi.label}</h3>
             <p className="text-3xl font-bold text-white font-mono">{kpi.value}</p>
           </div>
@@ -44,7 +44,7 @@ export default async function AdminOverviewPage() {
       </div>
 
       {/* Recent Signups */}
-      <div className="bg-[rgba(18,33,49,0.6)] backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
         <div className="p-6 border-b border-white/5">
           <h2 className="text-lg font-bold text-white">Recent Signups</h2>
         </div>

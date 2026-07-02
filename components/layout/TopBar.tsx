@@ -216,11 +216,11 @@ export function TopBar({ user, profile }: TopBarProps) {
                       <div className="flex justify-between items-start gap-2">
                         <div className="flex-1">
                           <p className={`text-sm font-medium ${n.is_read ? 'text-[#c7c4d7]' : 'text-white'}`}>{n.title}</p>
-                          <p className="text-xs text-[#918f9a] mt-1">{n.message}</p>
+                          <p className="text-xs text-[var(--text-muted)] mt-1">{n.message}</p>
                         </div>
                         {!n.is_read && <span className="w-2 h-2 bg-[#c0c1ff] rounded-full shrink-0 mt-1" />}
                       </div>
-                      <p className="text-[10px] text-[#918f9a] mt-2 font-mono">
+                      <p className="text-[10px] text-[var(--text-muted)] mt-2 font-mono">
                         {new Date(n.created_at).toLocaleDateString()}
                       </p>
                     </div>

@@ -5,45 +5,30 @@ export function ThemeToggle() {
   const [dark, setDark] = useState(true)
 
   useEffect(() => {
-    const saved = localStorage.getItem('quantivo-theme')
+    const saved = localStorage.getItem('qv-theme')
     const isDark = saved ? saved === 'dark' : true
     setDark(isDark)
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light')
-    document.documentElement.style.setProperty('--bg-canvas', isDark ? '#051424' : '#f8f9fc')
-    document.documentElement.style.setProperty('--text-primary', isDark ? '#d4e4fa' : '#1a1a2e')
   }, [])
 
   const toggle = () => {
     const next = !dark
     setDark(next)
-    localStorage.setItem('quantivo-theme', next ? 'dark' : 'light')
-    document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light')
-    document.documentElement.style.setProperty('--bg-canvas', next ? '#051424' : '#f8f9fc')
-    document.documentElement.style.setProperty('--text-primary', next ? '#d4e4fa' : '#1a1a2e')
-    document.documentElement.style.background = next ? '#051424' : '#f8f9fc'
-    document.body.style.background = next ? '#051424' : '#f8f9fc'
-    document.body.style.color = next ? '#d4e4fa' : '#1a1a2e'
+    localStorage.setItem('qv-theme', next ? 'dark' : 'light')
+    
+    if (next) {
+      document.documentElement.classList.remove('light')
+    } else {
+      document.documentElement.classList.add('light')
+    }
   }
 
   return (
     <button
       onClick={toggle}
-      style={{
-        background: 'rgba(255,255,255,0.06)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: '999px',
-        padding: '6px 14px',
-        color: '#c7c5d0',
-        fontSize: '13px',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '6px',
-        transition: 'all 0.2s'
-      }}
+      className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-color)] bg-[var(--glass-bg)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--color-primary)] transition-all text-sm"
       title="Toggle theme"
     >
-      <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
+      <span className="material-symbols-outlined text-[16px]">
         {dark ? 'light_mode' : 'dark_mode'}
       </span>
       {dark ? 'Light' : 'Dark'}

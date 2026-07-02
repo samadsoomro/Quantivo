@@ -29,10 +29,10 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
       <style>{`
         body { background-color: var(--bg-canvas); color: var(--text-primary); overflow-x: hidden; }
         .glass-card {
-          background: rgba(18, 33, 49, 0.6);
+          background: var(--bg-card);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
           border-radius: 16px;
         }
         .fade-up {
@@ -124,7 +124,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         }
         .btn-ghost:hover { transform: translateY(-3px); background: rgba(124,127,255,0.08); }
         .tool-card {
-          background: rgba(18, 33, 49, 0.6);
+          background: var(--bg-card);
           backdrop-filter: blur(16px);
           border: 1px solid rgba(250, 140, 0, 0.25);
           border-radius: 16px;
@@ -147,7 +147,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         @media (max-width: 768px) {
           .nav-links-desktop { display: none !important; }
           .mobile-menu-btn { display: block !important; }
-          .mobile-menu.open { display: flex; flex-direction: column; background: var(--bg-canvas); padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+          .mobile-menu.open { display: flex; flex-direction: column; background: var(--bg-canvas); padding: 1rem; border-bottom: 1px solid var(--border-color); }
           .tool-grid { grid-template-columns: 1fr !important; }
           .hero-headline { font-size: clamp(32px, 8vw, 64px) !important; }
           .floating-tags { display: none !important; }
@@ -156,7 +156,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
       `}</style>
 
       {/* TopNavBar */}
-      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 50, background: 'rgba(5,20,36,0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 50, background: 'rgba(5,20,36,0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border-color)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: '#e1dfff', letterSpacing: '-0.02em' }}>
             <Logo /> Quantivo
@@ -225,7 +225,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
                 {/* Trust Strip */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '32px' }}>
                   {['Free forever', 'No credit card', '2-minute setup'].map(t => (
-                    <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'Inter', fontSize: '13px', color: '#918f9a' }}>
+                    <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'Inter', fontSize: '13px', color: 'var(--text-muted)' }}>
                       <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#00cc4b' }}>check</span>
                       {t}
                     </div>
@@ -260,49 +260,54 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         {/* Tools Section */}
         <section id="tools" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto' }}>
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: '#e1dfff', marginBottom: '12px' }}>Professional Tools</h2>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)' }}>Accelerate your workflow with precision utilities. Free to try, unlimited with Pro.</p>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '12px' }}>15 Free Professional Tools</h2>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)' }}>No login required. Use 3 times/day free, unlimited with an account.</p>
           </div>
 
           <div className="tool-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
             {[
-              { icon: 'receipt_long', name: 'Invoice Generator', desc: 'Create professional, compliant invoices in seconds. Export directly to PDF.', href: '/tools/invoice', badge: '2/3 free uses', active: true },
-              { icon: 'picture_as_pdf', name: 'PDF Converter', desc: 'Convert financial CSVs and raw data directly into formatted, presentation-ready PDFs.', href: '/login', badge: '2/3 free uses', active: true },
-              { icon: 'account_balance', name: 'Bank Statement Generator', desc: 'Generate mock or normalized bank statements for testing and reconciliation.', href: '/login', badge: '2/3 free uses', active: true },
-              { icon: 'summarize', name: 'Expense Report', desc: 'Automate weekly expense reports.', href: '/tools/expense-report', badge: 'Coming Soon', active: false },
-              { icon: 'calculate', name: 'Budget Planner', desc: 'Plan and forecast annual budgets.', href: '/tools/budget', badge: 'Coming Soon', active: false },
-              { icon: 'qr_code', name: 'QR Code Generator', desc: 'Payment QR codes on the fly.', href: '/login', badge: '2/3 free uses', active: true },
-              { icon: 'currency_exchange', name: 'Currency Converter', desc: 'Real-time FX rates.', href: '/login', badge: '2/3 free uses', active: true },
-              { icon: 'percent', name: 'Loan Calculator', desc: 'Amortization schedules and more.', href: '/login', badge: '2/3 free uses', active: true },
-              { icon: 'table_chart', name: 'CSV to Excel', desc: 'Format conversions in browser.', href: '/tools/csv-excel', badge: 'Coming Soon', active: false },
+              { icon: 'receipt_long', name: 'Invoice Generator', desc: 'Create professional invoices with watermark & PDF export.', href: '/tools/invoice', badge: 'Finance' },
+              { icon: 'account_balance', name: 'Bank Statement', desc: 'Generate PDF bank statements with running balances.', href: '/tools/bank-statement', badge: 'Finance' },
+              { icon: 'attach_money', name: 'Expense Report', desc: 'Create expense reports by category with PDF export.', href: '/tools/expense-report', badge: 'Finance' },
+              { icon: 'savings', name: 'Budget Planner', desc: 'Plan monthly budgets with visual allocation tracking.', href: '/tools/budget-planner', badge: 'Finance' },
+              { icon: 'calculate', name: 'Loan Calculator', desc: 'Amortization schedules and monthly payment breakdown.', href: '/tools/loan-calculator', badge: 'Finance' },
+              { icon: 'currency_exchange', name: 'Currency Converter', desc: 'Live exchange rates for 30+ world currencies.', href: '/tools/currency-converter', badge: 'Finance' },
+              { icon: 'picture_as_pdf', name: 'PDF Converter', desc: 'Convert TXT, HTML, CSV to clean PDF documents.', href: '/tools/pdf', badge: 'Files' },
+              { icon: 'table_chart', name: 'CSV to Excel', desc: 'Convert CSV/TSV to .xlsx with bold headers.', href: '/tools/csv-to-excel', badge: 'Files' },
+              { icon: 'qr_code_2', name: 'QR Code Generator', desc: 'Custom QR codes for URLs, WiFi, email & phone.', href: '/tools/qr-code', badge: 'Generator' },
+              { icon: 'barcode_reader', name: 'Barcode Generator', desc: 'Create barcodes in 8 formats including EAN13.', href: '/tools/barcode-generator', badge: 'Generator' },
+              { icon: 'key', name: 'Password Generator', desc: 'Cryptographically secure passwords with strength meter.', href: '/tools/password-generator', badge: 'Generator' },
+              { icon: 'gavel', name: 'Terms & Conditions', desc: 'AI-generated legally-sound T&C for your product.', href: '/tools/terms-generator', badge: '✦ AI' },
+              { icon: 'privacy_tip', name: 'Privacy Policy', desc: 'GDPR & CCPA compliant policies in seconds.', href: '/tools/privacy-policy', badge: '✦ AI' },
+              { icon: 'code', name: 'Code Explainer', desc: 'AI explains any code snippet in plain English.', href: '/tools/code-explainer', badge: '✦ AI' },
+              { icon: 'sell', name: 'Product Description', desc: 'AI-powered conversion-optimized copy with CTA.', href: '/tools/product-description', badge: '✦ AI' },
             ].map((tool, i) => (
-              <div key={tool.name} className={`tool-card fade-up ${i > 0 ? ' stagger-' + Math.min(i, 8) : ''} ${!tool.active ? 'tool-card-disabled' : ''}`} style={{ opacity: tool.active ? 1 : 0.6 }}>
+              <div key={tool.name} className={`tool-card fade-up${i > 0 ? ' stagger-' + Math.min(i, 8) : ''}`}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: '32px', color: tool.active ? '#fa8c00' : 'var(--text-secondary)', fontVariationSettings: "'FILL' 0" }}>{tool.icon}</span>
-                  <span style={{ 
-                    background: tool.active ? 'rgba(250,140,0,0.12)' : 'rgba(255,204,2,0.1)', 
-                    color: tool.active ? '#fa8c00' : '#ffcc02', 
-                    border: `1px solid ${tool.active ? 'rgba(250,140,0,0.4)' : 'rgba(255,204,2,0.4)'}`, 
-                    padding: '4px 12px', borderRadius: '9999px', fontFamily: 'JetBrains Mono, monospace', fontSize: '12px' 
+                  <span className="material-symbols-outlined" style={{ fontSize: '32px', color: '#fa8c00', fontVariationSettings: "'FILL' 0" }}>{tool.icon}</span>
+                  <span style={{
+                    background: tool.badge.includes('AI') ? 'rgba(192,129,252,0.15)' : 'rgba(250,140,0,0.12)',
+                    color: tool.badge.includes('AI') ? '#c084fc' : '#fa8c00',
+                    border: `1px solid ${tool.badge.includes('AI') ? 'rgba(192,129,252,0.4)' : 'rgba(250,140,0,0.4)'}`,
+                    padding: '4px 12px', borderRadius: '9999px', fontFamily: 'JetBrains Mono, monospace', fontSize: '11px', fontWeight: 600
                   }}>{tool.badge}</span>
                 </div>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '20px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '8px' }}>{tool.name}</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '8px' }}>{tool.name}</h3>
                 <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '20px' }}>{tool.desc}</p>
-                {tool.active && (
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Link href={tool.href} className="btn-amber" style={{ flex: 1, textAlign: 'center', padding: '9px 16px', fontSize: '14px' }}>Try Free →</Link>
-                  </div>
-                )}
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <Link href={tool.href} className="btn-amber" style={{ flex: 1, textAlign: 'center', padding: '9px 16px', fontSize: '14px' }}>Try Free →</Link>
+                </div>
               </div>
             ))}
           </div>
 
           <div className="fade-up" style={{ marginTop: '48px', display: 'flex', justifyContent: 'center' }}>
-            <Link href="/signup" style={{ color: '#7c7fff', fontFamily: 'Inter', fontSize: '16px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-              View All 50+ Tools →
+            <Link href="/tools" style={{ color: 'var(--color-primary)', fontFamily: 'Inter', fontSize: '16px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', fontWeight: 600 }}>
+              View All Tools →
             </Link>
           </div>
         </section>
+
 
         {/* Features Section */}
         <section id="features" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto', background: 'rgba(18,33,49,0.2)' }}>
@@ -338,7 +343,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
             {/* Free */}
             <div className="glass-card fade-up" style={{ padding: '36px' }}>
               <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>Free</h3>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: '#7c7fff', marginBottom: '24px' }}>$0<span style={{ fontSize: '16px', color: '#918f9a' }}>/mo</span></div>
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: '#7c7fff', marginBottom: '24px' }}>$0<span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/mo</span></div>
               <ul style={{ listStyle: 'none', padding: 0, marginBottom: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {['Up to 50 transactions/mo', '3 tool uses/day', 'Basic dashboard', '1 goal'].map((f) => (
                   <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-secondary)' }}>
@@ -352,7 +357,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
             <div className="glass-card fade-up stagger-1" style={{ padding: '36px', border: '1px solid rgba(124,127,255,0.4)', boxShadow: '0 0 40px rgba(124,127,255,0.08)', position: 'relative' }}>
               <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: '#7c7fff', color: '#ffffff', padding: '4px 16px', borderRadius: '9999px', fontFamily: 'JetBrains Mono, monospace', fontSize: '12px', fontWeight: 500, letterSpacing: '0.04em' }}>MOST POPULAR</div>
               <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '22px', fontWeight: 700, color: '#7c7fff', marginBottom: '8px' }}>Pro</h3>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: '#7c7fff', marginBottom: '24px' }}>$12<span style={{ fontSize: '16px', color: '#918f9a' }}>/mo</span></div>
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: '#7c7fff', marginBottom: '24px' }}>$12<span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/mo</span></div>
               <ul style={{ listStyle: 'none', padding: 0, marginBottom: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {['Unlimited transactions', 'Unlimited tool uses', 'Advanced analytics', 'Unlimited goals', 'AI insights', 'Priority support'].map((f) => (
                   <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-primary)' }}>
@@ -386,7 +391,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         <div className="tool-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '48px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: '#e1dfff', marginBottom: '12px' }}><Logo /> Quantivo</div>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: '#918f9a', lineHeight: 1.7 }}>The precision financial command center for modern professionals.</p>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.7 }}>The precision financial command center for modern professionals.</p>
           </div>
           {[
             { heading: 'Product', links: ['Features', 'Tools', 'Pricing', 'Changelog'] },
@@ -397,9 +402,9 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
               <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '16px' }}>{col.heading}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {col.links.map((link) => (
-                  <a key={link} href="#" style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: '#918f9a', textDecoration: 'none', transition: 'color 200ms ease-out' }}
+                  <a key={link} href="#" style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 200ms ease-out' }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = '#7c7fff')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = '#918f9a')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
                   >{link}</a>
                 ))}
               </div>
@@ -407,7 +412,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
           ))}
         </div>
         <div style={{ maxWidth: '1280px', margin: '0 auto', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 300, color: '#918f9a' }}>© {new Date().getFullYear()} Quantivo Analytics. All rights reserved.</span>
+          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 300, color: 'var(--text-muted)' }}>© {new Date().getFullYear()} Quantivo Analytics. All rights reserved.</span>
           <Link href="/signup" className="btn-violet" style={{ fontSize: '14px', padding: '9px 24px' }}>Start Free →</Link>
         </div>
       </footer>
@@ -442,12 +447,12 @@ function MobileMenu() {
         <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>{open ? 'close' : 'menu'}</span>
       </button>
       {open && (
-        <div style={{ position: 'absolute', top: '100%', right: 0, width: '250px', background: 'rgba(5,20,36,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ position: 'absolute', top: '100%', right: 0, width: '250px', background: 'var(--nav-bg)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <a className="nav-link" href="#features" onClick={() => setOpen(false)}>Features</a>
           <a className="nav-link" href="#tools" onClick={() => setOpen(false)}>Free Tools</a>
           <a className="nav-link" href="#pricing" onClick={() => setOpen(false)}>Pricing</a>
           <a className="nav-link" href="#faq" onClick={() => setOpen(false)}>FAQ</a>
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', margin: '8px 0' }} />
+          <div style={{ borderTop: '1px solid var(--border-color)', margin: '8px 0' }} />
           <Link href="/login" className="btn-ghost" style={{ textAlign: 'center', width: '100%' }}>Log In</Link>
           <Link href="/signup" className="btn-violet" style={{ textAlign: 'center', width: '100%' }}>Get Started →</Link>
         </div>

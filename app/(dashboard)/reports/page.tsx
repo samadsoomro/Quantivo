@@ -51,7 +51,7 @@ export default function ReportsPage() {
           const cat = (Array.isArray(tx.categories) ? tx.categories[0] : tx.categories) as { name: string; color: string } | null
           const key = cat?.name ?? 'Other'
           if (!catMap[key]) {
-            catMap[key] = { name: key, amount: 0, color: cat?.color ?? '#918f9a' }
+            catMap[key] = { name: key, amount: 0, color: cat?.color ?? 'var(--text-muted)' }
           }
           catMap[key].amount += amt
         }
@@ -78,10 +78,10 @@ export default function ReportsPage() {
     <>
       <style>{`
         .glass-panel {
-          background-color: rgba(18, 33, 49, 0.6);
+          background-color: var(--bg-card);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-color);
         }
         .chart-grid-line {
           stroke: rgba(255, 255, 255, 0.05);
@@ -231,18 +231,18 @@ export default function ReportsPage() {
                 <line className="chart-grid-line" x1="50" x2="780" y1="200" y2="200"></line>
                 <line className="chart-grid-line" x1="50" x2="780" y1="275" y2="275"></line>
                 {/* Y Axis Labels */}
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="55">25k</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="130">20k</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="205">15k</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="280">10k</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="55">25k</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="130">20k</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="205">15k</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="end" x="40" y="280">10k</text>
                 {/* X Axis Labels */}
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="50" y="295">Jan</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="171" y="295">Feb</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="292" y="295">Mar</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="414" y="295">Apr</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="535" y="295">May</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="657" y="295">Jun</text>
-                <text fill="#918f9a" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="780" y="295">Jul</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="50" y="295">Jan</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="171" y="295">Feb</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="292" y="295">Mar</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="414" y="295">Apr</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="535" y="295">May</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="657" y="295">Jun</text>
+                <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="780" y="295">Jul</text>
                 {/* Income Area (Violet) */}
                 <path d="M50,220 C100,210 120,180 171,150 C220,120 250,140 292,130 C340,120 370,80 414,90 C460,100 490,110 535,80 C580,50 610,60 657,40 C700,20 740,30 780,20 L780,275 L50,275 Z" fill="url(#incomeGradient)"></path>
                 <path d="M50,220 C100,210 120,180 171,150 C220,120 250,140 292,130 C340,120 370,80 414,90 C460,100 490,110 535,80 C580,50 610,60 657,40 C700,20 740,30 780,20" fill="none" stroke="#c0c1ff" strokeWidth="2"></path>
@@ -387,7 +387,7 @@ export default function ReportsPage() {
 
       {/* Toast */}
       {toast && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toast}
         </div>
       )}
