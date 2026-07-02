@@ -46,15 +46,8 @@ export function ExpenseBreakdown({ data }: { data: CategoryData[] }) {
               ))}
             </Pie>
             <Tooltip
-              contentStyle={{
-                background: 'rgba(18, 33, 49, 0.85)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                borderRadius: '12px',
-                fontSize: '12px',
-                color: '#d5e4fa',
-                backdropFilter: 'blur(16px)'
-              }}
-              itemStyle={{ color: '#d5e4fa' }}
+              contentStyle={{ background: "var(--bg-canvas)", border: "1px solid rgba(124,127,255,0.2)", borderRadius: 12, color: "var(--text-primary)", backdropFilter: 'blur(16px)' }}
+              itemStyle={{ color: 'var(--text-primary)' }}
               formatter={(value: unknown) =>
                 total > 0
                   ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(Number(value))

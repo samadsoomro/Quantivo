@@ -211,11 +211,18 @@ export default function GoalsPage() {
                       <div className="w-12 h-12 rounded-xl bg-black/30 border border-white/5 flex items-center justify-center text-2xl shadow-inner">
                         {emoji}
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex flex-col items-end gap-1.5">
                         {goal.deadline && (
-                          <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[var(--text-secondary)] font-mono text-[10px]">
-                            Due: {goal.deadline}
-                          </span>
+                          <div className="flex gap-2">
+                            <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[var(--text-secondary)] font-mono text-[10px]">
+                              Due: {goal.deadline}
+                            </span>
+                            <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${
+                              new Date(goal.deadline) < new Date() ? 'bg-[rgba(255,68,51,0.15)] text-[#ff4433]' : 'bg-[rgba(192,193,255,0.1)] text-[#c0c1ff]'
+                            }`}>
+                              {new Date(goal.deadline) < new Date() ? 'Overdue' : `${Math.ceil((new Date(goal.deadline).getTime() - new Date().getTime()) / (1000 * 3600 * 24))}d left`}
+                            </span>
+                          </div>
                         )}
                         <span className={`px-3 py-1 rounded-full font-mono text-[10px] uppercase ${isCompleted ? 'bg-[#fee089]/10 border border-[#fee089]/20 text-[#fee089]' : isPaused ? 'bg-white/5 border border-white/10 text-[var(--text-secondary)]' : 'bg-[#c0c1ff]/10 border border-[#c0c1ff]/20 text-[#c0c1ff]'}`}>
                           {goal.status}
@@ -228,32 +235,19 @@ export default function GoalsPage() {
                       {isCompleted ? 'Goal fully completed!' : isPaused ? 'Goal currently paused' : 'Accumulating savings'}
                     </p>
 
-                    <div className="flex items-center gap-6 mb-8 z-10">
-                      {/* Circular Progress */}
-                      <div className="relative w-20 h-20 flex-shrink-0">
-                        <svg className="w-full h-full" viewBox="0 0 100 100">
-                          <circle className="text-white/10 stroke-current" cx="50" cy="50" fill="transparent" r="40" strokeWidth="8"></circle>
-                          <circle
-                            className={`${isCompleted ? 'text-[#fee089]' : 'text-[#c0c1ff]'} stroke-current progress-ring__circle`}
-                            cx="50"
-                            cy="50"
-                            fill="transparent"
-                            r="40"
-                            strokeDasharray="251.2"
-                            strokeDashoffset={strokeOffset}
-                            strokeLinecap="round"
-                            strokeWidth="8"
-                          ></circle>
-                        </svg>
-                        <div className={`absolute inset-0 flex items-center justify-center font-mono text-sm text-white ${isCompleted ? 'text-[#fee089]' : ''}`}>{pct}%</div>
+                    <div className="flex flex-col gap-3 mb-8 z-10">
+                      <div className="flex justify-between items-end">
+                        <div className="flex flex-col">
+                          <span className="font-mono text-2xl font-bold text-white leading-none mb-1">{formatCurrency(goal.current_amount)}</span>
+                          <span className="font-mono text-xs text-[var(--text-secondary)]">of {formatCurrency(goal.target_amount)}</span>
+                        </div>
+                        <span className={`font-mono text-lg font-bold ${isCompleted ? 'text-[#fee089]' : 'text-[#c0c1ff]'}`}>{pct}%</span>
                       </div>
-                      <div className="flex-1">
-                        <div className="flex justify-between items-baseline mb-1">
-                          <span className="font-mono text-2xl font-bold text-white">{formatCurrency(goal.current_amount)}</span>
-                        </div>
-                        <div className="font-mono text-xs text-[var(--text-secondary)]">
-                          of {formatCurrency(goal.target_amount)} target
-                        </div>
+                      <div className="w-full h-2.5 bg-black/40 rounded-full overflow-hidden border border-white/5">
+                        <div 
+                          className={`h-full rounded-full transition-all duration-500 ${isCompleted ? 'bg-[#fee089]' : 'bg-[#c0c1ff]'}`}
+                          style={{ width: `${pct}%` }}
+                        />
                       </div>
                     </div>
 

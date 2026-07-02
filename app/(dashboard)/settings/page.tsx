@@ -140,10 +140,6 @@ export default function SettingsPage() {
 
   const handleSectionClick = (id: string) => {
     setActiveSection(id)
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
   }
 
   const handleThemeChange = (newTheme: string) => {
@@ -213,6 +209,7 @@ export default function SettingsPage() {
         {/* Right Main Content */}
         <div className="flex-1 max-w-4xl space-y-16 pb-32">
           {/* Section: Profile */}
+          {activeSection === 'profile' && (
           <section id="profile" className="scroll-mt-24">
             <div className="mb-8 border-b border-white/10 pb-4">
               <h3 className="font-headline text-2xl font-bold text-white">Public Profile</h3>
@@ -329,8 +326,10 @@ export default function SettingsPage() {
               </div>
             </div>
           </section>
+          )}
 
           {/* Section: Billing & Plan */}
+          {activeSection === 'billing' && (
           <section id="billing" className="scroll-mt-24">
             <div className="mb-8 border-b border-white/10 pb-4">
               <h3 className="font-headline text-2xl font-bold text-white">Billing & Plan</h3>
@@ -404,8 +403,10 @@ export default function SettingsPage() {
               </table>
             </div>
           </section>
+          )}
 
           {/* Section: Appearance */}
+          {activeSection === 'appearance' && (
           <section id="appearance" className="scroll-mt-24">
             <div className="mb-8 border-b border-white/10 pb-4">
               <h3 className="font-headline text-2xl font-bold text-white">Appearance</h3>
@@ -494,8 +495,10 @@ export default function SettingsPage() {
               </div>
             </div>
           </section>
+          )}
 
           {/* Section: Danger Zone */}
+          {activeSection === 'danger' && (
           <section id="danger" className="scroll-mt-24">
             <div className="mb-8 border-b border-red-500/20 pb-4">
               <h3 className="font-headline text-2xl font-bold text-red-500">Danger Zone</h3>
@@ -522,6 +525,7 @@ export default function SettingsPage() {
               </div>
             </div>
           </section>
+          )}
         </div>
       </div>
 

@@ -51,7 +51,8 @@ export function DashboardCharts({ monthlyChartData, categoryData }: DashboardCha
               <YAxis axisLine={false} tickLine={false} tick={{ fill: '#c7c5d0', fontSize: 12 }} tickFormatter={(val) => `$${val > 999 ? (val/1000).toFixed(0) + 'k' : val}`} />
               <Tooltip
                 cursor={{ fill: 'rgba(255,255,255,0.02)' }}
-                contentStyle={{ backgroundColor: 'rgba(13,28,45,0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#dae2fd' }}
+                contentStyle={{ background: "var(--bg-canvas)", border: "1px solid rgba(124,127,255,0.2)", borderRadius: 12, color: "var(--text-primary)", backdropFilter: 'blur(16px)' }}
+                itemStyle={{ color: 'var(--text-primary)' }}
                 formatter={(value: any, name: any) => [formatCurrency(Number(value)), String(name).charAt(0).toUpperCase() + String(name).slice(1)]}
               />
               <Bar dataKey="income" fill="#c0c1ff" radius={[4, 4, 0, 0]} barSize={32} />
@@ -84,7 +85,8 @@ export function DashboardCharts({ monthlyChartData, categoryData }: DashboardCha
                   : <Cell fill="rgba(255,255,255,0.1)" />}
               </Pie>
               <Tooltip
-                contentStyle={{ backgroundColor: 'rgba(13,28,45,0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#dae2fd' }}
+                contentStyle={{ background: "var(--bg-canvas)", border: "1px solid rgba(124,127,255,0.2)", borderRadius: 12, color: "var(--text-primary)", backdropFilter: 'blur(16px)' }}
+                itemStyle={{ color: 'var(--text-primary)' }}
                 formatter={(value: any) => formatCurrency(Number(value))}
               />
             </PieChart>

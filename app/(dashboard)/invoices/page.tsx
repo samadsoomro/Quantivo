@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useState } from 'react'
 
 export default function InvoicesPage() {
+  const [activeTab, setActiveTab] = useState<'list' | 'new'>('list')
   const [companyName, setCompanyName] = useState('')
   const [companyAddress, setCompanyAddress] = useState('')
   const [clientName, setClientName] = useState('')
@@ -156,6 +157,18 @@ export default function InvoicesPage() {
     a.click()
     URL.revokeObjectURL(url)
     showToast('CSV downloaded successfully!')
+    showToast('CSV downloaded successfully!')
+  }
+
+  const [pastInvoices, setPastInvoices] = useState([
+    { id: '1', number: 'INV-001', client: 'Acme Corp', due: '2026-07-15', status: 'Pending', amount: 4500 },
+    { id: '2', number: 'INV-002', client: 'Stark Industries', due: '2026-06-30', status: 'Overdue', amount: 12500 },
+    { id: '3', number: 'INV-003', client: 'Wayne Enterprises', due: '2026-06-15', status: 'Paid', amount: 8200 },
+  ])
+
+  const markPaid = (id: string) => {
+    setPastInvoices(prev => prev.map(inv => inv.id === id ? { ...inv, status: 'Paid' } : inv))
+    showToast('Marked as paid')
   }
 
   return (
@@ -194,6 +207,61 @@ export default function InvoicesPage() {
       `}</style>
 
       <div className="max-w-[1440px] mx-auto pb-12 flex flex-col gap-6">
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '16px' }}>
+          <button onClick={() => setActiveTab('list')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'list' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'list' ? '#c0c1ff' : '#918f9a', border: 'none', cursor: 'pointer' }}>My Invoices</button>
+          <button onClick={() => setActiveTab('new')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'new' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'new' ? '#c0c1ff' : '#918f9a', border: 'none', cursor: 'pointer' }}>New Invoice</button>
+        </div>
+
+        {activeTab === 'list' && (
+          <div className="glass-panel p-6 flex flex-col gap-6">
+            <h2 className="font-headline-lg text-2xl font-bold text-white mb-2">My Invoices</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-[rgba(255,255,255,0.08)]">
+                    <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Invoice</th>
+                    <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Client</th>
+                    <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Due</th>
+                    <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">Status</th>
+                    <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider text-right">Amount</th>
+                    <th className="py-4 px-4 text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pastInvoices.map((inv) => (
+                    <tr key={inv.id} className="border-b border-[rgba(255,255,255,0.04)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
+                      <td className="py-4 px-4 font-medium text-[var(--text-primary)]">{inv.number}</td>
+                      <td className="py-4 px-4 text-[var(--text-secondary)]">{inv.client}</td>
+                      <td className="py-4 px-4 text-[var(--text-secondary)]">{inv.due}</td>
+                      <td className="py-4 px-4">
+                        <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                          inv.status === 'Paid' ? 'bg-[rgba(0,204,75,0.15)] text-[#00cc4b]' : 
+                          inv.status === 'Overdue' ? 'bg-[rgba(255,68,51,0.15)] text-[#ff4433]' : 
+                          'bg-[rgba(255,204,2,0.15)] text-[#ffcc02]'
+                        }`}>
+                          {inv.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 font-mono text-right text-[var(--text-primary)] font-semibold">${inv.amount.toLocaleString()}</td>
+                      <td className="py-4 px-4 text-right">
+                        {inv.status !== 'Paid' && (
+                          <button 
+                            onClick={() => markPaid(inv.id)} 
+                            className="px-3 py-1.5 rounded-lg border border-[rgba(255,255,255,0.1)] text-xs font-medium text-[var(--text-secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.05)] transition-colors"
+                          >
+                            Mark paid
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'new' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* LEFT PANEL: Editor */}
           <div className="glass-panel p-6 flex flex-col gap-6">
@@ -483,8 +551,9 @@ export default function InvoicesPage() {
             </div>
           </div>
         </div>
+        )}
 
-        {/* Action Bar */}
+        {activeTab === 'new' && (
         <div className="flex flex-col sm:flex-row justify-end items-center gap-4 mt-2">
           <button
             onClick={handleDownloadCSV}
@@ -501,9 +570,9 @@ export default function InvoicesPage() {
             Download PDF
           </button>
         </div>
+        )}
       </div>
 
-      {/* Toast */}
       {toastMsg && (
         <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toastMsg}

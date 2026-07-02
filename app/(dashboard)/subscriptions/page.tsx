@@ -153,7 +153,12 @@ export default function SubscriptionsPage() {
                       {sub.name.charAt(0)}
                     </div>
                     <div>
-                      <p style={{ fontSize: '15px', fontWeight: 600, color: '#e1dfff', margin: 0 }}>{sub.name}</p>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <p style={{ fontSize: '15px', fontWeight: 600, color: '#e1dfff', margin: 0 }}>{sub.name}</p>
+                        <span style={{ fontSize: '10px', fontWeight: 700, color: '#fa8c00', background: 'rgba(250,140,0,0.1)', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                          <span className="material-symbols-outlined" style={{ fontSize: '11px' }}>notifications_active</span> Reminder
+                        </span>
+                      </div>
                       <p style={{ fontSize: '12px', color: '#918f9a', margin: '2px 0 0', textTransform: 'capitalize' }}>{sub.category}</p>
                     </div>
                   </div>

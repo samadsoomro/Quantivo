@@ -240,20 +240,25 @@ export default function HabitsPage() {
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Flame size={16} style={{ color: streak > 0 ? '#fa8c00' : '#464654' }} />
-                      <span style={{ fontSize: '20px', fontWeight: 700, color: habit.color, fontFamily: 'JetBrains Mono, monospace' }}>{streak}</span>
-                      <span style={{ fontSize: '11px', color: '#918f9a' }}>day streak</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Flame size={16} style={{ color: streak > 0 ? '#fa8c00' : '#464654' }} />
+                        <span style={{ fontSize: '18px', fontWeight: 700, color: habit.color, fontFamily: 'JetBrains Mono, monospace', lineHeight: 1 }}>{streak}</span>
+                        <span style={{ fontSize: '11px', color: '#918f9a' }}>day streak</span>
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#c7c4d7', marginTop: '2px' }}>
+                        Progress: <span style={{ fontWeight: 'bold', color: done ? '#00cc4b' : '#e1dfff' }}>{done ? '1' : '0'}/1</span> {habit.frequency === 'daily' ? 'today' : 'this week'}
+                      </div>
                     </div>
                     <button onClick={(e) => { e.stopPropagation(); toggleCompletion(habit.id, today) }}
                       style={{
-                        width: '40px', height: '40px', borderRadius: '50%',
-                        background: done ? habit.color : 'transparent',
-                        border: `2px solid ${habit.color}`, color: done ? '#fff' : habit.color,
-                        fontSize: '18px', cursor: 'pointer', transition: 'all 0.2s',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        padding: '8px 12px', borderRadius: '8px',
+                        background: done ? 'rgba(0,204,75,0.1)' : 'rgba(192,193,255,0.1)',
+                        border: done ? '1px solid rgba(0,204,75,0.2)' : '1px solid rgba(192,193,255,0.2)',
+                        color: done ? '#00cc4b' : '#c0c1ff',
+                        fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s'
                       }}>
-                      {done ? '✓' : '○'}
+                      {done ? 'Completed' : 'Log progress'}
                     </button>
                   </div>
                 </div>

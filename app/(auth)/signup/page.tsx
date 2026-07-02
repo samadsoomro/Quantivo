@@ -52,13 +52,19 @@ export default function SignupPage() {
     setLoading(true)
     setError(null)
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { full_name: fullName } }
     })
     
     if (error) { setError(error.message); setLoading(false); return }
+
+    if (data?.user?.identities?.length === 0) {
+      setError("An account with this email already exists. Please log in instead.")
+      setLoading(false)
+      return
+    }
     
     setStep('otp')
     setCooldown(30)
