@@ -1,3 +1,4 @@
+'use client'
 import { AIToolPage } from '@/components/AIToolPage'
 
 export default function PrivacyPolicyPage() {

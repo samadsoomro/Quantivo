@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@/supabase/client'
 
 export function getDeviceId() {
   if (typeof window === 'undefined') return 'server'
