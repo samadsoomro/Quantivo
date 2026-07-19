@@ -1,26 +1,11 @@
-import React from 'react'
-
-export function Logo({ className = '' }: { className?: string }) {
+export function Logo({ size = 32 }: { size?: number }) {
   return (
-    <svg 
-      xmlns="http://www.w3.org/2000/svg" 
-      viewBox="0 0 32 32" 
-      width="32" 
-      height="32" 
-      className={className}
-    >
-      <circle cx="16" cy="16" r="16" fill="#7c7fff" />
-      <text 
-        x="16" 
-        y="21" 
-        fontFamily="sans-serif" 
-        fontWeight="bold" 
-        fontSize="18" 
-        fill="#ffffff" 
-        textAnchor="middle"
-      >
-        $
-      </text>
-    </svg>
+    <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
+      <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill="#7c7fff"/>
+        <text x="16" y="22" textAnchor="middle" fill="white" fontSize="17" fontWeight="700" fontFamily="Space Grotesk, sans-serif">$</text>
+      </svg>
+      <span style={{ fontFamily:'Space Grotesk, sans-serif', fontWeight:700, fontSize: size * 0.56, color:'var(--text-heading)' }}>Quantivo</span>
+    </div>
   )
 }

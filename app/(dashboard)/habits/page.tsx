@@ -94,9 +94,15 @@ export default function HabitsPage() {
   useEffect(() => { loadAll() }, [])
 
   const loadAll = async () => {
+    setLoading(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) {
+      setHabits([])
+      setCompletions([])
+      setLoading(false)
+      return
+    }
 
     const [{ data: habitsData }, { data: completionsData }] = await Promise.all([
       supabase.from('habits').select('*').eq('user_id', user.id).eq('is_active', true).order('created_at', { ascending: false }),
@@ -114,19 +120,33 @@ export default function HabitsPage() {
     setSaving(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    
+    if (!user) {
+      setSaving(false)
+      setShowAdd(false)
+      showToast('Login required to save')
+      return
+    }
+
     const { error } = await supabase.from('habits').insert({ ...form, user_id: user.id })
     if (error) showToast(`Error: ${error.message}`)
     setShowAdd(false)
     setForm({ title: '', icon: 'flame', color: '#c0c1ff', frequency: 'daily' })
-    setSaving(false)
     loadAll()
+    setSaving(false)
   }
 
   const updateHabit = async () => {
     if (!editHabit) return
     setSaving(true)
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      setSaving(false)
+      setEditHabit(null)
+      showToast('Login required to update')
+      return
+    }
     const { error } = await supabase.from('habits').update({
       title: form.title, icon: form.icon, color: form.color, frequency: form.frequency
     }).eq('id', editHabit.id)
@@ -138,6 +158,12 @@ export default function HabitsPage() {
 
   const deleteHabit = async (id: string) => {
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      setDeleteConfirm(null)
+      showToast('Login required to delete')
+      return
+    }
     await supabase.from('habits').update({ is_active: false }).eq('id', id)
     setDeleteConfirm(null)
     if (selectedHabit === id) setSelectedHabit(null)
@@ -146,12 +172,15 @@ export default function HabitsPage() {
 
   const toggleCompletion = async (habitId: string, date: string) => {
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      showToast('Login required to log progress')
+      return
+    }
     const existing = completions.find(c => c.habit_id === habitId && c.completed_at === date)
     if (existing) {
       await supabase.from('habit_completions').delete().eq('habit_id', habitId).eq('completed_at', date)
     } else {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) return
       await supabase.from('habit_completions').insert({ habit_id: habitId, user_id: user.id, completed_at: date })
     }
     loadAll()

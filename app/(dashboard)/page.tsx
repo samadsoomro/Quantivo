@@ -1,24 +1,28 @@
 import { createClient } from '@/supabase/server'
-import { redirect } from 'next/navigation'
 import { StatsCards } from '@/components/dashboard/StatsCards'
 import { RecentTransactions } from '@/components/dashboard/RecentTransactions'
 import { IncomeExpenseChart } from '@/components/dashboard/IncomeExpenseChart'
 import { CategoryPieChart } from '@/components/dashboard/CategoryPieChart'
 import { GoalsSummary } from '@/components/dashboard/GoalsSummary'
 import { startOfMonth, endOfMonth, format, subMonths } from 'date-fns'
+import { GuestDashboard } from '@/components/dashboard/GuestDashboard'
 
 export const metadata = { title: 'Dashboard' }
 
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login')
-
+  
   const now = new Date()
   const monthStart = format(startOfMonth(now), 'yyyy-MM-dd')
   const monthEnd = format(endOfMonth(now), 'yyyy-MM-dd')
   const lastMonthStart = format(startOfMonth(subMonths(now, 1)), 'yyyy-MM-dd')
   const lastMonthEnd = format(endOfMonth(subMonths(now, 1)), 'yyyy-MM-dd')
+
+  // If no user, render Guest version (will fetch from localStorage on client)
+  if (!user) {
+    return <GuestDashboard />
+  }
 
   // Fetch this month's transactions
   const { data: transactions } = await supabase

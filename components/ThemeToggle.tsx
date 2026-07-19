@@ -25,13 +25,10 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border-color)] bg-[var(--glass-bg)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--color-primary)] transition-all text-sm"
+      className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border)] bg-[var(--glass-bg)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--color-primary)] transition-all text-sm"
       title="Toggle theme"
     >
-      <span className="material-symbols-outlined text-[16px]">
-        {dark ? 'light_mode' : 'dark_mode'}
-      </span>
-      {dark ? 'Light' : 'Dark'}
+      {dark ? '☀️ Light' : '🌙 Dark'}
     </button>
   )
 }

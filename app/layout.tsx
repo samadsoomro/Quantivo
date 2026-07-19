@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { UserProvider } from './contexts/UserContext'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -29,7 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-[var(--bg-canvas)] text-[var(--text-primary)]`}>
-        {children}
+        <UserProvider>
+          {children}
+        </UserProvider>
       </body>
     </html>
   )

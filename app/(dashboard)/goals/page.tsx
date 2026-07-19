@@ -44,7 +44,12 @@ export default function GoalsPage() {
     setLoading(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) {
+      const localData = localStorage.getItem('qv-guest-goals')
+      if (localData) setGoals(JSON.parse(localData))
+      setLoading(false)
+      return
+    }
 
     const { data, error } = await supabase
       .from('goals')
@@ -76,7 +81,26 @@ export default function GoalsPage() {
     setIsAdding(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setIsAdding(false); return }
+    
+    if (!user) {
+      const newGoal = {
+        id: Math.random().toString(36).substring(7),
+        title: addForm.title,
+        target_amount: target,
+        current_amount: 0,
+        deadline: addForm.deadline || null,
+        category: addForm.category,
+        status: 'active',
+        created_at: new Date().toISOString()
+      } as any
+      const newGoals = [newGoal, ...goals]
+      setGoals(newGoals)
+      localStorage.setItem('qv-guest-goals', JSON.stringify(newGoals))
+      setShowAddModal(false)
+      setIsAdding(false)
+      showToast('Saved locally (Guest)')
+      return
+    }
 
     const { error } = await supabase.from('goals').insert({
       user_id: user.id,

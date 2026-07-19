@@ -29,7 +29,10 @@ export default function ReportsPage() {
     setLoading(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    if (!user) {
+      setLoading(false)
+      return
+    }
 
     // Fetch all transactions
     const { data: txData, error } = await supabase

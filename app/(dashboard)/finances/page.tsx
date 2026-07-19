@@ -43,7 +43,15 @@ export default function FinancesPage() {
     setLoading(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    
+    if (!user) {
+      const localData = localStorage.getItem('qv-guest-transactions')
+      if (localData) {
+        setTransactions(JSON.parse(localData))
+      }
+      setLoading(false)
+      return
+    }
 
     const { data, error } = await supabase
       .from('transactions')
@@ -82,8 +90,22 @@ export default function FinancesPage() {
     setIsAdding(true)
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
+    
     if (!user) {
+      const newTx: Transaction = {
+        id: Math.random().toString(36).substring(7),
+        title: addForm.desc,
+        amount: amt,
+        type,
+        date: format(new Date(), 'yyyy-MM-dd'),
+        categories: { name: 'Other', color: '#6b7280' }
+      }
+      const newTxs = [newTx, ...transactions]
+      setTransactions(newTxs)
+      localStorage.setItem('qv-guest-transactions', JSON.stringify(newTxs))
+      setAddModal({ isOpen: false, type: 'income' })
       setIsAdding(false)
+      showToast('Saved locally (Guest)')
       return
     }
 
@@ -110,6 +132,17 @@ export default function FinancesPage() {
 
   const handleDelete = async (id: string) => {
     const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    
+    if (!user) {
+      const newTxs = transactions.filter(t => t.id !== id)
+      setTransactions(newTxs)
+      localStorage.setItem('qv-guest-transactions', JSON.stringify(newTxs))
+      setDeleteConfirm(null)
+      showToast('Deleted locally (Guest)')
+      return
+    }
+
     const { error } = await supabase.from('transactions').delete().eq('id', id)
     if (error) {
       showToast(`Error deleting transaction: ${error.message}`)

@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       <div style={{
         background: 'rgba(13, 28, 45, 0.95)',
         backdropFilter: 'blur(16px)',
-        border: '1px solid var(--border-color)',
+        border: '1px solid var(--border)',
         padding: '12px',
         borderRadius: '8px',
         color: 'var(--text-primary)'
@@ -41,10 +41,10 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export function HeroGraph() {
   return (
     <div style={{
-      background: 'rgba(18, 33, 49, 0.8)',
+      background: 'var(--graph-card-bg)',
       backdropFilter: 'blur(16px)',
-      border: '1px solid rgba(124, 127, 255, 0.3)',
-      boxShadow: '0 0 40px rgba(124, 127, 255, 0.15)',
+      border: '1px solid var(--graph-card-border)',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
       borderRadius: '24px',
       padding: '24px',
       width: '100%',
@@ -53,8 +53,8 @@ export function HeroGraph() {
       zIndex: 20
     }}>
       <div style={{ marginBottom: '24px' }}>
-        <p style={{ margin: '0 0 4px', fontSize: '14px', color: 'var(--text-secondary)', fontFamily: 'Inter, sans-serif' }}>Total Balance</p>
-        <h3 style={{ margin: 0, fontSize: '36px', fontWeight: 700, color: 'white', fontFamily: 'JetBrains Mono, monospace' }}>$12,485.00</h3>
+        <p style={{ margin: '0 0 4px', fontSize: '14px', color: 'var(--text-muted)', fontFamily: 'Inter, sans-serif' }}>Total Balance</p>
+        <h3 style={{ margin: 0, fontSize: '36px', fontWeight: 700, color: 'var(--text-heading)', fontFamily: 'JetBrains Mono, monospace' }}>$12,485.00</h3>
       </div>
       
       <div style={{ height: '200px', width: '100%' }}>

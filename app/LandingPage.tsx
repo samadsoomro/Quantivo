@@ -70,7 +70,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         }
         .floating-tag { animation: float 6s ease-in-out infinite; }
         .nav-link {
-          color: var(--text-secondary);
+          color: var(--text-nav);
           font-family: Inter, sans-serif;
           font-size: 15px;
           font-weight: 300;
@@ -109,7 +109,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         .btn-amber:hover { transform: translateY(-3px); }
         .btn-ghost {
           background: transparent;
-          color: #7c7fff;
+          color: var(--text-nav);
           padding: 10px 28px;
           border-radius: 9999px;
           border: 1px solid #7c7fff;
@@ -156,10 +156,10 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
       `}</style>
 
       {/* TopNavBar */}
-      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 50, background: 'rgba(5,20,36,0.85)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border-color)' }}>
+      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 50, background: 'var(--bg-nav)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: '#e1dfff', letterSpacing: '-0.02em' }}>
-            <Logo /> Quantivo
+            <Logo />
           </div>
           <div className="nav-links-desktop" style={{ display: 'flex', gap: '32px' }}>
             <a className="nav-link" href="#features">Features</a>
@@ -210,7 +210,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
 
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12" style={{ position: 'relative', zIndex: 10, maxWidth: '1200px', margin: '0 auto' }}>
               <div style={{ flex: 1, textAlign: 'left', maxWidth: '600px' }}>
-                <h1 className="hero-headline" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '64px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px' }}>
+                <h1 className="hero-headline" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '64px', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px', color: 'var(--text-heading)' }}>
                   <span className="animated-gradient-text">{siteConfig?.hero_headline || 'Your Money. Your Goals. Finally Under Control.'}</span>
                 </h1>
                 <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '18px', fontWeight: 300, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '40px' }}>
@@ -260,7 +260,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         {/* Tools Section */}
         <section id="tools" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto' }}>
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '12px' }}>15 Free Professional Tools</h2>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: 'var(--text-heading)', marginBottom: '12px' }}>Free Professional Tools</h2>
             <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)' }}>No login required. Use 3 times/day free, unlimited with an account.</p>
           </div>
 
@@ -310,9 +310,9 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
 
 
         {/* Features Section */}
-        <section id="features" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto', background: 'rgba(18,33,49,0.2)' }}>
+        <section id="features" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto', background: 'var(--bg-elevated)' }}>
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: '#e1dfff', marginBottom: '12px' }}>Everything You Need</h2>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: 'var(--text-heading)', marginBottom: '12px' }}>Everything You Need</h2>
             <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)' }}>A complete command center for your financial life.</p>
           </div>
           <div className="tool-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
@@ -326,7 +326,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
             ].map((feature, i) => (
               <div key={feature.title} className={`glass-card hover-lift fade-up ${i > 0 ? ' stagger-' + Math.min(i, 8) : ''}`} style={{ padding: '28px' }}>
                 <span className="material-symbols-outlined" style={{ fontSize: '36px', color: '#7c7fff', marginBottom: '16px', display: 'block' }}>{feature.icon}</span>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '20px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '10px' }}>{feature.title}</h3>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '20px', fontWeight: 600, color: 'var(--text-heading)', marginBottom: '10px' }}>{feature.title}</h3>
                 <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-secondary)', lineHeight: 1.6 }}>{feature.desc}</p>
               </div>
             ))}
@@ -336,7 +336,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         {/* Pricing Section */}
         <section id="pricing" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto' }}>
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: '#e1dfff', marginBottom: '12px' }}>Simple Pricing</h2>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: 'var(--text-heading)', marginBottom: '12px' }}>Simple Pricing</h2>
             <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '16px', fontWeight: 300, color: 'var(--text-secondary)' }}>Start free. Scale when you need to.</p>
           </div>
           <div className="tool-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', maxWidth: '720px', margin: '0 auto' }}>
@@ -373,7 +373,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         {/* FAQ Section */}
         <section id="faq" style={{ padding: '80px 24px', maxWidth: '800px', margin: '0 auto' }}>
           <div className="fade-up" style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: '#e1dfff', marginBottom: '12px' }}>FAQs</h2>
+            <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '36px', fontWeight: 700, color: 'var(--text-heading)', marginBottom: '12px' }}>FAQs</h2>
           </div>
           {[
             { q: 'Is my financial data secure?', a: 'Yes. We use AES-256 encryption and never sell your data. All connections use read-only bank-level OAuth.' },
@@ -387,11 +387,11 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
       </main>
 
       {/* Footer */}
-      <footer style={{ borderTop: '1px solid rgba(255,255,255,0.06)', padding: '60px 24px 40px', background: 'rgba(1,15,31,0.6)' }}>
+      <footer style={{ borderTop: '1px solid var(--border)', padding: '60px 24px 40px', background: 'var(--bg-footer)' }}>
         <div className="tool-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '48px' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: '#e1dfff', marginBottom: '12px' }}><Logo /> Quantivo</div>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-muted)', lineHeight: 1.7 }}>The precision financial command center for modern professionals.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: 'var(--text-footer)', marginBottom: '12px' }}><Logo /></div>
+            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-footer)', lineHeight: 1.7 }}>The precision financial command center for modern professionals.</p>
           </div>
           {[
             { heading: 'Product', links: ['Features', 'Tools', 'Pricing', 'Changelog'] },
@@ -399,20 +399,20 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
             { heading: 'Legal', links: ['Privacy', 'Terms', 'Security', 'Status'] },
           ].map((col) => (
             <div key={col.heading}>
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '16px' }}>{col.heading}</div>
+              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 600, color: 'var(--text-footer)', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '16px' }}>{col.heading}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {col.links.map((link) => (
-                  <a key={link} href="#" style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-muted)', textDecoration: 'none', transition: 'color 200ms ease-out' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#7c7fff')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                  <a key={link} href="#" style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-footer)', textDecoration: 'none', transition: 'color 200ms ease-out' }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.9)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-footer)')}
                   >{link}</a>
                 ))}
               </div>
             </div>
           ))}
         </div>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 300, color: 'var(--text-muted)' }}>© {new Date().getFullYear()} Quantivo Analytics. All rights reserved.</span>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', borderTop: '1px solid var(--border)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 300, color: 'var(--text-footer)' }}>© {new Date().getFullYear()} Quantivo Analytics. All rights reserved.</span>
           <Link href="/signup" className="btn-violet" style={{ fontSize: '14px', padding: '9px 24px' }}>Start Free →</Link>
         </div>
       </footer>
