@@ -89,7 +89,6 @@ export default function GoalsPage() {
         target_amount: target,
         current_amount: 0,
         deadline: addForm.deadline || null,
-        category: addForm.category,
         status: 'active',
         created_at: new Date().toISOString()
       } as any

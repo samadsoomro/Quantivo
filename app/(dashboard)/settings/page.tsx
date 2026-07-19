@@ -71,6 +71,8 @@ export default function SettingsPage() {
 
   useEffect(() => {
     fetchProfile()
+    const isLight = document.documentElement.classList.contains('light')
+    setTheme(isLight ? 'light' : 'dark')
   }, [])
 
   const handleSaveProfile = async () => {
@@ -144,14 +146,11 @@ export default function SettingsPage() {
 
   const handleThemeChange = (newTheme: string) => {
     setTheme(newTheme)
-    document.documentElement.setAttribute('data-theme', newTheme)
-    localStorage.setItem('quantivo-theme', newTheme)
+    localStorage.setItem('qv-theme', newTheme)
     if (newTheme === 'light') {
-      document.documentElement.style.background = '#f8f9fc'
-      document.body.style.background = '#f8f9fc'
+      document.documentElement.classList.add('light')
     } else {
-      document.documentElement.style.background = 'var(--bg-canvas)'
-      document.body.style.background = 'var(--bg-canvas)'
+      document.documentElement.classList.remove('light')
     }
   }
 
@@ -343,7 +342,7 @@ export default function SettingsPage() {
                     <h4 className="font-headline text-lg font-bold text-white">Professional Tier</h4>
                     <span className="px-2 py-1 rounded-full bg-[#c0c1ff]/20 border border-[#c0c1ff]/30 text-[#c0c1ff] font-mono text-[10px] tracking-widest uppercase">Pro</span>
                   </div>
-                  <p className="font-body-sm text-xs text-[var(--text-secondary)]">Billed $12.00 monthly. Next charge on Nov 15, 2024.</p>
+                  <p className="font-body-sm text-xs text-[var(--text-secondary)]">Billed $12.00 monthly. Next charge on Nov 15, {new Date().getFullYear()}.</p>
                 </div>
                 <div className="text-right">
                   <div className="font-headline text-3xl font-bold text-white">$12<span className="font-body-sm text-sm text-[var(--text-secondary)]">/mo</span></div>
@@ -381,9 +380,9 @@ export default function SettingsPage() {
                 </thead>
                 <tbody className="font-body-sm text-xs text-[var(--text-secondary)]">
                   {[
-                    { date: '2024-10-15', desc: 'Pro Plan - Monthly Subscription', amt: '$12.00' },
-                    { date: '2024-09-15', desc: 'Pro Plan - Monthly Subscription', amt: '$12.00' },
-                    { date: '2024-08-15', desc: 'Pro Plan - Monthly Subscription', amt: '$12.00' }
+                    { date: `${new Date().getFullYear()}-10-15`, desc: 'Pro Plan - Monthly Subscription', amt: '$12.00' },
+                    { date: `${new Date().getFullYear()}-09-15`, desc: 'Pro Plan - Monthly Subscription', amt: '$12.00' },
+                    { date: `${new Date().getFullYear()}-08-15`, desc: 'Pro Plan - Monthly Subscription', amt: '$12.00' }
                   ].map((row, i) => (
                     <tr key={i} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors">
                       <td className="px-6 py-4 font-mono text-[var(--text-secondary)]">{row.date}</td>

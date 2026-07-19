@@ -6,9 +6,10 @@ import type { Profile } from '@/types'
 import type { User } from '@supabase/supabase-js'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import Link from 'next/link'
 
 interface TopBarProps {
-  user: User
+  user: User | null
   profile: Profile | null
 }
 
@@ -39,6 +40,7 @@ export function TopBar({ user, profile }: TopBarProps) {
   const notifRef = useRef<HTMLDivElement>(null)
 
   const fetchNotifs = useCallback(async () => {
+    if (!user) return
     const { data } = await supabase
       .from('quantivo_notifications')
       .select('*')
@@ -50,7 +52,7 @@ export function TopBar({ user, profile }: TopBarProps) {
       setNotifs(data)
       setUnreadCount(data.filter((n: Notification) => !n.is_read).length)
     }
-  }, [user.id])
+  }, [user?.id])
 
   useEffect(() => {
     fetchNotifs()
@@ -65,6 +67,7 @@ export function TopBar({ user, profile }: TopBarProps) {
   }, [fetchNotifs])
 
   const markAllRead = async () => {
+    if (!user) return
     await supabase
       .from('quantivo_notifications')
       .update({ is_read: true })
@@ -83,6 +86,7 @@ export function TopBar({ user, profile }: TopBarProps) {
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const runSearch = useCallback(async (q: string) => {
+    if (!user) return
     if (q.trim().length < 2) { setSearchResults([]); setSearchOpen(false); return }
     setSearching(true)
     const trimmed = q.trim()
@@ -102,7 +106,7 @@ export function TopBar({ user, profile }: TopBarProps) {
     setSearchResults(results)
     setSearchOpen(results.length > 0)
     setSearching(false)
-  }, [user.id])
+  }, [user?.id])
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const q = e.target.value
@@ -129,7 +133,7 @@ export function TopBar({ user, profile }: TopBarProps) {
 
   const initials = profile?.full_name
     ? profile.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
-    : user.email?.[0].toUpperCase() ?? 'U'
+    : user?.email?.[0].toUpperCase() ?? 'G'
 
   const typeIcon: Record<string, string> = { transaction: 'payments', goal: 'ads_click', habit: 'repeat_on' }
 
@@ -142,11 +146,12 @@ export function TopBar({ user, profile }: TopBarProps) {
             <span className="material-symbols-outlined absolute left-2 text-[#c7c4d7] text-[18px]">search</span>
             <input
               className="w-full bg-[#131b2e] border border-[#464554] rounded-lg pl-9 pr-4 py-2 text-sm text-[#dae2fd] placeholder:text-[#c7c4d7] focus:outline-none focus:border-[#c0c1ff] transition-colors"
-              placeholder="Search transactions, goals, habits..."
+              placeholder={user ? "Search transactions, goals, habits..." : "Sign in to search..."}
               type="text"
               value={searchQuery}
               onChange={handleSearchChange}
               onFocus={() => searchResults.length > 0 && setSearchOpen(true)}
+              disabled={!user}
             />
             {searching && (
               <span className="absolute right-3 text-[#c7c4d7] text-xs animate-pulse">...</span>
@@ -178,107 +183,122 @@ export function TopBar({ user, profile }: TopBarProps) {
         <div className="flex items-center gap-4">
           <ThemeToggle />
 
-          {/* Notifications */}
-          <div className="relative" ref={notifRef}>
-            <button
-              onClick={() => { setNotifOpen(o => !o); if (!notifOpen) fetchNotifs() }}
-              className="text-[#c7c4d7] hover:text-[#c0c1ff] transition-colors relative"
-            >
-              <span className="material-symbols-outlined">notifications</span>
-              {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 bg-[#ff4433] text-white rounded-full text-[9px] font-bold flex items-center justify-center px-0.5 ring-2 ring-[#0b1326]">
-                  {unreadCount > 9 ? '9+' : unreadCount}
-                </span>
-              )}
-            </button>
+          {/* Notifications — only for logged-in users */}
+          {user && (
+            <div className="relative" ref={notifRef}>
+              <button
+                onClick={() => { setNotifOpen(o => !o); if (!notifOpen) fetchNotifs() }}
+                className="text-[#c7c4d7] hover:text-[#c0c1ff] transition-colors relative"
+              >
+                <span className="material-symbols-outlined">notifications</span>
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-[16px] h-4 bg-[#ff4433] text-white rounded-full text-[9px] font-bold flex items-center justify-center px-0.5 ring-2 ring-[#0b1326]">
+                    {unreadCount > 9 ? '9+' : unreadCount}
+                  </span>
+                )}
+              </button>
 
-            {notifOpen && (
-              <div className="absolute right-0 top-10 w-80 bg-[#171f33] border border-[#464554] rounded-xl shadow-2xl z-50 overflow-hidden">
-                <div className="flex justify-between items-center p-4 border-b border-[#464554]">
-                  <h3 className="text-sm font-bold text-white">Notifications</h3>
-                  {unreadCount > 0 && (
-                    <button onClick={markAllRead} className="text-xs text-[#c0c1ff] hover:text-white transition-colors">
-                      Mark all read
-                    </button>
-                  )}
-                </div>
-                <div className="max-h-72 overflow-y-auto">
-                  {notifs.length === 0 ? (
-                    <div className="p-6 text-center">
-                      <span className="material-symbols-outlined text-3xl text-[#464554] block mb-2">notifications_off</span>
-                      <p className="text-sm text-[#c7c4d7]">No notifications yet</p>
-                    </div>
-                  ) : notifs.map(n => (
-                    <div
-                      key={n.id}
-                      className={`p-4 border-b border-[#464554]/50 hover:bg-white/[0.02] transition-colors ${!n.is_read ? 'bg-[#c0c1ff]/5' : ''}`}
-                    >
-                      <div className="flex justify-between items-start gap-2">
-                        <div className="flex-1">
-                          <p className={`text-sm font-medium ${n.is_read ? 'text-[#c7c4d7]' : 'text-white'}`}>{n.title}</p>
-                          <p className="text-xs text-[var(--text-muted)] mt-1">{n.message}</p>
-                        </div>
-                        {!n.is_read && <span className="w-2 h-2 bg-[#c0c1ff] rounded-full shrink-0 mt-1" />}
+              {notifOpen && (
+                <div className="absolute right-0 top-10 w-80 bg-[#171f33] border border-[#464554] rounded-xl shadow-2xl z-50 overflow-hidden">
+                  <div className="flex justify-between items-center p-4 border-b border-[#464554]">
+                    <h3 className="text-sm font-bold text-white">Notifications</h3>
+                    {unreadCount > 0 && (
+                      <button onClick={markAllRead} className="text-xs text-[#c0c1ff] hover:text-white transition-colors">
+                        Mark all read
+                      </button>
+                    )}
+                  </div>
+                  <div className="max-h-72 overflow-y-auto">
+                    {notifs.length === 0 ? (
+                      <div className="p-6 text-center">
+                        <span className="material-symbols-outlined text-3xl text-[#464554] block mb-2">notifications_off</span>
+                        <p className="text-sm text-[#c7c4d7]">No notifications yet</p>
                       </div>
-                      <p className="text-[10px] text-[var(--text-muted)] mt-2 font-mono">
-                        {new Date(n.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                  ))}
+                    ) : notifs.map(n => (
+                      <div
+                        key={n.id}
+                        className={`p-4 border-b border-[#464554]/50 hover:bg-white/[0.02] transition-colors ${!n.is_read ? 'bg-[#c0c1ff]/5' : ''}`}
+                      >
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="flex-1">
+                            <p className={`text-sm font-medium ${n.is_read ? 'text-[#c7c4d7]' : 'text-white'}`}>{n.title}</p>
+                            <p className="text-xs text-[var(--text-muted)] mt-1">{n.message}</p>
+                          </div>
+                          {!n.is_read && <span className="w-2 h-2 bg-[#c0c1ff] rounded-full shrink-0 mt-1" />}
+                        </div>
+                        <p className="text-[10px] text-[var(--text-muted)] mt-2 font-mono">
+                          {new Date(n.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           <div className="h-8 w-px bg-[#464554]" />
 
-          {/* User menu */}
-          <div className="relative group">
-            <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 rounded-full bg-[#c0c1ff] flex items-center justify-center border border-[#464554]">
-                <span className="text-xs font-bold text-[#1000a9]">{initials}</span>
-              </div>
-              <span className="text-sm text-[#dae2fd] hidden md:block">
-                {profile?.full_name ?? user.email?.split('@')[0]}
-              </span>
-            </button>
-            {/* Dropdown */}
-            <div className="absolute right-0 top-10 w-52 bg-[#171f33] border border-[#464554] rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-              <div className="p-3 border-b border-[#464554]">
-                <p className="text-sm font-medium text-[#dae2fd]">{profile?.full_name ?? 'User'}</p>
-                <p className="text-xs text-[#c7c4d7] truncate">{user.email}</p>
-                {profile?.is_admin && (
-                  <span className="mt-1 inline-block text-[9px] font-bold uppercase tracking-wider bg-[#ffb77a]/20 text-[#ffb77a] px-1.5 py-0.5 rounded">
-                    Admin
-                  </span>
-                )}
-              </div>
-              <div className="p-1">
-                <button
-                  onClick={() => router.push('/settings')}
-                  className="w-full text-left px-3 py-2 text-sm text-[#c7c4d7] hover:bg-[#222a3d] hover:text-[#dae2fd] rounded transition-colors"
-                >
-                  Settings
-                </button>
-                {profile?.is_admin && (
+          {/* User menu or Guest buttons */}
+          {user ? (
+            <div className="relative group">
+              <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <div className="w-8 h-8 rounded-full bg-[#c0c1ff] flex items-center justify-center border border-[#464554]">
+                  <span className="text-xs font-bold text-[#1000a9]">{initials}</span>
+                </div>
+                <span className="text-sm text-[#dae2fd] hidden md:block">
+                  {profile?.full_name ?? user.email?.split('@')[0]}
+                </span>
+              </button>
+              {/* Dropdown */}
+              <div className="absolute right-0 top-10 w-52 bg-[#171f33] border border-[#464554] rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="p-3 border-b border-[#464554]">
+                  <p className="text-sm font-medium text-[#dae2fd]">{profile?.full_name ?? 'User'}</p>
+                  <p className="text-xs text-[#c7c4d7] truncate">{user.email}</p>
+                  {profile?.is_admin && (
+                    <span className="mt-1 inline-block text-[9px] font-bold uppercase tracking-wider bg-[#ffb77a]/20 text-[#ffb77a] px-1.5 py-0.5 rounded">
+                      Admin
+                    </span>
+                  )}
+                </div>
+                <div className="p-1">
                   <button
-                    onClick={() => router.push('/admin/overview')}
-                    className="w-full text-left px-3 py-2 text-sm text-[#ffb77a] hover:bg-[#222a3d] rounded transition-colors"
+                    onClick={() => router.push('/settings')}
+                    className="w-full text-left px-3 py-2 text-sm text-[#c7c4d7] hover:bg-[#222a3d] hover:text-[#dae2fd] rounded transition-colors"
                   >
-                    Admin Portal
+                    Settings
                   </button>
-                )}
-                <button
-                  onClick={handleSignOut}
-                  className="w-full text-left px-3 py-2 text-sm text-[#ffb4ab] hover:bg-[#222a3d] rounded transition-colors"
-                >
-                  Sign out
-                </button>
+                  {profile?.is_admin && (
+                    <button
+                      onClick={() => router.push('/admin/overview')}
+                      className="w-full text-left px-3 py-2 text-sm text-[#ffb77a] hover:bg-[#222a3d] rounded transition-colors"
+                    >
+                      Admin Portal
+                    </button>
+                  )}
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full text-left px-3 py-2 text-sm text-[#ffb4ab] hover:bg-[#222a3d] rounded transition-colors"
+                  >
+                    Sign out
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Link href="/login" className="text-sm text-[#c7c4d7] hover:text-white transition-colors">
+                Log in
+              </Link>
+              <Link href="/signup" className="px-4 py-1.5 rounded-full bg-[#c0c1ff] text-[#1000a9] text-sm font-semibold hover:brightness-110 transition-all">
+                Sign up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </header>
   )
 }
+
+

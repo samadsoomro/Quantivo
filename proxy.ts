@@ -39,7 +39,11 @@ export async function proxy(request: NextRequest) {
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/signup')
   const isApiRoute = pathname.startsWith('/api') || pathname.startsWith('/auth')
 
-  if (!user && !isPublicRoute && !isToolRoute && !isApiRoute) {
+  const isDashboardSettings = pathname.startsWith('/dashboard/settings')
+  const isDashboardRoute = pathname.startsWith('/dashboard') && !isDashboardSettings
+  const isAllowedForGuest = isPublicRoute || isToolRoute || isApiRoute || isDashboardRoute
+
+  if (!user && !isAllowedForGuest) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('redirectTo', pathname)
