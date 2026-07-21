@@ -124,8 +124,43 @@ export default function ReportsPage() {
               CSV
             </button>
             <button
-              onClick={() => showToast('PDF export — use the Reports PDF feature in the Tools page.')}
-              className="bg-[#c0c1ff] text-[#292b5e] px-6 py-2 rounded-full font-medium text-sm hover:brightness-110 transition-all flex items-center gap-2"
+              onClick={async () => {
+                try {
+                  const { jsPDF } = await import('jspdf')
+                  const doc = new jsPDF()
+                  doc.setFontSize(22)
+                  doc.text('Quantivo Financial Report', 20, 25)
+                  doc.setFontSize(10)
+                  doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 33)
+                  doc.setFontSize(12)
+                  doc.text(`Total Income: ${formatCurrency(totalIncome)}`, 20, 50)
+                  doc.text(`Total Expenses: ${formatCurrency(totalExpenses)}`, 20, 58)
+                  doc.text(`Net Savings: ${formatCurrency(totalIncome - totalExpenses)}`, 20, 66)
+                  doc.text(`Savings Rate: ${savingsRate.toFixed(1)}%`, 20, 74)
+                  let y = 92
+                  doc.setFontSize(14)
+                  doc.text('Expense Breakdown by Category', 20, y)
+                  y += 10
+                  doc.setFontSize(10)
+                  doc.text('Category', 20, y)
+                  doc.text('Amount', 120, y)
+                  doc.text('% of Total', 160, y)
+                  doc.line(20, y + 2, 190, y + 2)
+                  y += 10
+                  categories.forEach(c => {
+                    doc.text(c.name, 20, y)
+                    doc.text(formatCurrency(c.amount), 120, y)
+                    doc.text(`${((c.amount / totalCatExpenses) * 100).toFixed(1)}%`, 160, y)
+                    y += 8
+                  })
+                  doc.save('Quantivo_Report.pdf')
+                  showToast('PDF downloaded!')
+                } catch (err) {
+                  console.error(err)
+                  showToast('Error generating PDF')
+                }
+              }}
+              className="bg-[var(--color-primary)] text-[var(--bg-canvas)] px-6 py-2 rounded-full font-medium text-sm hover:brightness-110 transition-all flex items-center gap-2"
             >
               <span className="material-symbols-outlined text-[18px]">picture_as_pdf</span>
               PDF
@@ -224,8 +259,8 @@ export default function ReportsPage() {
               <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 800 300">
                 <defs>
                   <linearGradient id="incomeGradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#c0c1ff" stopOpacity="0.4"></stop>
-                    <stop offset="100%" stopColor="#c0c1ff" stopOpacity="0.0"></stop>
+                    <stop offset="0%" stopColor="var(--color-primary)" stopOpacity="0.4"></stop>
+                    <stop offset="100%" stopColor="var(--color-primary)" stopOpacity="0.0"></stop>
                   </linearGradient>
                 </defs>
                 {/* Grid Lines */}
@@ -248,11 +283,11 @@ export default function ReportsPage() {
                 <text fill="var(--text-muted)" fontFamily="JetBrains Mono" fontSize="10" textAnchor="middle" x="780" y="295">Jul</text>
                 {/* Income Area (Violet) */}
                 <path d="M50,220 C100,210 120,180 171,150 C220,120 250,140 292,130 C340,120 370,80 414,90 C460,100 490,110 535,80 C580,50 610,60 657,40 C700,20 740,30 780,20 L780,275 L50,275 Z" fill="url(#incomeGradient)"></path>
-                <path d="M50,220 C100,210 120,180 171,150 C220,120 250,140 292,130 C340,120 370,80 414,90 C460,100 490,110 535,80 C580,50 610,60 657,40 C700,20 740,30 780,20" fill="none" stroke="#c0c1ff" strokeWidth="2"></path>
+                <path d="M50,220 C100,210 120,180 171,150 C220,120 250,140 292,130 C340,120 370,80 414,90 C460,100 490,110 535,80 C580,50 610,60 657,40 C700,20 740,30 780,20" fill="none" stroke="var(--color-primary)" strokeWidth="2"></path>
                 {/* Savings Line (Amber) */}
                 <path d="M50,260 C100,255 120,240 171,230 C220,220 250,210 292,200 C340,190 370,170 414,150 C460,130 490,120 535,100 C580,80 610,90 657,70 C700,50 740,60 780,40" fill="none" stroke="#fa8c00" strokeDasharray="6,4" strokeWidth="2"></path>
                 {/* Data Points */}
-                <circle cx="780" cy="20" fill="var(--bg-canvas)" r="4" stroke="#c0c1ff" strokeWidth="2"></circle>
+                <circle cx="780" cy="20" fill="var(--bg-canvas)" r="4" stroke="var(--color-primary)" strokeWidth="2"></circle>
                 <circle cx="780" cy="40" fill="var(--bg-canvas)" r="4" stroke="#fa8c00" strokeWidth="2"></circle>
               </svg>
             </div>
@@ -261,7 +296,7 @@ export default function ReportsPage() {
           {/* Right Column Stack */}
           <div className="flex flex-col gap-6">
             {/* AI Insight Card (Locked) */}
-            <div className="glass-panel rounded-xl p-6 relative overflow-hidden h-[213px] border-[#c0c1ff]/30 shadow-[0_0_15px_rgba(192,193,255,0.1)]">
+            <div className="glass-panel rounded-xl p-6 relative overflow-hidden h-[213px] border-[#c0c1ff]/30 shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.1)]">
               <div className="absolute inset-0 bg-gradient-to-br from-[#c0c1ff]/5 to-transparent z-0"></div>
               <div className="relative z-10 filter blur-sm select-none">
                 <div className="flex items-center gap-2 mb-4">
@@ -390,7 +425,7 @@ export default function ReportsPage() {
 
       {/* Toast */}
       {toast && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: 'var(--color-primary-hover)', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toast}
         </div>
       )}

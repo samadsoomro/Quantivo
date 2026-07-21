@@ -27,7 +27,7 @@ export function SiteEditorForm({ initialConfig }: { initialConfig: Record<string
           type="text" 
           value={headline}
           onChange={e => setHeadline(e.target.value)}
-          className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#7c7fff]"
+          className="w-full bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg px-4 py-3 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)]"
         />
       </div>
       
@@ -37,14 +37,14 @@ export function SiteEditorForm({ initialConfig }: { initialConfig: Record<string
           value={subhead}
           onChange={e => setSubhead(e.target.value)}
           rows={3}
-          className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#7c7fff]"
+          className="w-full bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg px-4 py-3 text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)]"
         />
       </div>
 
       <button 
         type="submit" 
         disabled={saving}
-        className="w-full bg-[#7c7fff] hover:bg-[#6869e8] disabled:opacity-50 text-white font-medium py-3 rounded-lg transition-colors"
+        className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] disabled:opacity-50 text-[var(--bg-canvas)] font-medium py-3 rounded-lg transition-colors"
       >
         {saving ? 'Saving...' : 'Save Changes'}
       </button>

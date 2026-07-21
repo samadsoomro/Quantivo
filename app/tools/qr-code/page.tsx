@@ -171,7 +171,7 @@ export default function QRCodePage() {
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
-                {[{ fg: '#000000', bg: '#ffffff' }, { fg: '#c0c1ff', bg: '#051424' }, { fg: '#4ade80', bg: '#052014' }, { fg: '#f87171', bg: '#1c0505' }].map((p, i) => (
+                {[{ fg: '#000000', bg: '#ffffff' }, { fg: 'var(--color-primary)', bg: '#051424' }, { fg: '#4ade80', bg: '#052014' }, { fg: '#f87171', bg: '#1c0505' }].map((p, i) => (
                   <button key={i} onClick={() => { setFgColor(p.fg); setBgColor(p.bg) }}
                     style={{ width: '36px', height: '36px', borderRadius: '8px', background: p.bg, border: `3px solid ${p.fg}`, cursor: 'pointer' }} />
                 ))}

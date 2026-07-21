@@ -96,9 +96,9 @@ export default function CSVtoExcelPage() {
           onDrop={e => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f) }}
           onClick={() => document.getElementById('csv-upload')?.click()}
           style={{
-            border: `2px dashed ${dragOver ? 'var(--color-primary)' : 'rgba(192,193,255,0.2)'}`,
+            border: `2px dashed ${dragOver ? 'var(--color-primary)' : 'rgba(var(--color-primary-rgb),0.2)'}`,
             borderRadius: '16px', padding: '48px 24px', textAlign: 'center', cursor: 'pointer',
-            background: dragOver ? 'rgba(192,193,255,0.03)' : 'var(--bg-card)',
+            background: dragOver ? 'rgba(var(--color-primary-rgb),0.03)' : 'var(--bg-card)',
             transition: 'all 0.2s', marginBottom: '24px'
           }}>
           <span className="material-symbols-outlined" style={{ fontSize: '48px', color: 'var(--text-muted)', display: 'block', marginBottom: '12px' }}>table_chart</span>

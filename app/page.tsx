@@ -15,5 +15,8 @@ export default async function Page() {
     return acc
   }, {} as Record<string, string>) || {}
 
-  return <LandingPage siteConfig={siteConfig} />
+  const { data: { user } } = await supabase.auth.getUser()
+  const { data: profile } = user ? await supabase.from('profiles').select('*').eq('id', user.id).single() : { data: null }
+
+  return <LandingPage siteConfig={siteConfig} user={user} profile={profile} />
 }

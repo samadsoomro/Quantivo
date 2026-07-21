@@ -78,11 +78,11 @@ export function AIToolPage({
         <Link href="/tools" style={{ color: 'var(--text-muted)', fontSize: '13px', textDecoration: 'none' }}>← All Tools</Link>
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '16px', marginBottom: '8px' }}>
-          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(192,193,255,0.1)', border: '1px solid rgba(192,193,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'rgba(var(--color-primary-rgb),0.1)', border: '1px solid rgba(var(--color-primary-rgb),0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <span className="material-symbols-outlined" style={{ fontSize: '24px', color: 'var(--color-primary)' }}>{icon}</span>
           </div>
           <div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '3px 10px', borderRadius: '999px', background: 'rgba(192,193,255,0.1)', border: '1px solid rgba(192,193,255,0.2)', fontSize: '11px', color: 'var(--color-primary)', fontWeight: 700, fontFamily: 'monospace', marginBottom: '4px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '3px 10px', borderRadius: '999px', background: 'rgba(var(--color-primary-rgb),0.1)', border: '1px solid rgba(var(--color-primary-rgb),0.2)', fontSize: '11px', color: 'var(--color-primary)', fontWeight: 700, fontFamily: 'monospace', marginBottom: '4px' }}>
               ✦ AI-POWERED · GROQ
             </div>
             <h1 style={{ fontSize: '28px', fontWeight: 700, fontFamily: 'Space Grotesk, sans-serif', color: 'var(--text-primary)', margin: 0 }}>{title}</h1>
@@ -113,7 +113,7 @@ export function AIToolPage({
               onClick={generate}
               disabled={loading || !input.trim()}
               style={{
-                background: input.trim() ? 'var(--color-primary)' : 'rgba(192,193,255,0.2)',
+                background: input.trim() ? 'var(--color-primary)' : 'rgba(var(--color-primary-rgb),0.2)',
                 color: input.trim() ? 'var(--bg-canvas)' : 'var(--text-muted)',
                 border: 'none', borderRadius: '12px', padding: '14px', fontWeight: 700, fontSize: '15px',
                 cursor: input.trim() && !loading ? 'pointer' : 'not-allowed',

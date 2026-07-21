@@ -172,7 +172,7 @@ export default function SettingsPage() {
         .ghost-input:focus {
           outline: none;
           border-color: #c0c1ff;
-          box-shadow: 0 0 0 3px rgba(192, 193, 255, 0.15);
+          box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.15);
         }
       `}</style>
 
@@ -421,7 +421,7 @@ export default function SettingsPage() {
                     onClick={() => handleThemeChange('dark')}
                     className={`cursor-pointer flex flex-col items-center gap-3 transition-opacity ${theme === 'dark' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
                   >
-                    <div className={`w-40 h-28 rounded-xl border-2 bg-[var(--bg-canvas)] p-2 relative overflow-hidden transition-all ${theme === 'dark' ? 'border-[#c0c1ff] shadow-[0_0_20px_rgba(192,193,255,0.15)]' : 'border-transparent'}`}>
+                    <div className={`w-40 h-28 rounded-xl border-2 bg-[var(--bg-canvas)] p-2 relative overflow-hidden transition-all ${theme === 'dark' ? 'border-[#c0c1ff] shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.15)]' : 'border-transparent'}`}>
                       <div className="w-full h-full flex flex-col gap-2 opacity-80">
                         <div className="w-full h-3 bg-white/5 rounded-sm flex items-center px-1 gap-1">
                           <div className="w-1.5 h-1.5 rounded-full bg-[#c0c1ff]"></div>
@@ -445,7 +445,7 @@ export default function SettingsPage() {
                     onClick={() => handleThemeChange('light')}
                     className={`cursor-pointer flex flex-col items-center gap-3 transition-opacity ${theme === 'light' ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
                   >
-                    <div className={`w-40 h-28 rounded-xl border-2 bg-white p-2 relative overflow-hidden transition-all ${theme === 'light' ? 'border-[#c0c1ff] shadow-[0_0_20px_rgba(192,193,255,0.15)]' : 'border-transparent'}`}>
+                    <div className={`w-40 h-28 rounded-xl border-2 bg-white p-2 relative overflow-hidden transition-all ${theme === 'light' ? 'border-[#c0c1ff] shadow-[0_0_20px_rgba(var(--color-primary-rgb),0.15)]' : 'border-transparent'}`}>
                       <div className="w-full h-full flex flex-col gap-2 opacity-80">
                         <div className="w-full h-3 bg-black/5 rounded-sm flex items-center px-1 gap-1">
                           <div className="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
@@ -471,7 +471,7 @@ export default function SettingsPage() {
                 <label className="font-mono text-xs text-[var(--text-secondary)] uppercase tracking-wider block mb-4">Accent Color</label>
                 <div className="flex gap-4">
                   {[
-                    { id: 'violet', color: '#c0c1ff' },
+                    { id: 'violet', color: 'var(--color-primary)' },
                     { id: 'blue', color: '#60a5fa' },
                     { id: 'green', color: '#34d399' },
                     { id: 'amber', color: '#fa8c00' }

@@ -190,7 +190,7 @@ export default function InvoicesPage() {
         .input-glass:focus {
           outline: none;
           border-color: #c0c1ff;
-          box-shadow: 0 0 0 3px rgba(192, 193, 255, 0.15);
+          box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.15);
         }
         .watermark {
           position: absolute;
@@ -208,8 +208,8 @@ export default function InvoicesPage() {
 
       <div className="max-w-[1440px] mx-auto pb-12 flex flex-col gap-6">
         <div style={{ display: 'flex', gap: '8px', marginBottom: '8px', borderBottom: '1px solid var(--border-color)', paddingBottom: '16px' }}>
-          <button onClick={() => setActiveTab('list')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'list' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'list' ? '#c0c1ff' : 'var(--text-muted)', border: 'none', cursor: 'pointer' }}>My Invoices</button>
-          <button onClick={() => setActiveTab('new')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'new' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'new' ? '#c0c1ff' : 'var(--text-muted)', border: 'none', cursor: 'pointer' }}>New Invoice</button>
+          <button onClick={() => setActiveTab('list')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'list' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'list' ? 'var(--color-primary)' : 'var(--text-muted)', border: 'none', cursor: 'pointer' }}>My Invoices</button>
+          <button onClick={() => setActiveTab('new')} style={{ padding: '8px 16px', borderRadius: '8px', fontSize: '14px', fontWeight: 600, transition: 'all 200ms ease', background: activeTab === 'new' ? 'rgba(124,127,255,0.1)' : 'transparent', color: activeTab === 'new' ? 'var(--color-primary)' : 'var(--text-muted)', border: 'none', cursor: 'pointer' }}>New Invoice</button>
         </div>
 
         {activeTab === 'list' && (
@@ -574,7 +574,7 @@ export default function InvoicesPage() {
       </div>
 
       {toastMsg && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: 'var(--color-primary-hover)', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toastMsg}
         </div>
       )}

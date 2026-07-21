@@ -1,6 +1,6 @@
 import { createClient } from '@/supabase/server'
 import { Sidebar } from '@/components/layout/Sidebar'
-import { TopBar } from '@/components/layout/TopBar'
+import { Navbar } from '@/components/layout/Navbar'
 import Link from 'next/link'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -22,12 +22,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
       <Sidebar />
       <div style={{ marginLeft: '256px', flex: 1, display: 'flex', flexDirection: 'column' }}>
         {!user && (
-          <div style={{ background: '#7c7fff', color: '#ffffff', padding: '10px 24px', textAlign: 'center', fontSize: '13px', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+          <div style={{ background: 'var(--color-accent)', color: '#ffffff', padding: '10px 24px', textAlign: 'center', fontSize: '13px', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
             <span>You're exploring as a guest. Your data won't be saved.</span>
             <Link href="/signup" style={{ color: '#ffffff', textDecoration: 'underline', fontWeight: 600 }}>Sign up free →</Link>
           </div>
         )}
-        <TopBar user={user} profile={profile} />
+        <Navbar variant="dashboard" user={user} profile={profile} />
         <main style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
           {children}
         </main>

@@ -226,8 +226,8 @@ export default function PublicInvoiceToolPage() {
         }
         .input-glass:focus {
           outline: none;
-          border-color: #c0c1ff;
-          box-shadow: 0 0 0 3px rgba(192, 193, 255, 0.15);
+          border-color: var(--color-primary);
+          box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.15);
         }
         .watermark {
           position: absolute;
@@ -278,7 +278,7 @@ export default function PublicInvoiceToolPage() {
                 </div>
                 {logoBase64 && (
                   <div className="relative w-max mb-2 group">
-                    <img src={logoBase64} alt="Company Logo" className="h-12 object-contain rounded" />
+                    <img src={logoBase64} alt="Company Logo" className="max-h-12 max-w-[160px] object-contain rounded" />
                     <button onClick={() => { setLogoBase64(null); localStorage.removeItem('invoice_logo') }} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                       <span className="material-symbols-outlined text-[12px]">close</span>
                     </button>
@@ -552,7 +552,7 @@ export default function PublicInvoiceToolPage() {
               </div>
               <div className="flex justify-between items-start relative z-10">
                 {logoBase64 ? (
-                  <img src={logoBase64} alt="Company Logo" className="h-12 object-contain" />
+                  <img src={logoBase64} alt="Company Logo" className="max-h-12 max-w-[120px] object-contain" />
                 ) : (
                   <div className="w-12 h-12 bg-black/5 rounded-lg border border-[var(--border-color)] flex items-center justify-center">
                     <span className="material-symbols-outlined text-[var(--text-muted)] text-[20px]">image</span>
@@ -667,7 +667,7 @@ export default function PublicInvoiceToolPage() {
         </div>
       </footer>
       {toastMsg && (
-        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: '#e1dfff', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
+        <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 200, background: 'rgba(13,28,45,0.95)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 20px', color: 'var(--color-primary-hover)', fontSize: '14px', backdropFilter: 'blur(12px)' }}>
           {toastMsg}
         </div>
       )}

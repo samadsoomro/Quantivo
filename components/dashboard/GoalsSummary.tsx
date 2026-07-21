@@ -4,7 +4,7 @@ import type { Goal } from '@/types'
 
 export function GoalsSummary({ goals }: { goals: Goal[] }) {
   return (
-    <div className="rounded-xl border bg-card p-5">
+    <div className="stat-card">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="font-semibold">Active Goals</h3>
         <Link href="/goals" className="text-xs text-primary hover:underline">

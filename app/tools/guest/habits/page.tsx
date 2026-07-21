@@ -2,7 +2,7 @@
 export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, useMemo } from 'react'
-import { createClient } from '@/supabase/client'
+import { ToolLayout } from '@/components/ToolLayout'
 import { Flame, Heart, Zap, Star, Target, Coffee, BookOpen, Dumbbell, Pencil, Trash2 } from 'lucide-react'
 
 function localDate(d: Date = new Date()): string {
@@ -99,95 +99,73 @@ export default function HabitsPage() {
 
   const loadAll = async () => {
     setLoading(true)
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      setHabits([])
-      setCompletions([])
-      setLoading(false)
-      return
-    }
-
-    const [{ data: habitsData }, { data: completionsData }] = await Promise.all([
-      supabase.from('habits').select('*').eq('user_id', user.id).eq('is_active', true).order('created_at', { ascending: false }),
-      supabase.from('habit_completions').select('habit_id, completed_at').eq('user_id', user.id),
-    ])
-    setHabits(habitsData ?? [])
-    setCompletions(completionsData ?? [])
-    if (habitsData && habitsData.length > 0 && !selectedHabit) {
-      setSelectedHabit(habitsData[0].id)
+    const localData = localStorage.getItem('qv-guest-habits')
+    const localCompletions = localStorage.getItem('qv-guest-habit-completions')
+    const parsedHabits = localData ? JSON.parse(localData) : []
+    const parsedCompletions = localCompletions ? JSON.parse(localCompletions) : []
+    setHabits(parsedHabits.filter((h: any) => h.is_active !== false))
+    setCompletions(parsedCompletions)
+    if (parsedHabits.length > 0 && !selectedHabit) {
+      setSelectedHabit(parsedHabits[0].id)
     }
     setLoading(false)
   }
 
   const addHabit = async () => {
     setSaving(true)
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    
-    if (!user) {
-      setSaving(false)
-      setShowAdd(false)
-      showToast('Login required to save')
-      return
+    const newHabit = {
+      id: Math.random().toString(36).substring(7),
+      title: form.title,
+      description: null,
+      icon: form.icon,
+      color: form.color,
+      frequency: form.frequency as 'daily' | 'weekly',
+      current_streak: 0,
+      longest_streak: 0,
+      is_active: true,
+      created_at: new Date().toISOString()
     }
-
-    const { error } = await supabase.from('habits').insert({ ...form, user_id: user.id })
-    if (error) showToast(`Error: ${error.message}`)
+    const newHabits = [newHabit, ...habits]
+    setHabits(newHabits)
+    localStorage.setItem('qv-guest-habits', JSON.stringify(newHabits))
     setShowAdd(false)
     setForm({ title: '', icon: 'flame', color: 'var(--color-primary)', frequency: 'daily' })
-    loadAll()
+    if (!selectedHabit) setSelectedHabit(newHabit.id)
     setSaving(false)
+    showToast('Saved locally (Guest)')
   }
 
   const updateHabit = async () => {
     if (!editHabit) return
     setSaving(true)
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      setSaving(false)
-      setEditHabit(null)
-      showToast('Login required to update')
-      return
-    }
-    const { error } = await supabase.from('habits').update({
-      title: form.title, icon: form.icon, color: form.color, frequency: form.frequency
-    }).eq('id', editHabit.id)
-    if (error) showToast(`Error: ${error.message}`)
+    const newHabits = habits.map(h => h.id === editHabit.id ? { ...h, ...form } : h)
+    setHabits(newHabits)
+    localStorage.setItem('qv-guest-habits', JSON.stringify(newHabits))
     setEditHabit(null)
     setSaving(false)
-    loadAll()
+    showToast('Updated locally (Guest)')
   }
 
   const deleteHabit = async (id: string) => {
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      setDeleteConfirm(null)
-      showToast('Login required to delete')
-      return
-    }
-    await supabase.from('habits').update({ is_active: false }).eq('id', id)
+    const newHabits = habits.filter(h => h.id !== id)
+    setHabits(newHabits)
+    localStorage.setItem('qv-guest-habits', JSON.stringify(newHabits))
     setDeleteConfirm(null)
     if (selectedHabit === id) setSelectedHabit(null)
-    loadAll()
+    showToast('Deleted locally (Guest)')
   }
 
   const toggleCompletion = async (habitId: string, date: string) => {
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      showToast('Login required to log progress')
-      return
-    }
     const existing = completions.find(c => c.habit_id === habitId && c.completed_at === date)
+    let newCompletions
     if (existing) {
-      await supabase.from('habit_completions').delete().eq('habit_id', habitId).eq('completed_at', date)
+      newCompletions = completions.filter(c => !(c.habit_id === habitId && c.completed_at === date))
     } else {
-      await supabase.from('habit_completions').insert({ habit_id: habitId, user_id: user.id, completed_at: date })
+      newCompletions = [...completions, { habit_id: habitId, completed_at: date }]
     }
-    loadAll()
+    setCompletions(newCompletions)
+    localStorage.setItem('qv-guest-habit-completions', JSON.stringify(newCompletions))
+    showToast('Progress logged locally (Guest)')
   }
 
   const habitCompletionSet = useMemo(() => {

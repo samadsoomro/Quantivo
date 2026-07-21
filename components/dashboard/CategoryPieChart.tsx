@@ -13,14 +13,14 @@ export function CategoryPieChart({ data }: { data: CategoryData[] }) {
 
   if (data.length === 0) {
     return (
-      <div className="flex h-full items-center justify-center rounded-xl border bg-card p-5">
+      <div className="stat-card flex h-full items-center justify-center">
         <p className="text-sm text-muted-foreground">No expense data yet</p>
       </div>
     )
   }
 
   return (
-    <div className="rounded-xl border bg-card p-5">
+    <div className="stat-card">
       <div className="mb-4">
         <h3 className="font-semibold">Expenses by Category</h3>
         <p className="text-xs text-muted-foreground">This month</p>

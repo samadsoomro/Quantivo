@@ -160,7 +160,7 @@ export default function ExpenseReportPage() {
                 <span style={{ color: '#fa8c00', fontFamily: 'monospace', fontWeight: 700 }}>{currency} {catTotal.toFixed(2)}</span>
               </div>
             ))}
-            <div style={{ ...card, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderColor: 'var(--color-primary)', background: 'rgba(192,193,255,0.05)' }}>
+            <div style={{ ...card, padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderColor: 'var(--color-primary)', background: 'rgba(var(--color-primary-rgb),0.05)' }}>
               <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>Total</span>
               <span style={{ color: 'var(--color-primary)', fontFamily: 'monospace', fontWeight: 700, fontSize: '20px' }}>{currency} {total.toFixed(2)}</span>
             </div>

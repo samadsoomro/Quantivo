@@ -101,10 +101,10 @@ export default function PDFConverterPage() {
   const sty = {
     card: { background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '16px', padding: '32px' } as React.CSSProperties,
     dropzone: {
-      border: `2px dashed ${dragOver ? 'var(--color-primary)' : 'rgba(192,193,255,0.2)'}`,
+      border: `2px dashed ${dragOver ? 'var(--color-primary)' : 'rgba(var(--color-primary-rgb),0.2)'}`,
       borderRadius: '12px', padding: '64px 24px', textAlign: 'center' as const,
       cursor: 'pointer', transition: 'border-color 0.2s, background 0.2s',
-      background: dragOver ? 'rgba(192,193,255,0.05)' : 'transparent', marginBottom: '24px'
+      background: dragOver ? 'rgba(var(--color-primary-rgb),0.05)' : 'transparent', marginBottom: '24px'
     } as React.CSSProperties
   }
 

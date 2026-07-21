@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { createClient } from '@/supabase/client'
 import { Eye, EyeOff } from 'lucide-react'
 import { Logo } from '@/components/Logo'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 
 export default function LoginPage() {
   const supabase = createClient()
@@ -172,7 +174,9 @@ export default function LoginPage() {
 
   if (step === 'forgot_otp') {
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--bg-canvas)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-canvas)' }}>
+        <Navbar variant="landing" user={null} profile={null} />
+        <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
         <div style={{ width: '100%', maxWidth: '420px' }}>
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
             <div style={{ margin: '0 auto 16px', display: 'flex', justifyContent: 'center' }}>
@@ -210,7 +214,7 @@ export default function LoginPage() {
                         borderRadius: '8px', color: 'var(--text-primary)', fontSize: '24px', fontWeight: 700, 
                         textAlign: 'center', outline: 'none', transition: 'border-color 200ms ease'
                       }}
-                      onFocus={(e) => { e.target.style.borderColor = '#7c7fff' }}
+                      onFocus={(e) => { e.target.style.borderColor = 'var(--color-accent)' }}
                       onBlur={(e) => { e.target.style.borderColor = 'var(--input-border)' }}
                     />
                   ))}
@@ -219,7 +223,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading || otp.join('').length !== 6}
-                style={{ width: '100%', background: '#7c7fff', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: otp.join('').length !== 6 ? 'not-allowed' : 'pointer', opacity: (loading || otp.join('').length !== 6) ? 0.6 : 1, transition: 'background 200ms ease, transform 200ms ease' }}
+                style={{ width: '100%', background: 'var(--color-accent)', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: otp.join('').length !== 6 ? 'not-allowed' : 'pointer', opacity: (loading || otp.join('').length !== 6) ? 0.6 : 1, transition: 'background 200ms ease, transform 200ms ease' }}
               >
                 {loading ? 'Verifying...' : 'Verify Code'}
               </button>
@@ -227,20 +231,24 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => { setStep('login'); setOtp(['','','','','','']); setErrors({}) }}
-                style={{ background: 'none', border: 'none', color: '#7c7fff', fontSize: '13px', cursor: 'pointer', textDecoration: 'none', padding: 0, marginTop: '-8px' }}
+                style={{ background: 'none', border: 'none', color: 'var(--color-accent)', fontSize: '13px', cursor: 'pointer', textDecoration: 'none', padding: 0, marginTop: '-8px' }}
               >
                 Back to login
               </button>
             </form>
           </div>
         </div>
+        </main>
+        <Footer />
       </div>
     )
   }
 
   if (step === 'forgot_reset') {
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--bg-canvas)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-canvas)' }}>
+        <Navbar variant="landing" user={null} profile={null} />
+        <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
         <div style={{ width: '100%', maxWidth: '420px' }}>
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
             <div style={{ margin: '0 auto 16px', display: 'flex', justifyContent: 'center' }}>
@@ -286,19 +294,23 @@ export default function LoginPage() {
                 </div>
                 {errors.confirmNewPassword && <div style={{ color: '#ffb4ab', fontSize: '12px', marginTop: '4px' }}>{errors.confirmNewPassword}</div>}
               </div>
-              <button type="submit" disabled={loading} style={{ width: '100%', background: '#7c7fff', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
+              <button type="submit" disabled={loading} style={{ width: '100%', background: 'var(--color-accent)', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
                 {loading ? 'Updating...' : 'Set Password'}
               </button>
             </form>
           </div>
         </div>
+        </main>
+        <Footer />
       </div>
     )
   }
 
   if (step === 'forgot_email') {
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--bg-canvas)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-canvas)' }}>
+        <Navbar variant="landing" user={null} profile={null} />
+        <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
         <div style={{ width: '100%', maxWidth: '420px' }}>
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
             <Link href="/" style={{ textDecoration: 'none', display: 'inline-block', marginBottom: '16px' }}>
@@ -318,21 +330,25 @@ export default function LoginPage() {
                 <label style={{ display: 'block', fontSize: '13px', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '6px' }}>Email</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com" style={inputStyle} />
               </div>
-              <button type="submit" disabled={loading} style={{ width: '100%', background: '#7c7fff', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
+              <button type="submit" disabled={loading} style={{ width: '100%', background: 'var(--color-accent)', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
                 {loading ? 'Sending...' : 'Send Reset Code'}
               </button>
             </form>
             <p style={{ textAlign: 'center', fontSize: '13px', color: 'var(--text-secondary)', marginTop: '20px', marginBottom: 0 }}>
-              <button type="button" onClick={() => { setStep('login'); setErrors({}) }} style={{ background: 'none', border: 'none', color: '#7c7fff', padding: 0, fontWeight: 500, cursor: 'pointer' }}>Back to login</button>
+              <button type="button" onClick={() => { setStep('login'); setErrors({}) }} style={{ background: 'none', border: 'none', color: 'var(--color-accent)', padding: 0, fontWeight: 500, cursor: 'pointer' }}>Back to login</button>
             </p>
           </div>
         </div>
+        </main>
+        <Footer />
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-canvas)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-canvas)' }}>
+      <Navbar variant="landing" user={null} profile={null} />
+      <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
       <style>{`
         .google-btn {
           background: #ffffff;
@@ -399,7 +415,7 @@ export default function LoginPage() {
                 {errors.form}
                 {errors.form.includes('verify') && (
                   <div style={{ marginTop: '8px' }}>
-                    <button type="button" onClick={handleResendConfirm} disabled={loading} style={{ background: 'none', border: 'none', color: '#7c7fff', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}>
+                    <button type="button" onClick={handleResendConfirm} disabled={loading} style={{ background: 'none', border: 'none', color: 'var(--color-accent)', fontWeight: 600, cursor: loading ? 'not-allowed' : 'pointer' }}>
                       Resend code →
                     </button>
                   </div>
@@ -413,7 +429,7 @@ export default function LoginPage() {
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
                 <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text-primary)' }}>Password</label>
-                <button type="button" onClick={() => { setStep('forgot_email'); setErrors({}) }} style={{ fontSize: '13px', fontWeight: 500, color: '#7c7fff', background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>
+                <button type="button" onClick={() => { setStep('forgot_email'); setErrors({}) }} style={{ fontSize: '13px', fontWeight: 500, color: 'var(--color-accent)', background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>
                   Forgot password?
                 </button>
               </div>
@@ -429,16 +445,18 @@ export default function LoginPage() {
                 </button>
               </div>
             </div>
-            <button type="submit" disabled={loading} style={{ width: '100%', background: '#7c7fff', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
+            <button type="submit" disabled={loading} style={{ width: '100%', background: 'var(--color-accent)', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
           <p style={{ textAlign: 'center', fontSize: '13px', color: 'var(--text-secondary)', marginTop: '20px', marginBottom: 0 }}>
             Don't have an account?{' '}
-            <Link href="/signup" style={{ color: '#7c7fff', textDecoration: 'none', fontWeight: 500 }}>Sign up free →</Link>
+            <Link href="/signup" style={{ color: 'var(--color-accent)', textDecoration: 'none', fontWeight: 500 }}>Sign up free →</Link>
           </p>
         </div>
       </div>
+      </main>
+      <Footer />
     </div>
   )
 }

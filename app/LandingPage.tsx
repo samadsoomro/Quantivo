@@ -7,7 +7,12 @@ import Link from 'next/link'
 import { Logo } from '@/components/Logo'
 import { HeroGraph } from '@/components/HeroGraph'
 
-export function LandingPage({ siteConfig }: { siteConfig: Record<string, string> }) {
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
+import type { User } from '@supabase/supabase-js'
+import type { Profile } from '@/types'
+
+export function LandingPage({ siteConfig, user, profile }: { siteConfig: Record<string, string>, user: User | null, profile: Profile | null }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -156,27 +161,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
       `}</style>
 
       {/* TopNavBar */}
-      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 50, background: 'var(--bg-nav)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: '#e1dfff', letterSpacing: '-0.02em' }}>
-            <Logo />
-          </div>
-          <div className="nav-links-desktop" style={{ display: 'flex', gap: '32px' }}>
-            <a className="nav-link" href="#features">Features</a>
-            <a className="nav-link" href="#tools">Free Tools</a>
-            <a className="nav-link" href="#pricing">Pricing</a>
-            <a className="nav-link" href="#faq">FAQ</a>
-          </div>
-          <div className="nav-links-desktop" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <ThemeToggle />
-            <Link href="/login" className="btn-ghost">Log In</Link>
-            <Link href="/signup" className="btn-violet">Get Started →</Link>
-          </div>
-          <div className="mobile-menu-btn" style={{ display: 'none' }}>
-            <MobileMenu />
-          </div>
-        </div>
-      </nav>
+      <Navbar variant="landing" user={user} profile={profile} />
 
       <main style={{ paddingTop: '96px', paddingBottom: '80px', background: 'var(--bg-canvas)' }}>
         {/* Hero Section */}
@@ -325,7 +310,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
               { icon: 'bar_chart', title: 'Advanced Reports', desc: 'Export detailed reports and tax-ready summaries in seconds.' },
             ].map((feature, i) => (
               <div key={feature.title} className={`glass-card hover-lift fade-up ${i > 0 ? ' stagger-' + Math.min(i, 8) : ''}`} style={{ padding: '28px' }}>
-                <span className="material-symbols-outlined" style={{ fontSize: '36px', color: '#7c7fff', marginBottom: '16px', display: 'block' }}>{feature.icon}</span>
+                <span className="material-symbols-outlined" style={{ fontSize: '36px', color: 'var(--color-accent)', marginBottom: '16px', display: 'block' }}>{feature.icon}</span>
                 <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '20px', fontWeight: 600, color: 'var(--text-heading)', marginBottom: '10px' }}>{feature.title}</h3>
                 <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-secondary)', lineHeight: 1.6 }}>{feature.desc}</p>
               </div>
@@ -343,7 +328,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
             {/* Free */}
             <div className="glass-card fade-up" style={{ padding: '36px' }}>
               <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>Free</h3>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: '#7c7fff', marginBottom: '24px' }}>$0<span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/mo</span></div>
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: 'var(--color-accent)', marginBottom: '24px' }}>$0<span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/mo</span></div>
               <ul style={{ listStyle: 'none', padding: 0, marginBottom: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {['Up to 50 transactions/mo', '3 tool uses/day', 'Basic dashboard', '1 goal'].map((f) => (
                   <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-secondary)' }}>
@@ -355,13 +340,13 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
             </div>
             {/* Pro */}
             <div className="glass-card fade-up stagger-1" style={{ padding: '36px', border: '1px solid rgba(124,127,255,0.4)', boxShadow: '0 0 40px rgba(124,127,255,0.08)', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: '#7c7fff', color: '#ffffff', padding: '4px 16px', borderRadius: '9999px', fontFamily: 'JetBrains Mono, monospace', fontSize: '12px', fontWeight: 500, letterSpacing: '0.04em' }}>MOST POPULAR</div>
-              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '22px', fontWeight: 700, color: '#7c7fff', marginBottom: '8px' }}>Pro</h3>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: '#7c7fff', marginBottom: '24px' }}>$12<span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/mo</span></div>
+              <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: 'var(--color-accent)', color: '#ffffff', padding: '4px 16px', borderRadius: '9999px', fontFamily: 'JetBrains Mono, monospace', fontSize: '12px', fontWeight: 500, letterSpacing: '0.04em' }}>MOST POPULAR</div>
+              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '22px', fontWeight: 700, color: 'var(--color-accent)', marginBottom: '8px' }}>Pro</h3>
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: 'var(--color-accent)', marginBottom: '24px' }}>$12<span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/mo</span></div>
               <ul style={{ listStyle: 'none', padding: 0, marginBottom: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {['Unlimited transactions', 'Unlimited tool uses', 'Advanced analytics', 'Unlimited goals', 'AI insights', 'Priority support'].map((f) => (
                   <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-primary)' }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#7c7fff' }}>check_circle</span>{f}
+                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--color-accent)' }}>check_circle</span>{f}
                   </li>
                 ))}
               </ul>
@@ -386,36 +371,7 @@ export function LandingPage({ siteConfig }: { siteConfig: Record<string, string>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer style={{ borderTop: '1px solid var(--border)', padding: '60px 24px 40px', background: 'var(--bg-footer)' }}>
-        <div className="tool-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: '48px', marginBottom: '48px' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'Space Grotesk', sans-serif", fontSize: '24px', fontWeight: 700, color: 'var(--text-footer)', marginBottom: '12px' }}><Logo /></div>
-            <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-footer)', lineHeight: 1.7 }}>The precision financial command center for modern professionals.</p>
-          </div>
-          {[
-            { heading: 'Product', links: ['Features', 'Tools', 'Pricing', 'Changelog'] },
-            { heading: 'Company', links: ['About', 'Blog', 'Careers', 'Press'] },
-            { heading: 'Legal', links: ['Privacy', 'Terms', 'Security', 'Status'] },
-          ].map((col) => (
-            <div key={col.heading}>
-              <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '13px', fontWeight: 600, color: 'var(--text-footer)', letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '16px' }}>{col.heading}</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {col.links.map((link) => (
-                  <a key={link} href="#" style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-footer)', textDecoration: 'none', transition: 'color 200ms ease-out' }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.9)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-footer)')}
-                  >{link}</a>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', borderTop: '1px solid var(--border)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', fontWeight: 300, color: 'var(--text-footer)' }}>© {new Date().getFullYear()} Quantivo Analytics. All rights reserved.</span>
-          <Link href="/signup" className="btn-violet" style={{ fontSize: '14px', padding: '9px 24px' }}>Start Free →</Link>
-        </div>
-      </footer>
+      <Footer />
     </>
   )
 }
@@ -430,7 +386,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         style={{ width: '100%', textAlign: 'left', padding: '20px 24px', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
       >
         <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '16px', fontWeight: 600, color: 'var(--text-primary)' }}>{question}</span>
-        <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#7c7fff', transition: 'transform 200ms ease-out', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>expand_more</span>
+        <span className="material-symbols-outlined" style={{ fontSize: '20px', color: 'var(--color-accent)', transition: 'transform 200ms ease-out', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>expand_more</span>
       </button>
       <div style={{ maxHeight: open ? '200px' : '0', overflow: 'hidden', transition: 'max-height 300ms ease-out' }}>
         <div style={{ padding: '0 24px 20px', fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-secondary)', lineHeight: 1.7 }}>{answer}</div>
@@ -439,24 +395,3 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   )
 }
 
-function MobileMenu() {
-  const [open, setOpen] = useState(false)
-  return (
-    <div style={{ position: 'relative' }}>
-      <button type="button" onClick={() => setOpen(!open)} style={{ background: 'none', border: 'none', color: '#e1dfff', cursor: 'pointer' }}>
-        <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>{open ? 'close' : 'menu'}</span>
-      </button>
-      {open && (
-        <div style={{ position: 'absolute', top: '100%', right: 0, width: '250px', background: 'var(--nav-bg)', border: '1px solid var(--border-color)', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <a className="nav-link" href="#features" onClick={() => setOpen(false)}>Features</a>
-          <a className="nav-link" href="#tools" onClick={() => setOpen(false)}>Free Tools</a>
-          <a className="nav-link" href="#pricing" onClick={() => setOpen(false)}>Pricing</a>
-          <a className="nav-link" href="#faq" onClick={() => setOpen(false)}>FAQ</a>
-          <div style={{ borderTop: '1px solid var(--border-color)', margin: '8px 0' }} />
-          <Link href="/login" className="btn-ghost" style={{ textAlign: 'center', width: '100%' }}>Log In</Link>
-          <Link href="/signup" className="btn-violet" style={{ textAlign: 'center', width: '100%' }}>Get Started →</Link>
-        </div>
-      )}
-    </div>
-  )
-}

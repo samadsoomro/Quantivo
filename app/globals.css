@@ -22,6 +22,12 @@
   --graph-card-bg: rgba(18,33,49,0.85);
   --graph-card-border: rgba(124,127,255,0.25);
   --glass-bg: rgba(18,33,49,0.6);
+  --color-primary: #c0c1ff;
+  --color-primary-hover: #e1dfff;
+  --color-primary-rgb: 192, 193, 255;
+  --color-accent: #7c7fff;
+  --color-secondary: #4edea3;
+  --color-destructive: #ffb4ab;
 }
 :root.light {
   --bg-canvas: #f0f4f8;
@@ -45,20 +51,28 @@
   --graph-card-bg: rgba(255,255,255,0.98);
   --graph-card-border: rgba(0,0,0,0.12);
   --glass-bg: rgba(255,255,255,0.8);
+  --color-primary: #5c5fdf;
+  --color-primary-hover: #4b4dc4;
+  --color-primary-rgb: 92, 95, 223;
+  --color-accent: #4a4dc4;
+  --color-secondary: #00b06b;
+  --color-destructive: #e63925;
 }
 
 @theme {
   --color-background: var(--bg-canvas);
   --color-foreground: var(--text-primary);
-  --color-primary: #c0c1ff;
-  --color-primary-foreground: #1000a9;
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-accent: var(--color-accent);
+  --color-primary-foreground: var(--bg-canvas);
   --color-card: var(--bg-surface);
   --color-muted: var(--bg-surface);
   --color-muted-foreground: var(--text-secondary);
   --color-border: var(--border);
   --color-input: var(--bg-surface);
-  --color-destructive: #ffb4ab;
-  --color-secondary: #4edea3;
+  --color-destructive: var(--color-destructive);
+  --color-secondary: var(--color-secondary);
   --color-accent: var(--bg-surface);
   --color-surface: var(--bg-surface);
   --font-sans: "Inter", system-ui, sans-serif;
@@ -107,7 +121,7 @@ body {
 .glass-card:hover {
   transform: translateY(-2px);
   backdrop-filter: blur(20px);
-  box-shadow: 0 10px 30px -10px rgba(192, 193, 255, 0.15);
+  box-shadow: 0 10px 30px -10px rgba(var(--color-primary-rgb), 0.15);
 }
 
 .glow-border {
@@ -117,14 +131,14 @@ body {
   content: "";
   position: absolute;
   inset: -1px;
-  background: linear-gradient(45deg, transparent, #c0c1ff, transparent);
+  background: linear-gradient(45deg, transparent, var(--color-primary), transparent);
   border-radius: inherit;
   z-index: -1;
   opacity: 0.5;
 }
 
 .gradient-text {
-  background: linear-gradient(to right, #e1dfff, #c0c1ff, #bac6e9);
+  background: linear-gradient(to right, var(--color-primary-hover), var(--color-primary), var(--color-accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% auto;
@@ -140,11 +154,11 @@ body {
 }
 
 .input-glow:focus {
-  box-shadow: 0 0 15px rgba(192, 193, 255, 0.15);
+  box-shadow: 0 0 15px rgba(var(--color-primary-rgb), 0.15);
 }
 
 .google-btn-hover:hover {
-  box-shadow: 0 0 20px rgba(192, 193, 255, 0.2);
+  box-shadow: 0 0 20px rgba(var(--color-primary-rgb), 0.2);
   transform: translateY(-1px);
 }
 
@@ -152,7 +166,7 @@ body {
   position: fixed;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(192, 193, 255, 0.05) 0%, rgba(5, 20, 36, 0) 70%);
+  background: radial-gradient(circle, rgba(var(--color-primary-rgb), 0.05) 0%, rgba(5, 20, 36, 0) 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -170,7 +184,7 @@ body {
   transition: all 0.2s ease-in-out;
 }
 .glow-button:hover {
-  box-shadow: 0 0 20px 0 rgba(192, 193, 255, 0.15);
+  box-shadow: 0 0 20px 0 rgba(var(--color-primary-rgb), 0.15);
   transform: translateY(-2px);
 }
 
@@ -190,8 +204,8 @@ body {
 
 input:focus {
   outline: none;
-  border-color: #c0c1ff !important;
-  box-shadow: 0 0 0 1px #c0c1ff;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 1px var(--color-primary);
 }
 
 .glass-sidebar {
@@ -222,4 +236,37 @@ input:focus {
   width: 4px;
   background-color: var(--color-primary);
   border-radius: 0 4px 4px 0;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -10px rgba(var(--color-primary-rgb), 0.15);
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-heading);
+}
+
+.section-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
 }

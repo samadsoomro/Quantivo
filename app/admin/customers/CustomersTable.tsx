@@ -57,12 +57,12 @@ export function CustomersTable({ initialProfiles }: { initialProfiles: Profile[]
           placeholder="Search by name or email..." 
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="bg-black/20 border border-white/10 rounded-lg px-4 py-2 text-sm text-white w-full max-w-sm focus:outline-none focus:border-[#7c7fff]"
+          className="bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg px-4 py-2 text-sm text-[var(--text-primary)] w-full max-w-sm focus:outline-none focus:border-[var(--color-primary)]"
         />
         <select 
           value={filterPlan}
           onChange={e => setFilterPlan(e.target.value)}
-          className="bg-black/20 border border-white/10 rounded-lg px-4 py-2 text-sm text-white focus:outline-none focus:border-[#7c7fff]"
+          className="bg-[var(--bg-elevated)] border border-[var(--border)] rounded-lg px-4 py-2 text-sm text-[var(--text-primary)] focus:outline-none focus:border-[var(--color-primary)]"
         >
           <option value="all">All Plans</option>
           <option value="free">Free</option>
@@ -71,9 +71,9 @@ export function CustomersTable({ initialProfiles }: { initialProfiles: Profile[]
       </div>
 
       {/* Table */}
-      <div className="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
+      <div className="bg-[var(--bg-card)] backdrop-blur-md border border-[var(--border)] rounded-2xl overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-white/5 border-b border-white/10">
+          <thead className="bg-[var(--bg-elevated)]/50 border-b border-[var(--border)]">
             <tr>
               <th className="p-4 text-xs font-mono text-[var(--text-secondary)] uppercase">Name</th>
               <th className="p-4 text-xs font-mono text-[var(--text-secondary)] uppercase">Email</th>
@@ -83,13 +83,13 @@ export function CustomersTable({ initialProfiles }: { initialProfiles: Profile[]
               <th className="p-4 text-xs font-mono text-[var(--text-secondary)] uppercase text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-[var(--border)]">
             {filtered.map(user => (
-              <tr key={user.id} className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-4 text-sm text-white font-medium">{user.full_name || 'Unnamed'}</td>
+              <tr key={user.id} className="hover:bg-[var(--bg-elevated)] transition-colors">
+                <td className="p-4 text-sm text-[var(--text-primary)] font-medium">{user.full_name || 'Unnamed'}</td>
                 <td className="p-4 text-sm text-[var(--text-secondary)]">{user.email}</td>
                 <td className="p-4 text-sm">
-                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${user.plan === 'pro' ? 'bg-[#c0c1ff]/20 text-[#c0c1ff]' : 'bg-white/10 text-[var(--text-secondary)]'}`}>
+                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${user.plan === 'pro' ? 'bg-[rgba(var(--color-primary-rgb),0.2)] text-[var(--color-primary)]' : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)]'}`}>
                     {user.plan || 'free'}
                   </span>
                 </td>
@@ -102,7 +102,7 @@ export function CustomersTable({ initialProfiles }: { initialProfiles: Profile[]
                 <td className="p-4 text-sm text-right space-x-2">
                   <button 
                     onClick={() => handlePlanToggle(user.id, user.plan)}
-                    className="text-xs bg-white/5 hover:bg-white/10 text-white px-2 py-1 rounded transition-colors"
+                    className="text-xs bg-[var(--bg-elevated)] hover:bg-[var(--border)] text-[var(--text-primary)] px-2 py-1 rounded transition-colors"
                   >
                     Toggle Plan
                   </button>

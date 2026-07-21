@@ -55,7 +55,7 @@ export function DashboardCharts({ monthlyChartData, categoryData }: DashboardCha
                 itemStyle={{ color: 'var(--text-primary)' }}
                 formatter={(value: any, name: any) => [formatCurrency(Number(value)), String(name).charAt(0).toUpperCase() + String(name).slice(1)]}
               />
-              <Bar dataKey="income" fill="#c0c1ff" radius={[4, 4, 0, 0]} barSize={32} />
+              <Bar dataKey="income" fill="var(--color-primary)" radius={[4, 4, 0, 0]} barSize={32} />
               <Bar dataKey="expenses" fill="#fa8c00" radius={[4, 4, 0, 0]} barSize={32} />
             </BarChart>
           </ResponsiveContainer>
@@ -103,7 +103,7 @@ export function DashboardCharts({ monthlyChartData, categoryData }: DashboardCha
             categoryData.map((cat, idx) => (
               <div className="flex justify-between items-center text-sm" key={cat.name}>
                 <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: cat.color || (idx === 0 ? '#c0c1ff' : idx === 1 ? '#fa8c00' : '#ff4433') }}></span>
+                  <span className="w-3 h-3 rounded-full" style={{ backgroundColor: cat.color || (idx === 0 ? 'var(--color-primary)' : idx === 1 ? '#fa8c00' : '#ff4433') }}></span>
                   <span className="font-body-sm text-[var(--text-secondary)]">{cat.name}</span>
                 </div>
                 <span className="font-data-display text-[#dae2fd]">{((cat.amount / categoryTotal) * 100).toFixed(0)}%</span>

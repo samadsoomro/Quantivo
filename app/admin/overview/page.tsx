@@ -23,7 +23,7 @@ export default async function AdminOverviewPage() {
     <div className="max-w-[1440px] mx-auto pb-12 space-y-6">
       <div className="flex justify-between items-end mb-10">
         <div>
-          <h1 className="font-headline-xl text-3xl font-bold text-[#c0c1ff] mb-2">Admin Overview</h1>
+          <h1 className="font-headline-xl text-3xl font-bold text-[var(--color-primary)] mb-2">Admin Overview</h1>
           <p className="font-body-md text-sm text-[var(--text-secondary)]">Platform KPIs and recent activity.</p>
         </div>
       </div>
@@ -36,20 +36,20 @@ export default async function AdminOverviewPage() {
           { label: 'MRR', value: `$${mrr.toLocaleString()}` },
           { label: 'Free Users', value: freeUsers || 0 }
         ].map((kpi, i) => (
-          <div key={i} className="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-2xl p-6">
+          <div key={i} className="bg-[var(--bg-card)] backdrop-blur-md border border-[var(--border)] rounded-2xl p-6">
             <h3 className="text-xs text-[var(--text-secondary)] font-mono uppercase tracking-wider mb-2">{kpi.label}</h3>
-            <p className="text-3xl font-bold text-white font-mono">{kpi.value}</p>
+            <p className="text-3xl font-bold text-[var(--text-primary)] font-mono">{kpi.value}</p>
           </div>
         ))}
       </div>
 
       {/* Recent Signups */}
-      <div className="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
-        <div className="p-6 border-b border-white/5">
-          <h2 className="text-lg font-bold text-white">Recent Signups</h2>
+      <div className="bg-[var(--bg-card)] backdrop-blur-md border border-[var(--border)] rounded-2xl overflow-hidden">
+        <div className="p-6 border-b border-[var(--border)]">
+          <h2 className="text-lg font-bold text-[var(--text-primary)]">Recent Signups</h2>
         </div>
         <table className="w-full text-left">
-          <thead className="bg-white/5 border-b border-white/10">
+          <thead className="bg-[var(--bg-elevated)]/50 border-b border-[var(--border)]">
             <tr>
               <th className="p-4 text-xs font-mono text-[var(--text-secondary)] uppercase">Name</th>
               <th className="p-4 text-xs font-mono text-[var(--text-secondary)] uppercase">Email</th>
@@ -57,13 +57,13 @@ export default async function AdminOverviewPage() {
               <th className="p-4 text-xs font-mono text-[var(--text-secondary)] uppercase">Joined</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className="divide-y divide-[var(--border)]">
             {recentSignups?.map(user => (
-              <tr key={user.id} className="hover:bg-white/[0.02] transition-colors">
-                <td className="p-4 text-sm text-white font-medium">{user.full_name || 'Unnamed'}</td>
+              <tr key={user.id} className="hover:bg-[var(--bg-elevated)] transition-colors">
+                <td className="p-4 text-sm text-[var(--text-primary)] font-medium">{user.full_name || 'Unnamed'}</td>
                 <td className="p-4 text-sm text-[var(--text-secondary)]">{user.email}</td>
                 <td className="p-4 text-sm">
-                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${user.plan === 'pro' ? 'bg-[#c0c1ff]/20 text-[#c0c1ff]' : 'bg-white/10 text-[var(--text-secondary)]'}`}>
+                  <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${user.plan === 'pro' ? 'bg-[rgba(var(--color-primary-rgb),0.2)] text-[var(--color-primary)]' : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)]'}`}>
                     {user.plan || 'free'}
                   </span>
                 </td>

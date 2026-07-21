@@ -79,7 +79,7 @@ export default function PasswordGeneratorPage() {
   const toggleStyle = (active: boolean) => ({
     display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px',
     borderRadius: '10px', border: `1px solid ${active ? 'var(--color-primary)' : 'var(--border-color)'}`,
-    background: active ? 'rgba(192,193,255,0.05)' : 'var(--bg-card)',
+    background: active ? 'rgba(var(--color-primary-rgb),0.05)' : 'var(--bg-card)',
     cursor: 'pointer', transition: 'all 0.15s', color: 'var(--text-primary)', fontSize: '14px'
   }) as React.CSSProperties
 

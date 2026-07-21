@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { createClient } from '@/supabase/client'
 import { Eye, EyeOff } from 'lucide-react'
 import { Logo } from '@/components/Logo'
+import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 
 export default function SignupPage() {
   const supabase = createClient()
@@ -158,7 +160,9 @@ export default function SignupPage() {
 
   if (step === 'otp') {
     return (
-      <div style={{ minHeight: '100vh', background: 'var(--bg-canvas)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-canvas)' }}>
+        <Navbar variant="landing" user={null} profile={null} />
+        <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
         <div style={{ width: '100%', maxWidth: '420px' }}>
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
             <div style={{ margin: '0 auto 16px', display: 'flex', justifyContent: 'center' }}>
@@ -196,7 +200,7 @@ export default function SignupPage() {
                         borderRadius: '8px', color: 'var(--text-primary)', fontSize: '24px', fontWeight: 700, 
                         textAlign: 'center', outline: 'none', transition: 'border-color 200ms ease'
                       }}
-                      onFocus={(e) => { e.target.style.borderColor = '#7c7fff' }}
+                      onFocus={(e) => { e.target.style.borderColor = 'var(--color-accent)' }}
                       onBlur={(e) => { e.target.style.borderColor = 'var(--input-border)' }}
                     />
                   ))}
@@ -205,7 +209,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 disabled={loading || otp.join('').length !== 6}
-                style={{ width: '100%', background: '#7c7fff', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: otp.join('').length !== 6 ? 'not-allowed' : 'pointer', opacity: (loading || otp.join('').length !== 6) ? 0.6 : 1, transition: 'background 200ms ease, transform 200ms ease' }}
+                style={{ width: '100%', background: 'var(--color-accent)', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: otp.join('').length !== 6 ? 'not-allowed' : 'pointer', opacity: (loading || otp.join('').length !== 6) ? 0.6 : 1, transition: 'background 200ms ease, transform 200ms ease' }}
               >
                 {loading ? 'Verifying...' : 'Verify Email'}
               </button>
@@ -215,7 +219,7 @@ export default function SignupPage() {
                   type="button"
                   onClick={handleResendCode}
                   disabled={cooldown > 0 || loading}
-                  style={{ background: 'none', border: 'none', color: '#7c7fff', fontSize: '13px', cursor: (cooldown > 0 || loading) ? 'not-allowed' : 'pointer', padding: 0, opacity: (cooldown > 0 || loading) ? 0.6 : 1 }}
+                  style={{ background: 'none', border: 'none', color: 'var(--color-accent)', fontSize: '13px', cursor: (cooldown > 0 || loading) ? 'not-allowed' : 'pointer', padding: 0, opacity: (cooldown > 0 || loading) ? 0.6 : 1 }}
                 >
                   {cooldown > 0 ? `Resend in ${cooldown}s...` : 'Resend code'}
                 </button>
@@ -223,12 +227,16 @@ export default function SignupPage() {
             </form>
           </div>
         </div>
+        </main>
+        <Footer />
       </div>
     )
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg-canvas)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--bg-canvas)' }}>
+      <Navbar variant="landing" user={null} profile={null} />
+      <main style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', fontFamily: 'Inter, sans-serif' }}>
       <style>{`
         .google-btn {
           background: #ffffff;
@@ -294,7 +302,7 @@ export default function SignupPage() {
             {errors.form && (
               <div style={{ color: errors.form.includes('exists') ? 'var(--text-secondary)' : '#ffb4ab', fontSize: '13px', textAlign: 'center' }}>
                 {errors.form.includes('exists') ? (
-                  <Link href="/login" style={{ color: '#7c7fff', textDecoration: 'none' }}>{errors.form}</Link>
+                  <Link href="/login" style={{ color: 'var(--color-accent)', textDecoration: 'none' }}>{errors.form}</Link>
                 ) : errors.form}
               </div>
             )}
@@ -338,16 +346,18 @@ export default function SignupPage() {
               </div>
               {errors.confirmPassword && <div className="input-error">{errors.confirmPassword}</div>}
             </div>
-            <button type="submit" disabled={loading} style={{ width: '100%', background: '#7c7fff', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
+            <button type="submit" disabled={loading} style={{ width: '100%', background: 'var(--color-accent)', color: '#ffffff', border: 'none', borderRadius: '9999px', padding: '12px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', opacity: loading ? 0.6 : 1, marginTop: '8px', transition: 'background 200ms ease, transform 200ms ease' }}>
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>
           </form>
           <p style={{ textAlign: 'center', fontSize: '13px', color: 'var(--text-secondary)', marginTop: '20px', marginBottom: 0 }}>
             Already have an account?{' '}
-            <Link href="/login" style={{ color: '#7c7fff', textDecoration: 'none', fontWeight: 500 }}>Log in →</Link>
+            <Link href="/login" style={{ color: 'var(--color-accent)', textDecoration: 'none', fontWeight: 500 }}>Log in →</Link>
           </p>
         </div>
       </div>
+      </main>
+      <Footer />
     </div>
   )
 }

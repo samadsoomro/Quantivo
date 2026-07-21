@@ -25,7 +25,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       }}>
         <p style={{ margin: '0 0 8px', fontSize: '12px', color: 'var(--text-secondary)' }}>{label}</p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <p style={{ margin: 0, color: '#7c7fff', fontWeight: 600, fontSize: '14px' }}>
+          <p style={{ margin: 0, color: 'var(--color-accent)', fontWeight: 600, fontSize: '14px' }}>
             Income: ${payload[0].value.toLocaleString()}
           </p>
           <p style={{ margin: 0, color: '#fa8c00', fontWeight: 600, fontSize: '14px' }}>
@@ -62,8 +62,8 @@ export function HeroGraph() {
           <AreaChart data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="colorIncomeHero" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#7c7fff" stopOpacity={0.2}/>
-                <stop offset="95%" stopColor="#7c7fff" stopOpacity={0}/>
+                <stop offset="5%" stopColor="var(--color-accent)" stopOpacity={0.2}/>
+                <stop offset="95%" stopColor="var(--color-accent)" stopOpacity={0}/>
               </linearGradient>
               <linearGradient id="colorExpenseHero" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#fa8c00" stopOpacity={0.2}/>
@@ -73,7 +73,7 @@ export function HeroGraph() {
             <XAxis dataKey="month" hide />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} />
-            <Area type="monotone" dataKey="income" stroke="#7c7fff" strokeWidth={2} fillOpacity={1} fill="url(#colorIncomeHero)" />
+            <Area type="monotone" dataKey="income" stroke="var(--color-accent)" strokeWidth={2} fillOpacity={1} fill="url(#colorIncomeHero)" />
             <Area type="monotone" dataKey="expenses" stroke="#fa8c00" strokeWidth={2} fillOpacity={1} fill="url(#colorExpenseHero)" />
           </AreaChart>
         </ResponsiveContainer>

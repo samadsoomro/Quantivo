@@ -21,9 +21,8 @@ export function AdminSidebar() {
         <div className="px-6 mb-12 flex flex-col">
           <div className="flex items-center gap-2">
             <Logo />
-            <h1 className="text-2xl font-bold text-[var(--text-primary)]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>Quantivo</h1>
           </div>
-          <p className="text-xs text-red-400 mt-1 tracking-wide font-mono uppercase font-bold">Admin Portal</p>
+          <p className="text-xs text-red-400 mt-3 tracking-wide font-mono uppercase font-bold">Admin Portal</p>
         </div>
 
         {/* Nav Items */}
@@ -36,8 +35,8 @@ export function AdminSidebar() {
                 href={item.href}
                 className={`flex items-center gap-4 px-4 py-2 border-l-2 transition-all duration-200 group ${
                   active
-                    ? 'bg-[#2d3449] text-[#ffb77a] border-[#ffb77a]'
-                    : 'text-[#c7c4d7] border-transparent hover:bg-[#222a3d] hover:text-[#dae2fd]'
+                    ? 'bg-[var(--bg-elevated)] text-[#ffb77a] border-[#ffb77a]'
+                    : 'text-[var(--text-secondary)] border-transparent hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)]'
                 }`}
               >
                 <span className={`material-symbols-outlined text-[20px] ${active ? 'icon-filled' : ''}`}>
@@ -50,10 +49,10 @@ export function AdminSidebar() {
         </div>
 
         {/* Back to User Dashboard */}
-        <div className="mt-auto px-2 pt-4 border-t border-[#464554]">
+        <div className="mt-auto px-2 pt-4 border-t border-[var(--border)]">
           <Link
             href="/dashboard"
-            className="flex items-center gap-4 px-4 py-2 border-l-2 border-transparent text-[#c7c4d7] hover:bg-[#222a3d] hover:text-[#dae2fd] transition-colors group"
+            className="flex items-center gap-4 px-4 py-2 border-l-2 border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-surface)] hover:text-[var(--text-primary)] transition-colors group"
           >
             <span className="material-symbols-outlined text-[20px]">logout</span>
             <span className="text-sm font-medium">Exit Admin</span>

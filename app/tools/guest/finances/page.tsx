@@ -3,7 +3,7 @@
 export const dynamic = 'force-dynamic'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/supabase/client'
+import { ToolLayout } from '@/components/ToolLayout'
 import { formatCurrency } from '@/lib/currency'
 import { format } from 'date-fns'
 
@@ -41,37 +41,13 @@ export default function FinancesPage() {
 
   const fetchTransactions = async () => {
     setLoading(true)
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    
-    if (!user) {
-      const localData = localStorage.getItem('qv-guest-transactions')
-      if (localData) {
-        setTransactions(JSON.parse(localData))
-      }
-      setLoading(false)
-      return
-    }
-
-    const { data, error } = await supabase
-      .from('transactions')
-      .select('id, date, title, amount, type, categories(name,color)')
-      .eq('user_id', user.id)
-      .order('date', { ascending: false })
-
-    if (!error && data) {
-      const formatted = (data as any[]).map(tx => ({
-        id: tx.id,
-        date: tx.date,
-        title: tx.title,
-        amount: Number(tx.amount),
-        type: tx.type,
-        categories: Array.isArray(tx.categories) ? tx.categories[0] : tx.categories
-      }))
-      setTransactions(formatted)
+    const localData = localStorage.getItem('qv-guest-transactions')
+    if (localData) {
+      setTransactions(JSON.parse(localData))
     }
     setLoading(false)
   }
+
 
   useEffect(() => {
     fetchTransactions()
@@ -88,68 +64,28 @@ export default function FinancesPage() {
     if (!addForm.desc || isNaN(amt)) return
 
     setIsAdding(true)
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    
-    if (!user) {
-      const newTx: Transaction = {
-        id: Math.random().toString(36).substring(7),
-        title: addForm.desc,
-        amount: amt,
-        type,
-        date: format(new Date(), 'yyyy-MM-dd'),
-        categories: { name: 'Other', color: '#6b7280' }
-      }
-      const newTxs = [newTx, ...transactions]
-      setTransactions(newTxs)
-      localStorage.setItem('qv-guest-transactions', JSON.stringify(newTxs))
-      setAddModal({ isOpen: false, type: 'income' })
-      setIsAdding(false)
-      showToast('Saved locally (Guest)')
-      return
-    }
-
-    const { data: catData } = await supabase.from('categories').select('id').limit(1).single()
-    const category_id = catData?.id || null
-
-    const { error } = await supabase.from('transactions').insert({
-      user_id: user.id,
+    const newTx = {
+      id: Math.random().toString(36).substring(7),
       title: addForm.desc,
       amount: amt,
       type,
       date: format(new Date(), 'yyyy-MM-dd'),
-      category_id
-    })
-
-    if (error) {
-      showToast(`Error creating transaction: ${error.message}`)
-    } else {
-      fetchTransactions()
-      setAddModal({ isOpen: false, type: 'income' })
+      categories: { name: 'Other', color: '#6b7280' }
     }
+    const newTxs = [newTx, ...transactions]
+    setTransactions(newTxs)
+    localStorage.setItem('qv-guest-transactions', JSON.stringify(newTxs))
+    setAddModal({ isOpen: false, type: 'income' })
     setIsAdding(false)
+    showToast('Saved locally (Guest)')
   }
 
   const handleDelete = async (id: string) => {
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    
-    if (!user) {
-      const newTxs = transactions.filter(t => t.id !== id)
-      setTransactions(newTxs)
-      localStorage.setItem('qv-guest-transactions', JSON.stringify(newTxs))
-      setDeleteConfirm(null)
-      showToast('Deleted locally (Guest)')
-      return
-    }
-
-    const { error } = await supabase.from('transactions').delete().eq('id', id)
-    if (error) {
-      showToast(`Error deleting transaction: ${error.message}`)
-    } else {
-      fetchTransactions()
-    }
+    const newTxs = transactions.filter(t => t.id !== id)
+    setTransactions(newTxs)
+    localStorage.setItem('qv-guest-transactions', JSON.stringify(newTxs))
     setDeleteConfirm(null)
+    showToast('Deleted locally (Guest)')
   }
 
   // Filter & Search Logic
@@ -212,11 +148,12 @@ export default function FinancesPage() {
         }
       `}</style>
 
+      <ToolLayout>
       <div className="max-w-[1440px] mx-auto pb-12 space-y-6">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
-            <h2 className="font-display-lg text-[40px] font-bold text-white mb-2 tracking-tight">Finances</h2>
+            <h2 className="font-display-lg text-[40px] font-bold text-[var(--text-primary)] mb-2 tracking-tight">Finances</h2>
             <p className="text-[var(--text-secondary)]">Manage and track your operational cash flow.</p>
           </div>
           <div className="flex items-center gap-3">
@@ -244,7 +181,7 @@ export default function FinancesPage() {
               <button
                 key={type}
                 onClick={() => { setFilter(type); setPage(1) }}
-                className={`px-4 py-1.5 rounded-md font-medium text-sm transition-colors ${filter === type ? 'bg-white/10 text-white' : 'text-[var(--text-secondary)] hover:text-white'}`}
+                className={`px-4 py-1.5 rounded-md font-medium text-sm transition-colors ${filter === type ? 'bg-white/10 text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
               >
                 {type.charAt(0).toUpperCase() + type.slice(1)}
               </button>
@@ -260,7 +197,7 @@ export default function FinancesPage() {
                 placeholder="Search transactions..."
                 value={searchTerm}
                 onChange={(e) => { setSearchTerm(e.target.value); setPage(1) }}
-                className="glass-input text-white rounded-lg pl-9 pr-4 py-2 text-sm w-64"
+                className="glass-input text-[var(--text-primary)] rounded-lg pl-9 pr-4 py-2 text-sm w-64"
               />
             </div>
           </div>
@@ -274,7 +211,7 @@ export default function FinancesPage() {
                 <tr className="border-b border-white/5 text-[var(--text-secondary)] font-mono text-xs uppercase tracking-wider">
                   <th
                     onClick={() => toggleSort('date')}
-                    className="py-4 px-6 font-medium cursor-pointer hover:text-white transition-colors group"
+                    className="py-4 px-6 font-medium cursor-pointer hover:text-[var(--text-primary)] transition-colors group"
                   >
                     <div className="flex items-center gap-2">
                       Date
@@ -287,7 +224,7 @@ export default function FinancesPage() {
                   <th className="py-4 px-6 font-medium">Category</th>
                   <th
                     onClick={() => toggleSort('amount')}
-                    className="py-4 px-6 font-medium text-right cursor-pointer hover:text-white transition-colors group"
+                    className="py-4 px-6 font-medium text-right cursor-pointer hover:text-[var(--text-primary)] transition-colors group"
                   >
                     <div className="flex items-center justify-end gap-2">
                       Amount
@@ -473,6 +410,7 @@ export default function FinancesPage() {
           {toastMsg}
         </div>
       )}
+    </ToolLayout>
     </>
   )
 }

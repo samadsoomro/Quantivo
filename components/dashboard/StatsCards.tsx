@@ -28,16 +28,16 @@ export function StatsCards({ stats }: StatsCardsProps) {
       value: fmt(stats.totalIncome),
       change: stats.incomeChange,
       icon: ArrowUpCircle,
-      color: 'text-green-600 dark:text-green-400',
-      bg: 'bg-green-500/10',
+      color: 'text-secondary',
+      bg: 'bg-secondary/10',
     },
     {
       label: 'Expenses',
       value: fmt(stats.totalExpenses),
       change: stats.expenseChange,
       icon: ArrowDownCircle,
-      color: 'text-red-500 dark:text-red-400',
-      bg: 'bg-red-500/10',
+      color: 'text-destructive',
+      bg: 'bg-destructive/10',
       invertChange: true, // higher expenses = bad
     },
     {
@@ -70,11 +70,11 @@ export function StatsCards({ stats }: StatsCardsProps) {
               {card.change !== null && (
                 <div className="mt-1 flex items-center gap-1 text-xs">
                   {isPositive ? (
-                    <TrendingUp className="h-3 w-3 text-green-500" />
+                    <TrendingUp className="h-3 w-3 text-secondary" />
                   ) : (
-                    <TrendingDown className="h-3 w-3 text-red-500" />
+                    <TrendingDown className="h-3 w-3 text-destructive" />
                   )}
-                  <span className={isPositive ? 'text-green-600 dark:text-green-400' : 'text-red-500'}>
+                  <span className={isPositive ? 'text-secondary' : 'text-destructive'}>
                     {Math.abs(card.change).toFixed(1)}%
                   </span>
                   <span className="text-muted-foreground">vs last month</span>

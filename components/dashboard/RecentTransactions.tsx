@@ -4,51 +4,51 @@ import type { Transaction } from '@/types'
 
 export function RecentTransactions({ transactions }: { transactions: Transaction[] }) {
   return (
-    <div className="lg:col-span-2 bg-[#131b2e] border border-[#464554] rounded-lg flex flex-col">
-      <div className="p-4 flex justify-between items-center border-b border-[#464554]">
-        <h3 className="text-base font-semibold text-[#dae2fd]">Recent Transactions</h3>
-        <Link href="/finances" className="text-xs text-[#c0c1ff] hover:text-[#e1e0ff] transition-colors">
+    <div className="lg:col-span-2 stat-card p-0 flex flex-col overflow-hidden">
+      <div className="p-5 flex justify-between items-center border-b border-[var(--border)]">
+        <h3 className="font-semibold">Recent Transactions</h3>
+        <Link href="/finances" className="text-xs text-primary hover:text-primary-hover transition-colors">
           View All
         </Link>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left">
+        <table className="w-full text-left" style={{ tableLayout: 'fixed' }}>
           <thead>
-            <tr className="border-b border-[#464554] bg-[#222a3d]/50">
-              <th className="py-2 px-4 text-xs font-medium text-[#c7c4d7]">Date</th>
-              <th className="py-2 px-4 text-xs font-medium text-[#c7c4d7]">Merchant</th>
-              <th className="py-2 px-4 text-xs font-medium text-[#c7c4d7]">Category</th>
-              <th className="py-2 px-4 text-xs font-medium text-[#c7c4d7] text-right">Amount</th>
+            <tr className="border-b border-[var(--border)] bg-[var(--bg-elevated)]/50">
+              <th className="py-2 px-4 text-xs font-medium text-[var(--text-secondary)] w-28">Date</th>
+              <th className="py-2 px-4 text-xs font-medium text-[var(--text-secondary)]">Merchant</th>
+              <th className="py-2 px-4 text-xs font-medium text-[var(--text-secondary)] w-32 hidden sm:table-cell">Category</th>
+              <th className="py-2 px-4 text-xs font-medium text-[var(--text-secondary)] text-right w-24">Amount</th>
             </tr>
           </thead>
           <tbody>
             {transactions.length === 0 ? (
               <tr>
-                <td colSpan={4} className="py-12 text-center text-sm text-[#c7c4d7]">
+                <td colSpan={4} className="py-12 text-center text-sm text-[var(--text-secondary)]">
                   No transactions yet. Add your first transaction!
                 </td>
               </tr>
             ) : (
               transactions.map((tx) => (
-                <tr key={tx.id} className="border-b border-[#464554]/50 hover:bg-[#222a3d] transition-colors">
-                  <td className="py-3 px-4 font-mono text-xs text-[#c7c4d7]">
+                <tr key={tx.id} className="border-b border-[var(--border)]/50 hover:bg-[var(--bg-elevated)] transition-colors">
+                  <td className="py-3 px-4 font-mono text-xs text-[var(--text-secondary)]">
                     {format(new Date(tx.date), 'MMM d, yyyy')}
                   </td>
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded bg-[#31394d] flex items-center justify-center border border-[#464554]">
-                        <span className="material-symbols-outlined text-[16px] text-[#dae2fd]">
+                      <div className="w-8 h-8 rounded bg-[var(--bg-elevated)] shrink-0 flex items-center justify-center border border-[var(--border)]">
+                        <span className="material-symbols-outlined text-[16px] text-[var(--text-primary)]">
                           {tx.type === 'income' ? 'work' : 'shopping_cart'}
                         </span>
                       </div>
-                      <span className="text-sm font-medium text-[#dae2fd]">{tx.title}</span>
+                      <span className="text-sm font-medium text-[var(--text-primary)] truncate block">{tx.title}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-sm text-[#c7c4d7]">
+                  <td className="py-3 px-4 text-sm text-[var(--text-secondary)] truncate hidden sm:table-cell">
                     {tx.categories?.name ?? 'Uncategorized'}
                   </td>
-                  <td className={`py-3 px-4 text-right font-mono text-sm ${
-                    tx.type === 'income' ? 'text-[#4edea3]' : 'text-[#dae2fd]'
+                  <td className={`py-3 px-4 text-right font-mono text-sm truncate ${
+                    tx.type === 'income' ? 'text-secondary' : 'text-primary'
                   }`}>
                     {tx.type === 'income' ? '+' : '-'}
                     {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(Number(tx.amount))}

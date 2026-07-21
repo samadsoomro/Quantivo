@@ -15,7 +15,7 @@ export default async function AdminCustomersPage() {
     <div className="max-w-[1440px] mx-auto pb-12 space-y-6">
       <div className="flex justify-between items-end mb-10">
         <div>
-          <h1 className="font-headline-xl text-3xl font-bold text-[#c0c1ff] mb-2">Customers</h1>
+          <h1 className="font-headline-xl text-3xl font-bold text-[var(--color-primary)] mb-2">Customers</h1>
           <p className="font-body-md text-sm text-[var(--text-secondary)]">Manage user accounts and subscriptions.</p>
         </div>
       </div>

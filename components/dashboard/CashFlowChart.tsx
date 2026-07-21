@@ -44,7 +44,7 @@ export function CashFlowChart({ data }: { data: MonthlyData[] }) {
               wrapperStyle={{ fontSize: '12px', paddingTop: '12px', color: '#c7c4d7' }}
               formatter={(value) => value.charAt(0).toUpperCase() + value.slice(1)}
             />
-            <Bar dataKey="income" fill="#c0c1ff" radius={[4, 4, 0, 0]} name="income" />
+            <Bar dataKey="income" fill="var(--color-primary)" radius={[4, 4, 0, 0]} name="income" />
             <Bar dataKey="expenses" fill="#31394d" radius={[4, 4, 0, 0]} name="expenses" />
           </BarChart>
         </ResponsiveContainer>

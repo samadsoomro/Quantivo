@@ -54,7 +54,7 @@ export function KPICards({ stats }: KPICardsProps) {
       change: stats.savingsChange,
       positive: true,
       icon: 'savings',
-      sparkColor: '#c0c1ff',
+      sparkColor: 'var(--color-primary)',
       sparkPath: 'M0 25 L20 20 L40 22 L60 10 L80 12 L100 5',
     },
   ]
