@@ -143,7 +143,7 @@ export function Navbar({ variant, user, profile }: NavbarProps) {
   const renderNavLinks = () => (
     <>
       <a className="nav-link" href="/#features">Features</a>
-      <a className="nav-link" href="/tools">Free Tools</a>
+      <a className="nav-link" href="/tools">Tools</a>
       <a className="nav-link" href="/#pricing">Pricing</a>
       <a className="nav-link" href="/#faq">FAQ</a>
     </>
@@ -156,7 +156,7 @@ export function Navbar({ variant, user, profile }: NavbarProps) {
           <Link href="/login" className="text-sm text-[var(--text-nav)] hover:text-white transition-colors" style={{ color: 'var(--text-nav)' }}>
             Log in
           </Link>
-          <Link href="/signup" className="btn-violet px-4 py-1.5 rounded-full text-sm font-semibold hover:brightness-110 transition-all">
+          <Link href="/tools" className="btn-violet px-4 py-1.5 rounded-full text-sm font-semibold hover:brightness-110 transition-all">
             Get Started →
           </Link>
         </div>
@@ -166,8 +166,8 @@ export function Navbar({ variant, user, profile }: NavbarProps) {
     return (
       <div className="relative group flex items-center gap-4">
         {isLandingOrTools && (
-          <Link href="/dashboard" className="text-sm font-medium hover:text-[var(--color-primary)] transition-colors" style={{ color: 'var(--text-primary)' }}>
-            Dashboard →
+          <Link href="/tools/tracker/finances" className="text-sm font-medium hover:text-[var(--color-primary)] transition-colors" style={{ color: 'var(--text-primary)' }}>
+            My Tracker →
           </Link>
         )}
         <button className="flex items-center gap-2 hover:opacity-80 transition-opacity">

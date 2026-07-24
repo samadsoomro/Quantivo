@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import { ToolLayout } from '@/components/ToolLayout'
+import { AdBanner } from '@/components/AdBanner'
 import { TOOLS } from '@/lib/tools'
 
 const totalTools = TOOLS.reduce((s, cat) => s + cat.items.length, 0)
@@ -68,6 +69,10 @@ export default function ToolsIndexPage() {
                   </div>
                 </Link>
               ))}
+            </div>
+            {/* AdBanner between categories */}
+            <div style={{ marginTop: '48px' }}>
+              <AdBanner slot="horizontal" />
             </div>
           </div>
         ))}

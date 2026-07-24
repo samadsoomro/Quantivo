@@ -1,12 +1,15 @@
 export const TOOLS = [
-  // Dashboard Guest Tools
+  // Personal Tracker Tools
   {
-    category: 'Track Your Finances — No Account Needed',
+    category: 'Personal Tracker',
     color: '#ff33aa',
     items: [
-      { href: '/tools/guest/finances', icon: 'payments', title: 'Finance Tracker', desc: 'Track income & expenses locally in your browser', badge: 'LOCAL' },
-      { href: '/tools/guest/goals', icon: 'ads_click', title: 'Goal Setting', desc: 'Set financial goals and track progress', badge: 'LOCAL' },
-      { href: '/tools/guest/habits', icon: 'repeat_on', title: 'Habit Tracker', desc: 'Build streaks and log daily progress', badge: 'LOCAL' },
+      { href: '/tools/tracker/finances', icon: 'payments', title: 'Finance Tracker', desc: 'Track income & expenses locally in your browser', badge: 'LOCAL' },
+      { href: '/tools/tracker/goals', icon: 'ads_click', title: 'Goal Setting', desc: 'Set financial goals and track progress', badge: 'LOCAL' },
+      { href: '/tools/tracker/habits', icon: 'repeat_on', title: 'Habit Tracker', desc: 'Build streaks and log daily progress', badge: 'LOCAL' },
+      { href: '/tools/tracker/invoices', icon: 'receipt', title: 'Invoice Manager', desc: 'Manage your invoices', badge: 'LOCAL' },
+      { href: '/tools/tracker/subscriptions', icon: 'event_repeat', title: 'Subscriptions', desc: 'Track your recurring subscriptions', badge: 'LOCAL' },
+      { href: '/tools/tracker/reports', icon: 'monitoring', title: 'Reports', desc: 'Financial reports and analytics', badge: 'LOCAL' },
     ]
   },
   // Utility Tools

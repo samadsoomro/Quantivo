@@ -199,17 +199,17 @@ export function LandingPage({ siteConfig, user, profile }: { siteConfig: Record<
                   <span className="animated-gradient-text">{siteConfig?.hero_headline || 'Your Money. Your Goals. Finally Under Control.'}</span>
                 </h1>
                 <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '18px', fontWeight: 300, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '40px' }}>
-                  {siteConfig?.hero_subheadline || 'The all-in-one finance tracker, invoice generator, and productivity suite built for freelancers and professionals.'}
+                  {siteConfig?.hero_subheadline || '100+ free tools for finance, documents, AI, and productivity. No signup required.'}
                 </p>
                 
                 <div className="flex flex-col md:flex-row items-center gap-4 mb-8">
-                  <Link href="/signup" className="btn-violet" style={{ fontSize: '17px', padding: '12px 36px', width: '100%', maxWidth: '240px' }}>Get Started Free</Link>
-                  <Link href="/login" className="btn-ghost" style={{ fontSize: '17px', padding: '12px 36px', width: '100%', maxWidth: '240px' }}>View Demo</Link>
+                  <Link href="/tools" className="btn-violet" style={{ fontSize: '17px', padding: '12px 36px', width: '100%', maxWidth: '240px' }}>Get Started Free</Link>
+                  <Link href="/tools" className="btn-ghost" style={{ fontSize: '17px', padding: '12px 36px', width: '100%', maxWidth: '240px' }}>View Demo</Link>
                 </div>
 
                 {/* Trust Strip */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginBottom: '32px' }}>
-                  {['Free forever', 'No credit card', '2-minute setup'].map(t => (
+                  {['100+ Tools', '$48M+ Tracked', '4.9★ Rating', '99.9% Uptime'].map(t => (
                     <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontFamily: 'Inter', fontSize: '13px', color: 'var(--text-muted)' }}>
                       <span className="material-symbols-outlined" style={{ fontSize: '16px', color: '#00cc4b' }}>check</span>
                       {t}
@@ -330,7 +330,7 @@ export function LandingPage({ siteConfig, user, profile }: { siteConfig: Record<
               <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '22px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '8px' }}>Free</h3>
               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '40px', fontWeight: 400, color: 'var(--color-accent)', marginBottom: '24px' }}>$0<span style={{ fontSize: '16px', color: 'var(--text-muted)' }}>/mo</span></div>
               <ul style={{ listStyle: 'none', padding: 0, marginBottom: '28px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {['Up to 50 transactions/mo', '3 tool uses/day', 'Basic dashboard', '1 goal'].map((f) => (
+                {['Up to 50 transactions/mo', '3 tool uses/day', 'Basic personal tracker', '1 goal'].map((f) => (
                   <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 300, color: 'var(--text-secondary)' }}>
                     <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#00cc4b' }}>check_circle</span>{f}
                   </li>

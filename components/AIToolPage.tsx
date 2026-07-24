@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ToolLayout } from '@/components/ToolLayout'
+import ReactMarkdown from 'react-markdown'
 
 interface AIToolPageProps {
   toolId: string
@@ -152,8 +153,8 @@ export function AIToolPage({
                   </button>
                 </div>
               </div>
-              <div style={{ background: 'var(--bg-elevated)', borderRadius: '10px', padding: '20px', whiteSpace: 'pre-wrap', fontSize: '14px', lineHeight: 1.7, color: 'var(--text-primary)', maxHeight: '600px', overflowY: 'auto', fontFamily: toolId === 'code-explain' ? 'JetBrains Mono, monospace' : 'inherit' }}>
-                {output}
+              <div className="prose prose-invert max-w-none" style={{ background: 'var(--bg-elevated)', borderRadius: '10px', padding: '20px', fontSize: '14px', lineHeight: 1.7, color: 'var(--text-primary)', maxHeight: '600px', overflowY: 'auto', fontFamily: toolId === 'code-explain' ? 'JetBrains Mono, monospace' : 'inherit' }}>
+                <ReactMarkdown>{output}</ReactMarkdown>
               </div>
             </div>
           )}
